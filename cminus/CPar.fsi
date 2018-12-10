@@ -2,6 +2,13 @@
 module CPar
 type token = 
   | EOF
+  | PLUSASSIGN
+  | MINUSASSIGN
+  | TIMESASSIGN
+  | DIVASSIGN
+  | MODASSIGN
+  | COLON
+  | QUESTION
   | LPAR
   | RPAR
   | LBRACE
@@ -12,11 +19,6 @@ type token =
   | COMMA
   | ASSIGN
   | AMP
-  | PLUSASSIGN
-  | MINUSASSIGN
-  | TIMESASSIGN
-  | DIVASSIGN
-  | MODASSIGN
   | NOT
   | SEQOR
   | SEQAND
@@ -44,12 +46,21 @@ type token =
   | VOID
   | WHILE
   | DO
+  | SWITCH
+  | CASE
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTINT of (int)
   | CSTBOOL of (int)
 type tokenId = 
     | TOKEN_EOF
+    | TOKEN_PLUSASSIGN
+    | TOKEN_MINUSASSIGN
+    | TOKEN_TIMESASSIGN
+    | TOKEN_DIVASSIGN
+    | TOKEN_MODASSIGN
+    | TOKEN_COLON
+    | TOKEN_QUESTION
     | TOKEN_LPAR
     | TOKEN_RPAR
     | TOKEN_LBRACE
@@ -60,11 +71,6 @@ type tokenId =
     | TOKEN_COMMA
     | TOKEN_ASSIGN
     | TOKEN_AMP
-    | TOKEN_PLUSASSIGN
-    | TOKEN_MINUSASSIGN
-    | TOKEN_TIMESASSIGN
-    | TOKEN_DIVASSIGN
-    | TOKEN_MODASSIGN
     | TOKEN_NOT
     | TOKEN_SEQOR
     | TOKEN_SEQAND
@@ -92,6 +98,8 @@ type tokenId =
     | TOKEN_VOID
     | TOKEN_WHILE
     | TOKEN_DO
+    | TOKEN_SWITCH
+    | TOKEN_CASE
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTINT
@@ -113,6 +121,8 @@ type nonTerminalId =
     | NONTERM_Stmt
     | NONTERM_StmtM
     | NONTERM_StmtU
+    | NONTERM_Casedecs
+    | NONTERM_Casedec
     | NONTERM_Expr
     | NONTERM_ExprNotAccess
     | NONTERM_AtExprNotAccess
