@@ -140,10 +140,15 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | CstI i         -> [CSTI i]
     | Addr acc       -> cAccess acc varEnv funEnv
     | P1(ope, acc)   -> 
-      cAccess acc varEnv funEnv @ [DUP] @ 1
+      cAccess acc varEnv funEnv @ [DUP] @ [LDI]  @ 1
       @ (match ope with
         | "+" -> [ADD]
         | "-" -> [SUB] ) @ [STI]
+    | P2(acc, ope)   ->
+      cAccess acc varEnv funEnv @ [DUP] @ [LDI]  @ 1
+      @ (match ope with
+        | "+" -> [ADD] @ [STI] @ 1 @ [SUB]
+        | "-" -> [SUB] @ [STI] @ 1 @ [ADD])
     | Prim1(ope, e1) ->
       cExpr e1 varEnv funEnv
       @ (match ope with
@@ -182,6 +187,15 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       @ cExpr e2 varEnv funEnv
       @ [GOTO labend; Label labtrue; CSTI 1; Label labend]
     | Call(f, es) -> callfun f es varEnv funEnv
+    | Question(e1, e2, e3)  ->
+      let label1 = newLable()
+      let label2 = newLable()
+      let label3 = newLable()
+      cExpr e1 varEnv funEnv @ [IFNZRO label2]
+      @ cExpr e3 varEnv funEnv @ [GOTO label3; Label label1]
+      @ [Label label2] @ cExpr e2 varEnv funEnv
+      @ [Label label3]
+      
 
 and cAccess access varEnv funEnv : instr list =
     match access with 
