@@ -30,6 +30,7 @@ and stmt =
   | Switch of expr * (expr * stmt) list * stmt
   | While of expr * stmt
   | Do of stmt * expr
+  | For of stmt * expr * stmt
   | Expr of expr
   | Return of expr option
   | Block of stmtordec list

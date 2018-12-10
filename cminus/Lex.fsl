@@ -16,11 +16,15 @@ let lexemeAsString lexbuf =
 
 let keyword s =
     match s with
+    | "bool"    -> BOOL
     | "case"    -> CASE
     | "char"    -> CHAR 
+    | "default" -> DEFAULT
     | "do"      -> DO
+    | "double"  -> DOUBLE
     | "else"    -> ELSE
     | "false"   -> CSTBOOL 0
+    | "for"     -> FOR
     | "if"      -> IF
     | "int"     -> INT
     | "null"    -> NULL
