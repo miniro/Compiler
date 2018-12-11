@@ -15,6 +15,7 @@ let nl = CstI 10
 %}
 
 %token <int> CSTINT CSTBOOL
+%token <float> CSTFLOAT
 %token <string> CSTSTRING NAME
 
 %token CHAR ELSE IF INT NULL PRINT PRINTLN RETURN VOID WHILE DO FOR DEFAULT
@@ -65,6 +66,7 @@ Vardesc:
   | LPAR Vardesc RPAR                   { $2                                      } 
   | Vardesc LBRACK RBRACK               { compose1 (fun t -> TypA(t, None)) $1    }
   | Vardesc LBRACK CSTINT RBRACK        { compose1 (fun t -> TypA(t, Some $3)) $1 }
+  | Vardesc LBRACK CSTFLOAT RBRACK      { compose1 (fun t -> TypA(t, Some $3)) $1 }
 ;
 
 Fundec:
@@ -180,11 +182,14 @@ Exprs1:
 Const:
     CSTINT                              { $1       }
   | CSTBOOL                             { $1       }
+  | CSTFLOAT                            { $1       }
   | MINUS CSTINT                        { - $2     }
+  | MINUS CSTFLOAT                      { - $2     }
   | NULL                                { -1       }
 ;
 
 Type:
     INT                                 { TypI     }
   | CHAR                                { TypC     }
+  | FLOAT                               { TypF     }
 ;
