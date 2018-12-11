@@ -4,7 +4,8 @@ type typ =
   | TypI                           
   | TypC                           
   | TypA of typ * int option      
-  | TypP of typ                    
+  | TypP of typ
+  | TypF of float
 
 and access =                                                      
   | AccVar of string                 

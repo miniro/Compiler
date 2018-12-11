@@ -39,6 +39,7 @@ type token =
   | ELSE
   | IF
   | INT
+  | FLOAT
   | NULL
   | PRINT
   | PRINTLN
@@ -52,6 +53,7 @@ type token =
   | DEFAULT
   | CSTSTRING of (string)
   | NAME of (string)
+  | CSTFLOAT of (float)
   | CSTINT of (int)
   | CSTBOOL of (int)
 type tokenId = 
@@ -93,6 +95,7 @@ type tokenId =
     | TOKEN_ELSE
     | TOKEN_IF
     | TOKEN_INT
+    | TOKEN_FLOAT
     | TOKEN_NULL
     | TOKEN_PRINT
     | TOKEN_PRINTLN
@@ -106,6 +109,7 @@ type tokenId =
     | TOKEN_DEFAULT
     | TOKEN_CSTSTRING
     | TOKEN_NAME
+    | TOKEN_CSTFLOAT
     | TOKEN_CSTINT
     | TOKEN_CSTBOOL
     | TOKEN_end_of_input

@@ -101,7 +101,7 @@ let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       let labtest  = newLabel()
       [GOTO labtest; Label labbegin] @ cStmt body varEnv funEnv
       @ [Label labtest] @ cExpr e varEnv funEnv @ [IFNZRO labbegin]
-    | Do(e, body) ->
+    | Do(body, e) ->
       let labbegin = newLabel()
       let labtest  = newLabel()
       [Label labbegin] @ cStmt body varEnv funEnv
