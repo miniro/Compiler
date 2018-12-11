@@ -101,14 +101,14 @@ let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       let labtest  = newLabel()
       [GOTO labtest; Label labbegin] @ cStmt body varEnv funEnv
       @ [Label labtest] @ cExpr e varEnv funEnv @ [IFNZRO labbegin]
-    | Do(e, body) ->
+    | Do(body, e) ->
       let labbegin = newLabel()
       let labtest  = newLabel()
       [Label labbegin] @ cStmt body varEnv funEnv
       @ [Label labtest] @ cExpr e varEnv funEnv @ [IFNZRO labbegin]
     | For(e1, e2, e3, body) ->
-      let labbegin = newLable()
-      let labtest  = newLable()
+      let labbegin = newLabel()
+      let labtest  = newLabel()
       cExpr e1 varEnv funEnv @ [GOTO labtest; Label labbegin]
       @ cStmt body varEnv funEnv @ cExpr e3 varEnv funEnv
       @ [Label labtest] @ cExpr e2 varEnv funEnv @ [IFNZRO labbegin]
@@ -133,29 +133,45 @@ let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | Return (Some e) -> 
       cExpr e varEnv funEnv @ [RET (snd varEnv)]
 
+and cStmtOrDec stmtOrDec (varEnv : VarEnv) (funEnv : FunEnv) : VarEnv * instr list = 
+    match stmtOrDec with 
+    | Stmt stmt    -> (varEnv, cStmt stmt varEnv funEnv) 
+    | Dec (typ, x) -> allocate Locvar (typ, x) varEnv
+
 and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list = 
     match e with
     | Access acc     -> cAccess acc varEnv funEnv @ [LDI] 
     | Assign(acc, e) -> cAccess acc varEnv funEnv @ cExpr e varEnv funEnv @ [STI]
     | CstI i         -> [CSTI i]
     | Addr acc       -> cAccess acc varEnv funEnv
-    | P1(ope, acc)   -> 
-      cAccess acc varEnv funEnv @ [DUP] @ [LDI]  @ 1
+    | P1(acc, ope)   -> 
+      cAccess acc varEnv funEnv @ [DUP] @ [LDI] @ [CSTI 1]
       @ (match ope with
         | "+" -> [ADD]
-        | "-" -> [SUB] ) @ [STI]
-    | P2(acc, ope)   ->
-      cAccess acc varEnv funEnv @ [DUP] @ [LDI]  @ 1
+        | "-" -> [SUB] 
+        | _   -> raise (Failure "unknown primitive 1")) @ [STI]
+    | P2(ope, acc)   ->
+      cAccess acc varEnv funEnv @ [DUP] @ [LDI] @ [CSTI 1]
       @ (match ope with
-        | "+" -> [ADD] @ [STI] @ 1 @ [SUB]
-        | "-" -> [SUB] @ [STI] @ 1 @ [ADD])
+        | "+" -> [ADD] @ [STI] @ [CSTI 1] @ [SUB]
+        | "-" -> [SUB] @ [STI] @ [CSTI 1] @ [ADD]
+        | _   -> raise (Failure "unknown primitive 2"))
+    | A(ope, acc, e) ->
+      cAccess acc varEnv funEnv @ [DUP] @ [LDI] @ cExpr e varEnv funEnv
+      @ (match ope with
+        | "+" -> [ADD]
+        | "-" -> [SUB]
+        | "*" -> [MUL]
+        | "/" -> [DIV]
+        | "%" -> [MOD] 
+        | _   -> raise (Failure "unknown primitive 3")) @ [STI]
     | Prim1(ope, e1) ->
       cExpr e1 varEnv funEnv
       @ (match ope with
          | "!"      -> [NOT]
          | "printi" -> [PRINTI]
          | "printc" -> [PRINTC]
-         | _        -> raise (Failure "unknown primitive 1"))
+         | _        -> raise (Failure "unknown primitive 4"))
     | Prim2(ope, e1, e2) ->
       cExpr e1 varEnv funEnv
       @ cExpr e2 varEnv funEnv
@@ -171,7 +187,7 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
          | ">="  -> [LT; NOT]
          | ">"   -> [SWAP; LT]
          | "<="  -> [SWAP; LT; NOT]
-         | _     -> raise (Failure "unknown primitive 2"))
+         | _     -> raise (Failure "unknown primitive 5"))
     | Andalso(e1, e2) ->
       let labend   = newLabel()
       let labfalse = newLabel()
@@ -188,13 +204,15 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       @ [GOTO labend; Label labtrue; CSTI 1; Label labend]
     | Call(f, es) -> callfun f es varEnv funEnv
     | Question(e1, e2, e3)  ->
-      let label1 = newLable()
-      let label2 = newLable()
-      let label3 = newLable()
+      let label1 = newLabel()
+      let label2 = newLabel()
+      let label3 = newLabel()
       cExpr e1 varEnv funEnv @ [IFNZRO label2]
       @ cExpr e3 varEnv funEnv @ [GOTO label3; Label label1]
       @ [Label label2] @ cExpr e2 varEnv funEnv
       @ [Label label3]
+    | _     -> raise (Failure "unknown primitive 6")
+    
       
 
 and cAccess access varEnv funEnv : instr list =

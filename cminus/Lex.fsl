@@ -16,12 +16,9 @@ let lexemeAsString lexbuf =
 
 let keyword s =
     match s with
-    | "bool"    -> BOOL
-    | "case"    -> CASE
     | "char"    -> CHAR 
     | "default" -> DEFAULT
     | "do"      -> DO
-    | "double"  -> DOUBLE
     | "else"    -> ELSE
     | "false"   -> CSTBOOL 0
     | "for"     -> FOR
@@ -31,7 +28,6 @@ let keyword s =
     | "print"   -> PRINT
     | "println" -> PRINTLN
     | "return"  -> RETURN
-    | "switch"  -> SWITCH
     | "true"    -> CSTBOOL 1
     | "void"    -> VOID 
     | "while"   -> WHILE         
@@ -68,7 +64,7 @@ rule Token = parse
   | "+="            { PLUSASSIGN }
   | "-="            { MINUSASSIGN } 
   | "*="            { TIMESASSIGN } 
-  | "/="            { divASSIGN } 
+  | "/="            { DIVASSIGN } 
   | "%="            { MODASSIGN } 
   | "=="            { EQ } 
   | "!="            { NE }

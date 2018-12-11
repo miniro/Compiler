@@ -21,16 +21,17 @@ and expr =
   | Prim3 of expr * expr * expr 
   | P1 of access * string   //用于处理'++a,--a'的情况
   | P2 of string * access   //用于处理'a++,a--'的情况
+  | A of string * access * expr
   | Andalso of expr * expr          
   | Orelse of expr * expr           
-  | Call of string * expr list       
+  | Call of string * expr list
+  | Question of expr * expr * expr       
 
 and stmt =
   | If of expr * stmt * stmt
-  | Switch of expr * (expr * stmt) list * stmt
   | While of expr * stmt
   | Do of stmt * expr
-  | For of stmt * expr * stmt
+  | For of expr * expr * expr * stmt
   | Expr of expr
   | Return of expr option
   | Block of stmtordec list

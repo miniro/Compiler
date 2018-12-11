@@ -17,7 +17,7 @@ let nl = CstI 10
 %token <int> CSTINT CSTBOOL
 %token <string> CSTSTRING NAME
 
-%token CHAR ELSE IF INT NULL PRINT PRINTLN RETURN VOID WHILE DO SWITCH CASE FOR DEFAULT
+%token CHAR ELSE IF INT NULL PRINT PRINTLN RETURN VOID WHILE DO FOR DEFAULT
 %token PLUS MINUS TIMES DIV MOD PLUSONE MINUSONE
 %token EQ NE GT LT GE LE
 %token NOT SEQOR SEQAND
@@ -103,8 +103,6 @@ StmtM:  /* No unbalanced if-else */
   | RETURN Expr SEMI                    { Return(Some($2))     }
   | Block                               { $1                   }
   | IF LPAR Expr RPAR StmtM ELSE StmtM  { If($3, $5, $7)       }
-  | SWITCH LPAR Expr RPAR Casedecs      { Switch($3, $5, Block [])       }
-  | SWITCH LPAR Expr RPAR Casedecs DEFAULT Stmt     { Switch($3, $5, $7)       }
   | WHILE LPAR Expr RPAR StmtM          { While($3, $5)        }
   | DO StmtM WHILE LPAR Expr RPAR       { Do($2, $5)           }
   | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtM  { For($3, $5, $7, $9) } 
@@ -113,19 +111,10 @@ StmtM:  /* No unbalanced if-else */
 StmtU:
     IF LPAR Expr RPAR StmtM ELSE StmtU  { If($3, $5, $7)       }
   | IF LPAR Expr RPAR Stmt              { If($3, $5, Block []) }
-  | SWITCH LPAR Expr RPAR Casedecs      { Switch($3, $5, Block [])       }
-  | SWITCH LPAR Expr RPAR Casedecs DEFAULT Stmt     { Switch($3, $5, $7)       }
   | WHILE LPAR Expr RPAR StmtU          { While($3, $5)        }
   | DO StmtU WHILE LPAR Expr RPAR       { Do($2, $5)           }
   | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtU  { For($3, $5, $7, $9) } 
 ;
-
-Casedecs:
-  | Casedec Casedecs                    { $1 :: $2            }
-;
-
-Casedec:
-  | CASE Expr COLON Stmt                { Case($2, $4)        }
 
 Expr: 
     Access                              { Access $1           }
@@ -140,15 +129,15 @@ ExprNotAccess:
   | PRINT Expr                          { Prim1("printi", $2) }
   | PRINTLN                             { Prim1("printc", nl) }
   | Expr PLUS  Expr                     { Prim2("+",  $1, $3) }
-  | Access PLUSONE                      { P2($1, '+')         }
-  | Access MINUSONE                     { P2($1, '-')         }
-  | PLUSONE Access                      { P1('+', $2)         }
-  | MINUSONE Access                     { P1('-', $2)         }
-  | Access PLUSASSIGN Expr              { Assign($1, Prim2("+", $1, $3)) }
-  | Access MINUSASSIGN Expr             { Assign($1, Prim2("-", $1, $3)) }
-  | Access TIMESASSIGN Expr             { Assign($1, Prim2("*", $1, $3)) }
-  | Access DIVASSIGN Expr               { Assign($1, Prim2("/", $1, $3)) }
-  | Access MODASSIGN Expr               { Assign($1, Prim2("%", $1, $3)) }
+  | Access PLUSONE                      { P2("+", $1)         }
+  | Access MINUSONE                     { P2("-", $1)         }
+  | PLUSONE Access                      { P1($2, "+")         }
+  | MINUSONE Access                     { P1($2, "-")         }
+  | Access PLUSASSIGN Expr              { A("+", $1, $3)      }
+  | Access MINUSASSIGN Expr             { A("-", $1, $3)      }
+  | Access TIMESASSIGN Expr             { A("*", $1, $3)      }
+  | Access DIVASSIGN Expr               { A("/", $1, $3)      }
+  | Access MODASSIGN Expr               { A("%", $1, $3)      }
   | Expr MINUS Expr                     { Prim2("-",  $1, $3) }
   | Expr TIMES Expr                     { Prim2("*",  $1, $3) }
   | Expr DIV   Expr                     { Prim2("/",  $1, $3) }
@@ -161,7 +150,7 @@ ExprNotAccess:
   | Expr LE    Expr                     { Prim2("<=", $1, $3) }
   | Expr SEQAND Expr                    { Andalso($1, $3)     }
   | Expr SEQOR  Expr                    { Orelse($1, $3)      }
-  | Expr QUESTION Expr COLON Expr       { Question($1, $2, $3)}
+  | Expr QUESTION Expr COLON Expr       { Question($1, $3, $5)}
 ;
 
 AtExprNotAccess:
