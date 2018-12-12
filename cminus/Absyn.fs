@@ -5,7 +5,7 @@ type typ =
   | TypC                           
   | TypA of typ * int option      
   | TypP of typ
-  | TypF of float
+  | TypF 
 
 and access =                                                      
   | AccVar of string                 
@@ -16,7 +16,8 @@ and expr =
   | Access of access              
   | Assign of access * expr        
   | Addr of access                 
-  | CstI of int                      
+  | CstI of int
+  | CstF of float                      
   | Prim1 of string * expr
   | Prim2 of string * expr * expr
   | Prim3 of expr * expr * expr 
