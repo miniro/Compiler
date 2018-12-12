@@ -1,3 +1,4 @@
-/cminus/*.class
-/cminus/*.c
-/cminus/*.out
+cminus/*.class
+cminus/*.c
+cminus/*.out
+/test/
