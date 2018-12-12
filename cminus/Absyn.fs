@@ -5,12 +5,17 @@ type typ =
   | TypC                           
   | TypA of typ * int option      
   | TypP of typ
-  | TypF of float
 
 and access =                                                      
   | AccVar of string                 
   | AccDeref of expr                
   | AccIndex of access * expr
+
+and buildfun =
+  | Sort of int list
+  | Max of int list
+  | Min of int list
+  | Swap of int * int
 
 and expr =                                                         
   | Access of access              
@@ -26,7 +31,8 @@ and expr =
   | Andalso of expr * expr          
   | Orelse of expr * expr           
   | Call of string * expr list
-  | Question of expr * expr * expr       
+  | Question of expr * expr * expr
+  // | Buildfun of buildfun
 
 and stmt =
   | If of expr * stmt * stmt

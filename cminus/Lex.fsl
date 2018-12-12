@@ -31,7 +31,11 @@ let keyword s =
     | "return"  -> RETURN
     | "true"    -> CSTBOOL 1
     | "void"    -> VOID 
-    | "while"   -> WHILE         
+    | "while"   -> WHILE     
+    | "Sort"    -> SORT
+    | "Max"     -> MAX
+    | "Min"     -> MIN
+    | "Swap"    -> SWAP    
     | _         -> NAME s
  
 let cEscape s = 

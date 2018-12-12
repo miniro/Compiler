@@ -49,6 +49,10 @@ type token =
   | DO
   | FOR
   | DEFAULT
+  | SORT
+  | MAX
+  | MIN
+  | SWAP
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTFLOAT of (float)
@@ -103,6 +107,10 @@ type tokenId =
     | TOKEN_DO
     | TOKEN_FOR
     | TOKEN_DEFAULT
+    | TOKEN_SORT
+    | TOKEN_MAX
+    | TOKEN_MIN
+    | TOKEN_SWAP
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTFLOAT
