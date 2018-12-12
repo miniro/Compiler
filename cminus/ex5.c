@@ -1,10 +1,17 @@
 // ¼ì²â?:
 
 void main() {
-  int a=4;
-  int b=5;
-  int c=0;
+  int a;
+  a=4;
+  int b;
+  b=5;
+  int c;
+  c=4;
   c=a>b?a:b;
+  print a;
+  println;
+  print b;
+  println;
   print c;
   println;
 }
