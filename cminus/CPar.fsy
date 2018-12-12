@@ -67,6 +67,7 @@ Vardesc:
   | LPAR Vardesc RPAR                   { $2                                      } 
   | Vardesc LBRACK RBRACK               { compose1 (fun t -> TypA(t, None)) $1    }
   | Vardesc LBRACK CSTINT RBRACK        { compose1 (fun t -> TypA(t, Some $3)) $1 }
+
 ;
 
 Fundec:
@@ -157,6 +158,7 @@ ExprNotAccess:
 
 AtExprNotAccess:
     Const                               { CstI $1             }
+  | ConstF                              { CstF $1             }
   | LPAR ExprNotAccess RPAR             { $2                  } 
   | AMP Access                          { Addr $2             }
 ;
@@ -186,7 +188,12 @@ Const:
   | NULL                                { -1       }
 ;
 
+ConstF:
+  | CSTFLOAT                            { $1       }
+  | MINUS CSTFLOAT                      { - $2     }
+;
 Type:
     INT                                 { TypI     }
   | CHAR                                { TypC     }
+  | FLOAT                               { TypF     }
 ;

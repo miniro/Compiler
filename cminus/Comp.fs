@@ -143,6 +143,7 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | Access acc     -> cAccess acc varEnv funEnv @ [LDI] 
     | Assign(acc, e) -> cAccess acc varEnv funEnv @ cExpr e varEnv funEnv @ [STI]
     | CstI i         -> [CSTI i]
+    | CstF i         -> [CSTF ((int)i)]
     | Addr acc       -> cAccess acc varEnv funEnv
     | P1(acc, ope)   -> 
       cAccess acc varEnv funEnv @ [DUP] @ [LDI] @ [CSTI 1]

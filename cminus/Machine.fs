@@ -16,6 +16,7 @@ type label = string
 type instr =
   | Label of label                     (* symbolic label; pseudo-instruc. *)
   | CSTI of int                        (* constant                        *)
+  | CSTF of int
   | ADD                                (* addition                        *)
   | SUB                                (* subtraction                     *)
   | MUL                                (* multiplication                  *)
@@ -167,7 +168,7 @@ let CODELDARGS = 24
 [<Literal>]
 let CODESTOP   = 25;
 
-
+let CODECSTF   = 26
 
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
@@ -178,6 +179,7 @@ let makelabenv (addr, labenv) instr =
     // 记录当前 (标签, 地址) ==> 到 labenv中
     | Label lab      -> (addr, (lab, addr) :: labenv)
     | CSTI i         -> (addr+2, labenv)
+    | CSTF i         -> (addr+2, labenv)
     | ADD            -> (addr+1, labenv)
     | SUB            -> (addr+1, labenv)
     | MUL            -> (addr+1, labenv)
@@ -213,6 +215,7 @@ let rec emitints getlab instr ints =
     match instr with
     | Label lab      -> ints
     | CSTI i         -> CODECSTI   :: i :: ints
+    | CSTF i         -> CODECSTF   :: i :: ints
     | ADD            -> CODEADD    :: ints
     | SUB            -> CODESUB    :: ints
     | MUL            -> CODEMUL    :: ints
@@ -295,6 +298,7 @@ let rec decomp ints : instr list =
     | CODEPRINTC :: ints_rest                         ->   PRINTC        :: decomp ints_rest
     | CODELDARGS :: ints_rest                         ->   LDARGS        :: decomp ints_rest
     | CODESTOP   :: ints_rest                         ->   STOP             :: decomp ints_rest
-    | CODECSTI   :: i :: ints_rest                    ->   CSTI i :: decomp ints_rest       
+    | CODECSTI   :: i :: ints_rest                    ->   CSTI i :: decomp ints_rest   
+    | CODECSTF   :: i :: ints_rest                    ->   CSTF i :: decomp ints_rest  
     | _                                       ->    printf "%A" ints; failwith "unknow code"
 
