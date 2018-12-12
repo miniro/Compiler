@@ -7,7 +7,7 @@ void main() {
   b=5;
   int c;
   c=4;
-  c=a>b?a:b;
+  c=a>b?a+1:b+1;
   print a;
   println;
   print b;

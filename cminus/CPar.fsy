@@ -28,6 +28,7 @@ let nl = CstI 10
 
 %right ASSIGN PLUSASSIGN MINUSASSIGN TIMESASSIGN DIVASSIGN MODASSIGN            /* lowest precedence */
 %nonassoc PRINT
+%right COLON QUESTION
 %left SEQOR
 %left SEQAND
 %left EQ NE 

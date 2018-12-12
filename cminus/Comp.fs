@@ -204,13 +204,12 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       @ [GOTO labend; Label labtrue; CSTI 1; Label labend]
     | Call(f, es) -> callfun f es varEnv funEnv
     | Question(e1, e2, e3)  ->
-      let label1 = newLabel()
-      let label2 = newLabel()
-      let label3 = newLabel()
-      cExpr e1 varEnv funEnv @ [IFNZRO label2]
-      @ cExpr e3 varEnv funEnv @ [GOTO label3; Label label1]
-      @ [Label label2] @ cExpr e2 varEnv funEnv
-      @ [Label label3]
+      let labtrue = newLabel()
+      let labelend = newLabel()
+      cExpr e1 varEnv funEnv @ [IFNZRO labtrue]
+      @ cExpr e3 varEnv funEnv @ [GOTO labelend]
+      @ [Label labtrue] @ cExpr e2 varEnv funEnv
+      @ [Label labelend]
     | _     -> raise (Failure "unknown primitive 6")
     
       
