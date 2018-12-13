@@ -27,6 +27,7 @@ and expr =
   | Prim1 of string * expr
   | Prim2 of string * expr * expr
   | Prim3 of expr * expr * expr 
+  | Bitassign of string * access * expr
   | P1 of access * string   //用于处理'++a,--a'的情况
   | P2 of string * access   //用于处理'a++,a--'的情况
   | A of string * access * expr
@@ -34,7 +35,9 @@ and expr =
   | Orelse of expr * expr     
   | Bitxor of expr * expr  
   | Bitand of expr * expr  
-  | Bitor of expr * expr        
+  | Bitor of expr * expr
+  | Bitleft of expr * expr
+  | Bitright of expr * expr       
   | Call of string * expr list
   | Question of expr * expr * expr
   // | Buildfun of buildfun

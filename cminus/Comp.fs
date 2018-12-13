@@ -166,6 +166,15 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
         | "/" -> [DIV]
         | "%" -> [MOD] 
         | _   -> raise (Failure "unknown primitive 3")) @ [STI]
+    | Bitassign(ope, acc, e) ->
+      cAccess acc varEnv funEnv @ [DUP] @ [LDI] @ cExpr e varEnv funEnv
+      @ (match ope with
+        | "&" -> [BITAND]
+        | "|" -> [BITOR]
+        | "^" -> [BITXOR]
+        | "<<" -> [BITLEFT]
+        | ">>" -> [BITRIGHT] 
+        | _   -> raise (Failure "unknown primitive 3")) @ [STI]
     | Prim1(ope, e1) ->
       cExpr e1 varEnv funEnv
       @ (match ope with
@@ -215,6 +224,14 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       cExpr e1 varEnv funEnv
       @ cExpr e2 varEnv funEnv
       @[BITXOR]  
+    | Bitright(e1, e2) ->
+      cExpr e1 varEnv funEnv
+      @ cExpr e2 varEnv funEnv
+      @[BITRIGHT]
+    | Bitleft(e1, e2) ->
+      cExpr e1 varEnv funEnv
+      @ cExpr e2 varEnv funEnv
+      @[BITLEFT]  
     | Call(f, es) -> callfun f es varEnv funEnv
     | Question(e1, e2, e3)  ->
       let labtrue = newLabel()

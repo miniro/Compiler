@@ -35,7 +35,7 @@ class Machine {
     GOTO = 16, IFZERO = 17, IFNZRO = 18, CALL = 19, TCALL = 20, RET = 21, 
     PRINTI = 22, PRINTC = 23, 
     LDARGS = 24,
-    STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28;
+    STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30;
   final static int STACKSIZE = 1000;
   
   // Read code from file and execute it
@@ -67,6 +67,10 @@ class Machine {
         s[sp+1] = p[pc++]; sp++; break;
       case ADD: 
         s[sp-1] = s[sp-1] + s[sp]; sp--; break;
+	  case BITLEFT: 
+        s[sp-1] = s[sp-1] << s[sp]; sp--; break;
+	  case BITRIGHT: 
+        s[sp-1] = s[sp-1] >> s[sp]; sp--; break;
 	  case BITAND: 
         s[sp-1] = s[sp-1] & s[sp]; sp--; break;
 	  case BITOR: 
@@ -149,6 +153,8 @@ class Machine {
   static String insname(int[] p, int pc) {
     switch (p[pc]) {
     case CSTI:   return "CSTI " + p[pc+1]; 
+	case BITLEFT: return "BITLEFT";
+	case BITRIGHT:  return "BITRIGHT";
 	case BITAND: return "BITAND";
 	case BITOR:  return "BITOR";
 	case BITXOR: return "BITXOR";
