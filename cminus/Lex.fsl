@@ -86,6 +86,7 @@ rule Token = parse
   | "||"            { SEQOR }                     
   | "&&"            { SEQAND }                     
   | "&"             { AMP }
+  | "~"             {BITNOT}
   | "<<"            {BITLEFT}
   | ">>"            {BITRIGHT}
   | "^"             {BITXOR}       

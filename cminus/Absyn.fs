@@ -37,7 +37,8 @@ and expr =
   | Bitand of expr * expr  
   | Bitor of expr * expr
   | Bitleft of expr * expr
-  | Bitright of expr * expr       
+  | Bitright of expr * expr 
+  | Bitnot of string*expr 
   | Call of string * expr list
   | Question of expr * expr * expr
   // | Buildfun of buildfun

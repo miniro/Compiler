@@ -231,7 +231,10 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | Bitleft(e1, e2) ->
       cExpr e1 varEnv funEnv
       @ cExpr e2 varEnv funEnv
-      @[BITLEFT]  
+      @[BITLEFT] 
+    | Bitnot(ope, e1) ->
+      cExpr e1 varEnv funEnv
+      @ [BITNOT] 
     | Call(f, es) -> callfun f es varEnv funEnv
     | Question(e1, e2, e3)  ->
       let labtrue = newLabel()
