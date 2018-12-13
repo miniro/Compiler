@@ -18,7 +18,7 @@ let nl = CstI 10
 %token <float> CSTFLOAT
 %token <string> CSTSTRING NAME
 
-%token CHAR ELSE IF INT FLOAT NULL PRINT PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP
+%token CHAR ELSE IF INT FLOAT NULL PRINT PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP SWITCH CASE
 %token PLUS MINUS TIMES DIV MOD PLUSONE MINUSONE
 %token EQ NE GT LT GE LE
 %token NOT SEQOR SEQAND
@@ -112,6 +112,8 @@ StmtM:  /* No unbalanced if-else */
   | WHILE LPAR Expr RPAR StmtM          { While($3, $5)        }
   | DO StmtM WHILE LPAR Expr RPAR       { Do($2, $5)           }
   | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtM  { For($3, $5, $7, $9) } 
+  | SWITCH LPAR Expr RPAR StmtM         { Switch($3)           }
+  | CASE Expr COLON StmtM               { Case($2, $4)         }
 ;
 
 StmtU:
@@ -120,6 +122,8 @@ StmtU:
   | WHILE LPAR Expr RPAR StmtU          { While($3, $5)        }
   | DO StmtU WHILE LPAR Expr RPAR       { Do($2, $5)           }
   | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtU  { For($3, $5, $7, $9) } 
+  | SWITCH LPAR Expr RPAR StmtU         { Switch($3)           }
+  | CASE Expr COLON StmtU               { Case($2, $4)         }
 ;
 
 Expr: 

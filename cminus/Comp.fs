@@ -132,6 +132,12 @@ let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       [RET (snd varEnv - 1)]
     | Return (Some e) -> 
       cExpr e varEnv funEnv @ [RET (snd varEnv)]
+    // | Switch(e) ->
+    //   cExpr e varEnv funEnv @ [INCSP -1]
+    // | Case(e, body) ->
+    //   let labend = newLabel()
+    //   [DUP] @ cExpr e varEnv funEnv @ [SUB] @ [IFNZRO labend]
+    //   @ [INSCP -1] @ 
 
 and cStmtOrDec stmtOrDec (varEnv : VarEnv) (funEnv : FunEnv) : VarEnv * instr list = 
     match stmtOrDec with 

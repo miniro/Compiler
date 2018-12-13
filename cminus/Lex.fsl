@@ -35,7 +35,9 @@ let keyword s =
     | "Sort"    -> SORT
     | "Max"     -> MAX
     | "Min"     -> MIN
-    | "Swap"    -> SWAP    
+    | "Swap"    -> SWAP
+    | "Switch"  -> SWITCH    
+    | "Case"    -> CASE
     | _         -> NAME s
  
 let cEscape s = 

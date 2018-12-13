@@ -38,7 +38,7 @@ and expr =
   | Bitor of expr * expr
   | Bitleft of expr * expr
   | Bitright of expr * expr 
-  | Bitnot of string*expr 
+  | Bitnot of string * expr 
   | Call of string * expr list
   | Question of expr * expr * expr
   // | Buildfun of buildfun
@@ -51,6 +51,8 @@ and stmt =
   | Expr of expr
   | Return of expr option
   | Block of stmtordec list
+  | Switch of expr * (expr * stmt) list
+  | Case of expr * stmt
 
 and stmtordec =
   | Dec of typ * string
