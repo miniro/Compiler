@@ -9,6 +9,9 @@ type token =
   | MODASSIGN
   | COLON
   | QUESTION
+  | BITAND
+  | BITOR
+  | BITXOR
   | LPAR
   | RPAR
   | LBRACE
@@ -67,6 +70,9 @@ type tokenId =
     | TOKEN_MODASSIGN
     | TOKEN_COLON
     | TOKEN_QUESTION
+    | TOKEN_BITAND
+    | TOKEN_BITOR
+    | TOKEN_BITXOR
     | TOKEN_LPAR
     | TOKEN_RPAR
     | TOKEN_LBRACE

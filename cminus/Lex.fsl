@@ -80,7 +80,9 @@ rule Token = parse
   | "<="            { LE }
   | "||"            { SEQOR }                     
   | "&&"            { SEQAND }                     
-  | "&"             { AMP }                     
+  | "&"             { AMP }
+  | "^"             {BITXOR}       
+  | "|"             {BITOR}
   | "!"             { NOT }                     
   | '('             { LPAR }
   | ')'             { RPAR }

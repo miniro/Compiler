@@ -31,7 +31,10 @@ and expr =
   | P2 of string * access   //用于处理'a++,a--'的情况
   | A of string * access * expr
   | Andalso of expr * expr          
-  | Orelse of expr * expr           
+  | Orelse of expr * expr     
+  | Bitxor of expr * expr  
+  | Bitand of expr * expr  
+  | Bitor of expr * expr        
   | Call of string * expr list
   | Question of expr * expr * expr
   // | Buildfun of buildfun

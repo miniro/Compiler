@@ -203,6 +203,18 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       @ [IFNZRO labtrue]
       @ cExpr e2 varEnv funEnv
       @ [GOTO labend; Label labtrue; CSTI 1; Label labend]
+    | Bitand(e1, e2) ->
+      cExpr e1 varEnv funEnv
+      @ cExpr e2 varEnv funEnv
+      @[BITAND]
+    | Bitor(e1, e2) ->
+      cExpr e1 varEnv funEnv
+      @ cExpr e2 varEnv funEnv
+      @[BITOR]
+    | Bitxor(e1, e2) ->
+      cExpr e1 varEnv funEnv
+      @ cExpr e2 varEnv funEnv
+      @[BITXOR]  
     | Call(f, es) -> callfun f es varEnv funEnv
     | Question(e1, e2, e3)  ->
       let labtrue = newLabel()

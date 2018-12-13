@@ -17,7 +17,6 @@ type label = string
 type instr =
   | Label of label                     (* symbolic label; pseudo-instruc. *)
   | CSTI of int                        (* constant                        *)
-  | CSTF of int
   | ADD                                (* addition                        *)
   | SUB                                (* subtraction                     *)
   | MUL                                (* multiplication                  *)
@@ -43,7 +42,9 @@ type instr =
   | PRINTC                             (* print s[sp] as character        *)
   | LDARGS                             (* load command line args on stack *)
   | STOP                               (* halt the abstract machine       *)
-
+  | BITAND
+  | BITOR
+  | BITXOR
 (* Generate new distinct labels *)
 
 // 返回两个函数 resetLabels , newLabel
@@ -169,6 +170,15 @@ let CODELDARGS = 24
 [<Literal>]
 let CODESTOP   = 25;
 
+[<Literal>]
+let CODEBITAND   = 26;
+
+[<Literal>]
+let CODEBITOR   = 27;
+
+[<Literal>]
+let CODEBITXOR   = 28;
+
 
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
@@ -179,7 +189,6 @@ let makelabenv (addr, labenv) instr =
     // 记录当前 (标签, 地址) ==> 到 labenv中
     | Label lab      -> (addr, (lab, addr) :: labenv)
     | CSTI i         -> (addr+2, labenv)
-    | CSTF i         -> (addr+2, labenv)
     | ADD            -> (addr+1, labenv)
     | SUB            -> (addr+1, labenv)
     | MUL            -> (addr+1, labenv)
@@ -205,7 +214,9 @@ let makelabenv (addr, labenv) instr =
     | PRINTC         -> (addr+1, labenv)
     | LDARGS         -> (addr+1, labenv)
     | STOP           -> (addr+1, labenv)
-
+    | BITAND         -> (addr+1, labenv)
+    | BITOR          -> (addr+1, labenv)
+    | BITXOR         -> (addr+1, labenv)
 (* Bytecode emission, second pass: output bytecode as integers *)
 
 //getlab 是得到标签所在地址的函数
@@ -240,6 +251,9 @@ let rec emitints getlab instr ints =
     | PRINTC         -> CODEPRINTC :: ints
     | LDARGS         -> CODELDARGS :: ints
     | STOP           -> CODESTOP   :: ints
+    | BITAND         -> CODEBITAND :: ints
+    | BITOR          -> CODEBITOR  :: ints
+    | BITXOR         -> CODEBITXOR :: ints
 
 
 (* Convert instruction list to int list in two passes:
@@ -269,10 +283,12 @@ let ntolabel (n:int) :label =
 let rec decomp ints : instr list = 
 
     // printf "%A" ints
-
     match ints with
     | []                                              ->  []
-    | CODEADD :: ints_rest                         ->   ADD           :: decomp ints_rest
+    | CODEBITAND :: ints_rest                         ->   BITAND        :: decomp ints_rest
+    | CODEBITOR :: ints_rest                          ->   BITOR         :: decomp ints_rest
+    | CODEBITXOR :: ints_rest                         ->   BITXOR        :: decomp ints_rest
+    | CODEADD :: ints_rest                            ->   ADD           :: decomp ints_rest
     | CODESUB    :: ints_rest                         ->   SUB           :: decomp ints_rest
     | CODEMUL    :: ints_rest                         ->   MUL           :: decomp ints_rest
     | CODEDIV    :: ints_rest                         ->   DIV           :: decomp ints_rest
@@ -298,6 +314,5 @@ let rec decomp ints : instr list =
     | CODELDARGS :: ints_rest                         ->   LDARGS        :: decomp ints_rest
     | CODESTOP   :: ints_rest                         ->   STOP             :: decomp ints_rest
     | CODECSTI   :: i :: ints_rest                    ->   CSTI i :: decomp ints_rest   
-    | CODECSTF   :: i :: ints_rest                    ->   CSTF i :: decomp ints_rest  
     | _                                       ->    printf "%A" ints; failwith "unknow code"
 
