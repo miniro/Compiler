@@ -13,6 +13,7 @@ module Machine
 
 type label = string
 // 汇编指令
+  
 type instr =
   | Label of label                     (* symbolic label; pseudo-instruc. *)
   | CSTI of int                        (* constant                        *)
@@ -168,7 +169,6 @@ let CODELDARGS = 24
 [<Literal>]
 let CODESTOP   = 25;
 
-let CODECSTF   = 26
 
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
@@ -215,7 +215,6 @@ let rec emitints getlab instr ints =
     match instr with
     | Label lab      -> ints
     | CSTI i         -> CODECSTI   :: i :: ints
-    | CSTF i         -> CODECSTF   :: i :: ints
     | ADD            -> CODEADD    :: ints
     | SUB            -> CODESUB    :: ints
     | MUL            -> CODEMUL    :: ints

@@ -143,7 +143,7 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | Access acc     -> cAccess acc varEnv funEnv @ [LDI] 
     | Assign(acc, e) -> cAccess acc varEnv funEnv @ cExpr e varEnv funEnv @ [STI]
     | CstI i         -> [CSTI i]
-    | CstF i         -> [CSTF ((int)i)]
+    | CstF i         -> [CSTI ((int)i)]
     | Addr acc       -> cAccess acc varEnv funEnv
     | P1(acc, ope)   -> 
       cAccess acc varEnv funEnv @ [DUP] @ [LDI] @ [CSTI 1]
@@ -273,10 +273,10 @@ let compileToFile program fname =
     // printf "instrs: %A\n" instrs
 
     let bytecode = code2ints instrs
-    // printf "bytecode: %A\n" bytecode 
+    printf "bytecode: %A\n" bytecode 
 
-    // let deinstrs = decomp bytecode
-    // printf "deinstrs: %A\n" deinstrs
+    let deinstrs = decomp bytecode
+    printf "deinstrs: %A\n" deinstrs
 
     intsToFile bytecode fname
     instrs

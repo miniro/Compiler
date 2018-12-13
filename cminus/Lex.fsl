@@ -93,14 +93,18 @@ rule Token = parse
   | ':'             { COLON }
   | '?'             { QUESTION }
   | "//"            { EndLineComment lexbuf; Token lexbuf }
+  | "/ /"            { EndLineComment lexbuf; Token lexbuf }
   | "/*"            { Comment lexbuf; Token lexbuf }
+  | "(*"            { Comment lexbuf; Token lexbuf }
   | '"'             { CSTSTRING (String [] lexbuf) }
   | eof             { EOF }
   | _               { failwith "Lexer error: illegal symbol" }
 
 and Comment = parse
-   | "/*"           { Comment lexbuf; Comment lexbuf }
+   | "/*"           { Comment lexbuf; Comment lexbuf }  
    | "*/"           { () }
+   | "(*"           { Comment lexbuf; Comment lexbuf }  
+   | "*)"           { () }
    | '\n'           { lexbuf.EndPos <- lexbuf.EndPos.NextLine; Comment lexbuf }
    | (eof | '\026') { failwith "Lexer error: unterminated comment" }
    | _              { Comment lexbuf }
