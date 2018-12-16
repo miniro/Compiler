@@ -197,6 +197,11 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       cAccess a1 varEnv funEnv @ [DUP] @ [LDI] @ cAccess a2 varEnv funEnv @ [DUP] @ [LDI]
       @ [GETSP] @ [CSTI 3] @ [SUB] @ [LDI] @ [SWAP] @ [STI] @ [INCSP -1] @ [SWAP] @ [STI]
       @ [INCSP -1]
+    | Abs(e) ->
+      let lab1 = newLabel()
+      let lab2 = newLabel()
+      cExpr e varEnv funEnv @ [CSTI 0] @ [LT] @ [IFNZRO lab1] @ cExpr e varEnv funEnv
+      @ [GOTO lab2;Label lab1] @ cExpr e varEnv funEnv @ [NEG] @ [Label lab2]
     | Prim1(ope, e1) ->
       cExpr e1 varEnv funEnv
       @ (match ope with

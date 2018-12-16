@@ -39,6 +39,7 @@ and expr =
   | Max of expr * expr
   | Min of expr * expr
   | Swap of access * access
+  | Abs of expr
 
 and stmt =
   | If of expr * stmt * stmt

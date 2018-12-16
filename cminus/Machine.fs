@@ -48,6 +48,7 @@ type instr =
   | BITLEFT
   | BITRIGHT
   | BITNOT
+  | NEG
 (* Generate new distinct labels *)
 
 // 返回两个函数 resetLabels , newLabel
@@ -191,6 +192,9 @@ let CODEBITRIGHT  = 30;
 [<Literal>]
 let CODEBITNOT  = 31;
 
+[<Literal>]
+let CODENEG  = 32;
+
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
  *)
@@ -231,6 +235,7 @@ let makelabenv (addr, labenv) instr =
     | BITLEFT        -> (addr+1, labenv)
     | BITRIGHT       -> (addr+1, labenv)
     | BITNOT         -> (addr+1, labenv)
+    | NEG            -> (addr+1, labenv)
 (* Bytecode emission, second pass: output bytecode as integers *)
 
 //getlab 是得到标签所在地址的函数
@@ -271,6 +276,7 @@ let rec emitints getlab instr ints =
     | BITLEFT        -> CODEBITLEFT :: ints
     | BITRIGHT       -> CODEBITRIGHT :: ints
     | BITNOT         -> CODEBITNOT :: ints    
+    | NEG            -> CODENEG :: ints    
 
 (* Convert instruction list to int list in two passes:
    Pass 1: build label environment
@@ -301,6 +307,7 @@ let rec decomp ints : instr list =
     // printf "%A" ints
     match ints with
     | []                                              ->  []
+    | CODENEG :: ints_rest                            ->   NEG           :: decomp ints_rest
     | CODEBITLEFT :: ints_rest                        ->   BITLEFT       :: decomp ints_rest
     | CODEBITNOT :: ints_rest                         ->   BITNOT       :: decomp ints_rest
     | CODEBITRIGHT :: ints_rest                       ->   BITRIGHT      :: decomp ints_rest  

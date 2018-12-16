@@ -16,6 +16,7 @@ let lexemeAsString lexbuf =
 
 let keyword s =
     match s with
+    | "Abs"     -> ABS
     | "char"    -> CHAR 
     | "default" -> DEFAULT
     | "do"      -> DO

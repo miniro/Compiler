@@ -64,6 +64,7 @@ type token =
   | MAX
   | MIN
   | SWAP
+  | ABS
   | SWITCH
   | CASE
   | CSTSTRING of (string)
@@ -135,6 +136,7 @@ type tokenId =
     | TOKEN_MAX
     | TOKEN_MIN
     | TOKEN_SWAP
+    | TOKEN_ABS
     | TOKEN_SWITCH
     | TOKEN_CASE
     | TOKEN_CSTSTRING

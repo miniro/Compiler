@@ -35,7 +35,7 @@ class Machine {
     GOTO = 16, IFZERO = 17, IFNZRO = 18, CALL = 19, TCALL = 20, RET = 21, 
     PRINTI = 22, PRINTC = 23, 
     LDARGS = 24,
-    STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,BITNOT = 31;
+    STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,BITNOT = 31,NEG = 32;
   final static int STACKSIZE = 1000;
   
   // Read code from file and execute it
@@ -79,6 +79,8 @@ class Machine {
         s[sp-1] = s[sp-1] | s[sp]; sp--; break;
 	  case BITXOR: 
         s[sp-1] = s[sp-1] ^ s[sp]; sp--; break;
+    case NEG:
+        s[sp] = -s[sp];break;
       case SUB: 
         s[sp-1] = s[sp-1] - s[sp]; sp--; break;
       case MUL: 
@@ -186,6 +188,7 @@ class Machine {
     case PRINTC: return "PRINTC";
     case LDARGS: return "LDARGS";
     case STOP:   return "STOP";
+    case NEG:    return "NEG";
     default:     return "<unknown>";
     }
   }
