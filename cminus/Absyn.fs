@@ -12,12 +12,6 @@ and access =
   | AccDeref of expr                
   | AccIndex of access * expr
 
-and buildfun =
-  | Sort of int list
-  | Max of int list
-  | Min of int list
-  | Swap of int * int
-
 and expr =                                                         
   | Access of access              
   | Assign of access * expr        
@@ -41,7 +35,10 @@ and expr =
   | Bitnot of string * expr 
   | Call of string * expr list
   | Question of expr * expr * expr
-  // | Buildfun of buildfun
+  | Sort of int list
+  | Max of expr * expr
+  | Min of expr * expr
+  | Swap of access * access
 
 and stmt =
   | If of expr * stmt * stmt
@@ -51,7 +48,7 @@ and stmt =
   | Expr of expr
   | Return of expr option
   | Block of stmtordec list
-  | Switch of expr * (expr * stmt) list
+  | Switch of expr
   | Case of expr * stmt
 
 and stmtordec =

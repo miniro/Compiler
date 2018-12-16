@@ -47,7 +47,7 @@ let allocate (kind : int -> Var) (typ, x) (varEnv : VarEnv) : VarEnv * instr lis
       let newEnv = ((x, (kind (fdepth), typ)) :: env, fdepth+1)
       let code = [INCSP 1]
 
-      printf "new varEnv: %A\n" newEnv // 调试 显示分配后环境变化
+      printf "new varEnv: %A\n" newEnv
       (newEnv, code)
 
 (* Bind declared parameters in env: *)
@@ -181,6 +181,22 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
         | "<<" -> [BITLEFT]
         | ">>" -> [BITRIGHT] 
         | _   -> raise (Failure "unknown primitive 3")) @ [STI]
+    | Max(e1, e2) ->
+      let labtrue = newLabel()
+      let labend = newLabel()
+      cExpr e1 varEnv funEnv @ cExpr e2 varEnv funEnv @ [LT] @ [IFNZRO labtrue]
+      @ cExpr e1 varEnv funEnv @ [GOTO labend;Label labtrue] @ cExpr e2 varEnv funEnv
+      @ [Label labend]
+    | Min(e1, e2) ->
+      let labtrue = newLabel()
+      let labend = newLabel()
+      cExpr e1 varEnv funEnv @ cExpr e2 varEnv funEnv @ [LT] @ [IFNZRO labtrue]
+      @ cExpr e2 varEnv funEnv @ [GOTO labend;Label labtrue] @ cExpr e1 varEnv funEnv
+      @ [Label labend]
+    | Swap(a1, a2) ->
+      cAccess a1 varEnv funEnv @ [DUP] @ [LDI] @ cAccess a2 varEnv funEnv @ [DUP] @ [LDI]
+      @ [GETSP] @ [CSTI 3] @ [SUB] @ [LDI] @ [SWAP] @ [STI] @ [INCSP -1] @ [SWAP] @ [STI]
+      @ [INCSP -1]
     | Prim1(ope, e1) ->
       cExpr e1 varEnv funEnv
       @ (match ope with
@@ -318,5 +334,4 @@ let compileToFile program fname =
 
     intsToFile bytecode fname
     instrs
-
 (* Example programs are found in the files ex1.c, ex2.c, etc *)
