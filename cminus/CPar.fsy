@@ -18,8 +18,8 @@ let nl = CstI 10
 %token <float> CSTFLOAT
 %token <string> CSTSTRING NAME
 
-%token CHAR ELSE IF INT FLOAT NULL PRINT PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE
-%token PLUS MINUS TIMES DIV MOD PLUSONE MINUSONE
+%token CHAR ELSE IF INT FLOAT NULL PRINT PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE GCD MCM
+%token PLUS MINUS TIMES DIV MOD PLUSONE MINUSONE INVO
 %token EQ NE GT LT GE LE
 %token NOT SEQOR SEQAND
 %token LPAR RPAR LBRACE RBRACE LBRACK RBRACK SEMI COMMA ASSIGN AMP 
@@ -38,6 +38,7 @@ let nl = CstI 10
 %left BITLEFT BITRIGHT
 %left PLUS MINUS
 %left TIMES DIV MOD 
+%right INVO
 %nonassoc BITNOT NOT AMP PLUSONE MINUSONE
 %nonassoc LBRACK          /* highest precedence  */
 
@@ -158,6 +159,7 @@ ExprNotAccess:
   | Expr LT    Expr                     { Prim2("<",  $1, $3) }
   | Expr GE    Expr                     { Prim2(">=", $1, $3) }
   | Expr LE    Expr                     { Prim2("<=", $1, $3) }
+  | Expr INVO  Expr                     { Prim2("**", $1, $3) }
   | Expr SEQAND Expr                    { Andalso($1, $3)     }
   | Expr SEQOR  Expr                    { Orelse($1, $3)      }
   | Expr AMP Expr                       { Bitand($1, $3)      }
@@ -169,6 +171,8 @@ ExprNotAccess:
   | MIN LPAR Expr COMMA Expr RPAR       { Min($3, $5)         }
   | SWAP LPAR Access COMMA Access RPAR  { Swap($3, $5)        }
   | ABS LPAR Expr RPAR                  { Abs($3)             }
+  | GCD LPAR Expr COMMA Expr RPAR       { Gcd($3, $5)         }
+  | MCM LPAR Expr COMMA Expr RPAR       { Mcm($3, $5)         }
   | BITNOT Expr                         { Bitnot("~", $2)    }
   | Access BITANDASSIGN Expr            { Bitassign("&",$1, $3)      }
   | Access BITORASSIGN  Expr            { Bitassign("|",$1, $3)      }

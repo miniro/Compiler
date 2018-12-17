@@ -46,6 +46,7 @@ type token =
   | MOD
   | PLUSONE
   | MINUSONE
+  | INVO
   | CHAR
   | ELSE
   | IF
@@ -67,6 +68,8 @@ type token =
   | ABS
   | SWITCH
   | CASE
+  | GCD
+  | MCM
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTFLOAT of (float)
@@ -118,6 +121,7 @@ type tokenId =
     | TOKEN_MOD
     | TOKEN_PLUSONE
     | TOKEN_MINUSONE
+    | TOKEN_INVO
     | TOKEN_CHAR
     | TOKEN_ELSE
     | TOKEN_IF
@@ -139,6 +143,8 @@ type tokenId =
     | TOKEN_ABS
     | TOKEN_SWITCH
     | TOKEN_CASE
+    | TOKEN_GCD
+    | TOKEN_MCM
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTFLOAT

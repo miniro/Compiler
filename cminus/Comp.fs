@@ -202,6 +202,12 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       let lab2 = newLabel()
       cExpr e varEnv funEnv @ [CSTI 0] @ [LT] @ [IFNZRO lab1] @ cExpr e varEnv funEnv
       @ [GOTO lab2;Label lab1] @ cExpr e varEnv funEnv @ [NEG] @ [Label lab2]
+    | Gcd(e1, e2) ->
+      cExpr e1 varEnv funEnv
+      @ cExpr e2 varEnv funEnv @ [GCD]
+    | Mcm(e1, e2) ->
+      cExpr e1 varEnv funEnv @ cExpr e2 varEnv funEnv @ [GCD] @ cExpr e1 varEnv funEnv @ cExpr e2 varEnv funEnv
+      @ [MUL] @ [SWAP] @ [DIV]
     | Prim1(ope, e1) ->
       cExpr e1 varEnv funEnv
       @ (match ope with
@@ -224,6 +230,7 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
          | ">="  -> [LT; NOT]
          | ">"   -> [SWAP; LT]
          | "<="  -> [SWAP; LT; NOT]
+         | "**"  -> [INVO]
          | _     -> raise (Failure "unknown primitive 5"))
     | Andalso(e1, e2) ->
       let labend   = newLabel()

@@ -35,7 +35,7 @@ class Machine {
     GOTO = 16, IFZERO = 17, IFNZRO = 18, CALL = 19, TCALL = 20, RET = 21, 
     PRINTI = 22, PRINTC = 23, 
     LDARGS = 24,
-    STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,BITNOT = 31,NEG = 32;
+    STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,BITNOT = 31,NEG = 32,INVO = 33,GCD = 34;
   final static int STACKSIZE = 1000;
   
   // Read code from file and execute it
@@ -51,6 +51,20 @@ class Machine {
     execcode(p, s, iargs, trace);            // Execute program proper
     long runtime = System.currentTimeMillis() - starttime;
     System.err.println("\nRan " + runtime/1000.0 + " seconds");
+  }
+
+//a**b
+  static int f(int a, int b){
+    int result = 1;
+    for(int i=1;i<=b;i++)
+      result*=a;
+    return result;
+  }
+  
+  static int gcd(int a, int b){
+    if(b==0)
+      return a;
+    return gcd(b,a%b);
   }
 
   // The machine: execute the code starting at p[pc] 
@@ -81,6 +95,15 @@ class Machine {
         s[sp-1] = s[sp-1] ^ s[sp]; sp--; break;
     case NEG:
         s[sp] = -s[sp];break;
+      case INVO:
+        s[sp-1] = f(s[sp-1], s[sp]); sp--; break;
+      case GCD:
+        int r;
+        if(s[sp-1]<s[sp])
+          r = gcd(s[sp],s[sp-1]);
+        else 
+          r = gcd(s[sp-1], s[sp]);
+        s[sp-1] = r; sp--; break;
       case SUB: 
         s[sp-1] = s[sp-1] - s[sp]; sp--; break;
       case MUL: 
@@ -189,6 +212,7 @@ class Machine {
     case LDARGS: return "LDARGS";
     case STOP:   return "STOP";
     case NEG:    return "NEG";
+    case INVO:   return "INVO";
     default:     return "<unknown>";
     }
   }

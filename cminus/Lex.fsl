@@ -16,6 +16,8 @@ let lexemeAsString lexbuf =
 
 let keyword s =
     match s with
+    | "Gcd"     -> GCD
+    | "Mcm"     -> MCM
     | "Abs"     -> ABS
     | "char"    -> CHAR 
     | "default" -> DEFAULT
@@ -62,6 +64,7 @@ rule Token = parse
   | ['0'-'9']+'.'['0'-'9']+ { CSTFLOAT (System.Double.Parse (lexemeAsString lexbuf)) }  
   | ['a'-'z''A'-'Z']['a'-'z''A'-'Z''0'-'9']*
                     { keyword (lexemeAsString lexbuf) }
+  | "**"            { INVO }
   | '+'             { PLUS } 
   | "++"            { PLUSONE }
   | "--"            { MINUSONE }

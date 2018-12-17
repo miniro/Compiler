@@ -40,6 +40,8 @@ and expr =
   | Min of expr * expr
   | Swap of access * access
   | Abs of expr
+  | Gcd of expr * expr
+  | Mcm of expr * expr
 
 and stmt =
   | If of expr * stmt * stmt
