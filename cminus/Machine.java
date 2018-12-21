@@ -34,8 +34,8 @@ class Machine {
     GETBP = 13, GETSP = 14, INCSP = 15, 
     GOTO = 16, IFZERO = 17, IFNZRO = 18, CALL = 19, TCALL = 20, RET = 21, 
     PRINTI = 22, PRINTC = 23, 
-    LDARGS = 24,
-    STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37;
+    LDARGS = 24,STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,
+    BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37,CSTF=38,PRINTF = 39 ;
   final static int STACKSIZE = 1000;
   
   // Read code from file and execute it
@@ -68,7 +68,10 @@ class Machine {
   }
 
   // The machine: execute the code starting at p[pc] 
-
+  static float change(int x){
+    int a=x%100,b=x/100;
+    return (float) (b*Math.pow(10,-a));
+  }
   static int execcode(int[] p, int[] s, int[] iargs, boolean trace) {
     int bp = -999;	// Base pointer, for local variable access 
     int sp = -1;	// Stack top pointer
@@ -78,6 +81,8 @@ class Machine {
         printsppc(s, bp, sp, p, pc);
       switch (p[pc++]) {
       case CSTI:
+        s[sp+1] = p[pc++]; sp++; break;
+      case CSTF:
         s[sp+1] = p[pc++]; sp++; break;
       case ADD: 
         s[sp-1] = s[sp-1] + s[sp]; sp--; break;
@@ -169,6 +174,11 @@ class Machine {
         System.out.print(s[sp] + " "); break; 
       case PRINTC:
         System.out.print((char)(s[sp])); break; 
+      case PRINTF:{
+        float ans=change(s[sp]);
+        System.out.print(ans +" "); break;
+      }
+        
       case LDARGS:
 	for (int i=0; i<iargs.length; i++) // Push commandline arguments
 	  s[++sp] = iargs[i];
@@ -186,12 +196,13 @@ class Machine {
   static String insname(int[] p, int pc) {
     switch (p[pc]) {
     case CSTI:   return "CSTI " + p[pc+1]; 
-	case BITNOT:  return "BITNOT";
-	case BITLEFT: return "BITLEFT";
-	case BITRIGHT:  return "BITRIGHT";
-	case BITAND: return "BITAND";
-	case BITOR:  return "BITOR";
-	case BITXOR: return "BITXOR";
+    case CSTF:   return "CSTF " + p[pc+1]; 
+    case BITNOT:  return "BITNOT";
+    case BITLEFT: return "BITLEFT";
+    case BITRIGHT:  return "BITRIGHT";
+    case BITAND: return "BITAND";
+    case BITOR:  return "BITOR";
+    case BITXOR: return "BITXOR";
     case ADD:    return "ADD";
     case SUB:    return "SUB";
     case MUL:    return "MUL";

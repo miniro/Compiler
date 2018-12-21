@@ -17,6 +17,7 @@ type label = string
 type instr =
   | Label of label                     (* symbolic label; pseudo-instruc. *)
   | CSTI of int                        (* constant                        *)
+  | CSTF of int                        (* constant                        *)
   | ADD                                (* addition                        *)
   | SUB                                (* subtraction                     *)
   | MUL                                (* multiplication                  *)
@@ -40,6 +41,7 @@ type instr =
   | RET of int                         (* pop m and return to s[sp]       *)
   | PRINTI                             (* print s[sp] as integer          *)
   | PRINTC                             (* print s[sp] as character        *)
+  | PRINTF                             (* print s[sp] as float            *)
   | LDARGS                             (* load command line args on stack *)
   | STOP                               (* halt the abstract machine       *)
   | BITAND
@@ -211,6 +213,11 @@ let CODEROUND  = 35;
 let CODEFLOOR = 36;
 [<Literal>]
 let CODECEIL  = 37;
+[<Literal>]
+let CODECSTF  = 38;
+
+[<Literal>]
+let CODEPRINTF  = 39;
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
  *)
@@ -220,6 +227,7 @@ let makelabenv (addr, labenv) instr =
     // 记录当前 (标签, 地址) ==> 到 labenv中
     | Label lab      -> (addr, (lab, addr) :: labenv)
     | CSTI i         -> (addr+2, labenv)
+    | CSTF i         -> (addr+2, labenv)
     | ADD            -> (addr+1, labenv)
     | SUB            -> (addr+1, labenv)
     | MUL            -> (addr+1, labenv)
@@ -243,6 +251,7 @@ let makelabenv (addr, labenv) instr =
     | RET m          -> (addr+2, labenv)
     | PRINTI         -> (addr+1, labenv)
     | PRINTC         -> (addr+1, labenv)
+    | PRINTF         -> (addr+1, labenv)
     | LDARGS         -> (addr+1, labenv)
     | STOP           -> (addr+1, labenv)
     | BITAND         -> (addr+1, labenv)
@@ -266,6 +275,7 @@ let rec emitints getlab instr ints =
     match instr with
     | Label lab      -> ints
     | CSTI i         -> CODECSTI   :: i :: ints
+    | CSTF i         -> CODECSTF   :: i :: ints
     | ADD            -> CODEADD    :: ints
     | SUB            -> CODESUB    :: ints
     | MUL            -> CODEMUL    :: ints
@@ -289,6 +299,7 @@ let rec emitints getlab instr ints =
     | RET m          -> CODERET    :: m :: ints
     | PRINTI         -> CODEPRINTI :: ints
     | PRINTC         -> CODEPRINTC :: ints
+    | PRINTF         -> CODEPRINTF :: ints
     | LDARGS         -> CODELDARGS :: ints
     | STOP           -> CODESTOP   :: ints
     | BITAND         -> CODEBITAND :: ints
@@ -367,8 +378,10 @@ let rec decomp ints : instr list =
     | CODERET    :: m :: ints_rest                    ->   RET m         :: decomp ints_rest
     | CODEPRINTI :: ints_rest                         ->   PRINTI        :: decomp ints_rest
     | CODEPRINTC :: ints_rest                         ->   PRINTC        :: decomp ints_rest
+    | CODEPRINTF :: ints_rest                         ->   PRINTF       :: decomp ints_rest
     | CODELDARGS :: ints_rest                         ->   LDARGS        :: decomp ints_rest
     | CODESTOP   :: ints_rest                         ->   STOP             :: decomp ints_rest
     | CODECSTI   :: i :: ints_rest                    ->   CSTI i :: decomp ints_rest   
+    | CODECSTF   :: i :: ints_rest                    ->   CSTF i :: decomp ints_rest 
     | _                                       ->    printf "%A" ints; failwith "unknow code"
 

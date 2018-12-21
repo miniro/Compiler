@@ -35,6 +35,7 @@ let keyword s =
     | "print"   -> PRINT
     | "printi"  -> PRINTI
     | "printc"  -> PRINTC
+    | "printf"  -> PRINTF
     | "println" -> PRINTLN
     | "return"  -> RETURN
     | "true"    -> CSTBOOL 1

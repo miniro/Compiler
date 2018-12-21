@@ -52,6 +52,7 @@ let allocate (kind : int -> Var) (typ, x) (varEnv : VarEnv) : VarEnv * instr lis
 
 (* Bind declared parameters in env: *)
 
+
 let bindParam (env, fdepth) (typ, x)  : VarEnv = 
     ((x, (Locvar fdepth, typ)) :: env , fdepth+1)
 
@@ -144,12 +145,17 @@ and cStmtOrDec stmtOrDec (varEnv : VarEnv) (funEnv : FunEnv) : VarEnv * instr li
     | Stmt stmt    -> (varEnv, cStmt stmt varEnv funEnv) 
     | Dec (typ, x) -> allocate Locvar (typ, x) varEnv
 
+
+and change (a:float):int=
+    if string((int)a).Length=string(a).Length
+    then int(a*100.0+0.0)
+    else int(a*(10.0**(float(string(a).Length-string((int)a).Length)+1.0))+float(string(a).Length-string((int)a).Length-1))
 and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list = 
     match e with
     | Access acc     -> cAccess acc varEnv funEnv @ [LDI] 
     | Assign(acc, e) -> cAccess acc varEnv funEnv @ cExpr e varEnv funEnv @ [STI]
     | CstI i         -> [CSTI i]
-    | CstF i         -> [CSTI ((int)i)]
+    | CstF i         -> [CSTF (change i)]
     | Addr acc       -> cAccess acc varEnv funEnv
     | P1(acc, ope)   -> 
       cAccess acc varEnv funEnv @ [DUP] @ [LDI] @ [CSTI 1]
@@ -220,6 +226,7 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
          | "!"      -> [NOT]
          | "printi" -> [PRINTI]
          | "printc" -> [PRINTC]
+         | "printf" -> [PRINTF]
          | _        -> raise (Failure "unknown primitive 4"))
     | Prim2(ope, e1, e2) ->
       cExpr e1 varEnv funEnv
