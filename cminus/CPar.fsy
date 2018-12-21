@@ -18,7 +18,7 @@ let nl = CstI 10
 %token <float> CSTFLOAT
 %token <string> CSTSTRING NAME
 
-%token CHAR ELSE IF INT FLOAT NULL PRINT PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE GCD MCM
+%token CHAR ELSE IF INT FLOAT NULL PRINT PRINTI PRINTC PRINTF PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE GCD MCM ROUND FLOOR CEIL
 %token PLUS MINUS TIMES DIV MOD PLUSONE MINUSONE INVO
 %token EQ NE GT LT GE LE
 %token NOT SEQOR SEQAND
@@ -28,7 +28,7 @@ let nl = CstI 10
 
 
 %right ASSIGN PLUSASSIGN MINUSASSIGN TIMESASSIGN DIVASSIGN MODASSIGN   BITANDASSIGN BITORASSIGN BITXORASSIGN BITLEFTASSIGN BITRIGHTASSIGN          /* lowest precedence */
-%nonassoc PRINT
+%nonassoc PRINT PRINTI PRINTC PRINTF
 %right COLON QUESTION
 %left SEQOR
 %left SEQAND
@@ -138,6 +138,9 @@ ExprNotAccess:
   | NAME LPAR Exprs RPAR                { Call($1, $3)        }  
   | NOT Expr                            { Prim1("!", $2)      }
   | PRINT Expr                          { Prim1("printi", $2) }
+  | PRINTI Expr                         { Prim1("printi", $2) }
+  | PRINTC Expr                         { Prim1("printc", $2) }
+  | PRINTF Expr                         { Prim1("printf", $2) }
   | PRINTLN                             { Prim1("printc", nl) }
   | Expr PLUS  Expr                     { Prim2("+",  $1, $3) }
   | Access PLUSONE                      { P2("+", $1)         }
@@ -171,6 +174,9 @@ ExprNotAccess:
   | MIN LPAR Expr COMMA Expr RPAR       { Min($3, $5)         }
   | SWAP LPAR Access COMMA Access RPAR  { Swap($3, $5)        }
   | ABS LPAR Expr RPAR                  { Abs($3)             }
+  | ROUND LPAR Expr RPAR                { Round($3)         }
+  | FLOOR LPAR Expr RPAR                { Floor($3)         }
+  | CEIL LPAR Expr RPAR                 { Ceil($3)         }
   | GCD LPAR Expr COMMA Expr RPAR       { Gcd($3, $5)         }
   | MCM LPAR Expr COMMA Expr RPAR       { Mcm($3, $5)         }
   | BITNOT Expr                         { Bitnot("~", $2)    }

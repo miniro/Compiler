@@ -54,6 +54,9 @@ type token =
   | FLOAT
   | NULL
   | PRINT
+  | PRINTI
+  | PRINTC
+  | PRINTF
   | PRINTLN
   | RETURN
   | VOID
@@ -70,6 +73,9 @@ type token =
   | CASE
   | GCD
   | MCM
+  | ROUND
+  | FLOOR
+  | CEIL
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTFLOAT of (float)
@@ -129,6 +135,9 @@ type tokenId =
     | TOKEN_FLOAT
     | TOKEN_NULL
     | TOKEN_PRINT
+    | TOKEN_PRINTI
+    | TOKEN_PRINTC
+    | TOKEN_PRINTF
     | TOKEN_PRINTLN
     | TOKEN_RETURN
     | TOKEN_VOID
@@ -145,6 +154,9 @@ type tokenId =
     | TOKEN_CASE
     | TOKEN_GCD
     | TOKEN_MCM
+    | TOKEN_ROUND
+    | TOKEN_FLOOR
+    | TOKEN_CEIL
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTFLOAT

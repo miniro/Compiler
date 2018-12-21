@@ -16,6 +16,9 @@ let lexemeAsString lexbuf =
 
 let keyword s =
     match s with
+    | "Round"   -> ROUND
+    | "Floor"   -> FLOOR
+    | "Ceil"    -> CEIL
     | "Gcd"     -> GCD
     | "Mcm"     -> MCM
     | "Abs"     -> ABS
@@ -30,6 +33,8 @@ let keyword s =
     | "float"   -> FLOAT
     | "null"    -> NULL
     | "print"   -> PRINT
+    | "printi"  -> PRINTI
+    | "printc"  -> PRINTC
     | "println" -> PRINTLN
     | "return"  -> RETURN
     | "true"    -> CSTBOOL 1

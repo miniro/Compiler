@@ -40,6 +40,9 @@ and expr =
   | Min of expr * expr
   | Swap of access * access
   | Abs of expr
+  | Round of expr
+  | Floor of expr
+  | Ceil of expr
   | Gcd of expr * expr
   | Mcm of expr * expr
 

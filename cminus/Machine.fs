@@ -51,6 +51,9 @@ type instr =
   | NEG
   | INVO
   | GCD
+  | FLOOR
+  | CEIL
+  | ROUND
 (* Generate new distinct labels *)
 
 // 返回两个函数 resetLabels , newLabel
@@ -202,7 +205,12 @@ let CODEINVO  = 33;
 
 [<Literal>]
 let CODEGCD  = 34;
-
+[<Literal>]
+let CODEROUND  = 35;
+[<Literal>]
+let CODEFLOOR = 36;
+[<Literal>]
+let CODECEIL  = 37;
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
  *)
@@ -246,6 +254,9 @@ let makelabenv (addr, labenv) instr =
     | NEG            -> (addr+1, labenv)
     | INVO           -> (addr+1, labenv)
     | GCD            -> (addr+1, labenv)
+    | FLOOR          -> (addr+1, labenv)
+    | CEIL           -> (addr+1, labenv)
+    | ROUND          -> (addr+1, labenv)
 (* Bytecode emission, second pass: output bytecode as integers *)
 
 //getlab 是得到标签所在地址的函数
@@ -289,7 +300,9 @@ let rec emitints getlab instr ints =
     | NEG            -> CODENEG  :: ints 
     | INVO           -> CODEINVO :: ints   
     | GCD            -> CODEGCD  :: ints
-
+    | FLOOR          -> CODEFLOOR  :: ints
+    | ROUND          -> CODEROUND  :: ints
+    | CEIL           -> CODECEIL  :: ints
 (* Convert instruction list to int list in two passes:
    Pass 1: build label environment
    Pass 2: output instructions using label environment
@@ -320,6 +333,9 @@ let rec decomp ints : instr list =
     match ints with
     | []                                              ->  []
     | CODEGCD  :: ints_rest                           ->   GCD           :: decomp ints_rest
+    | CODEFLOOR  :: ints_rest                         ->   FLOOR            :: decomp ints_rest
+    | CODECEIL  :: ints_rest                          ->   CEIL           :: decomp ints_rest
+    | CODEROUND :: ints_rest                          ->   ROUND           :: decomp ints_rest
     | CODEINVO :: ints_rest                           ->   INVO          :: decomp ints_rest
     | CODENEG :: ints_rest                            ->   NEG           :: decomp ints_rest
     | CODEBITLEFT :: ints_rest                        ->   BITLEFT       :: decomp ints_rest

@@ -35,7 +35,7 @@ class Machine {
     GOTO = 16, IFZERO = 17, IFNZRO = 18, CALL = 19, TCALL = 20, RET = 21, 
     PRINTI = 22, PRINTC = 23, 
     LDARGS = 24,
-    STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,BITNOT = 31,NEG = 32,INVO = 33,GCD = 34;
+    STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37;
   final static int STACKSIZE = 1000;
   
   // Read code from file and execute it
@@ -81,29 +81,35 @@ class Machine {
         s[sp+1] = p[pc++]; sp++; break;
       case ADD: 
         s[sp-1] = s[sp-1] + s[sp]; sp--; break;
-	  case BITNOT: 
-        s[sp] = ~s[sp]         ; break;
-	  case BITLEFT: 
-        s[sp-1] = s[sp-1] << s[sp]; sp--; break;
-	  case BITRIGHT: 
-        s[sp-1] = s[sp-1] >> s[sp]; sp--; break;
-	  case BITAND: 
-        s[sp-1] = s[sp-1] & s[sp]; sp--; break;
-	  case BITOR: 
-        s[sp-1] = s[sp-1] | s[sp]; sp--; break;
-	  case BITXOR: 
-        s[sp-1] = s[sp-1] ^ s[sp]; sp--; break;
-    case NEG:
-        s[sp] = -s[sp];break;
+      case BITNOT: 
+          s[sp] = ~s[sp]         ; break;
+      case ROUND:
+          s[sp+1] = p[pc++]; sp++; break;
+      case FLOOR:
+          s[sp+1] = p[pc++]; sp++; break;
+      case CEIL:
+          s[sp+1] = p[pc++]; sp++; break;
+      case BITLEFT: 
+          s[sp-1] = s[sp-1] << s[sp]; sp--; break;
+      case BITRIGHT: 
+          s[sp-1] = s[sp-1] >> s[sp]; sp--; break;
+      case BITAND: 
+          s[sp-1] = s[sp-1] & s[sp]; sp--; break;
+      case BITOR: 
+          s[sp-1] = s[sp-1] | s[sp]; sp--; break;
+      case BITXOR: 
+          s[sp-1] = s[sp-1] ^ s[sp]; sp--; break;
+      case NEG:
+          s[sp] = -s[sp];break;
       case INVO:
-        s[sp-1] = f(s[sp-1], s[sp]); sp--; break;
+          s[sp-1] = f(s[sp-1], s[sp]); sp--; break;
       case GCD:
-        int r;
-        if(s[sp-1]<s[sp])
-          r = gcd(s[sp],s[sp-1]);
-        else 
-          r = gcd(s[sp-1], s[sp]);
-        s[sp-1] = r; sp--; break;
+          int r;
+          if(s[sp-1]<s[sp])
+            r = gcd(s[sp],s[sp-1]);
+          else 
+            r = gcd(s[sp-1], s[sp]);
+          s[sp-1] = r; sp--; break;
       case SUB: 
         s[sp-1] = s[sp-1] - s[sp]; sp--; break;
       case MUL: 
