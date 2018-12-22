@@ -20,6 +20,9 @@ and expr =
   | Assign of access * expr        
   | Addr of access                 
   | CstI of int
+  | CstBIN of int
+  | CstOCT of int
+  | CstHEX of int
   | CstF of float                      
   | Prim1 of string * expr
   | Prim2 of string * expr * expr

@@ -131,22 +131,16 @@ class Machine {
       }   
       case ASIN:{
         double f=change(s[sp]);
-        // System.out.println("f:"+f);
-        // System.out.println("f2:"+Math.asin(f));
         s[sp]=change2(Math.asin(f));
         break;
       }
       case ACOS:{
         double f=change(s[sp]);
-        // System.out.println("f:"+f);
-        // System.out.println("f2:"+Math.acos(f));
         s[sp]=change2(Math.acos(f));
         break;
       }   
       case ATAN:{
         double f=change(s[sp]);
-        // System.out.println("f:"+f);
-        // System.out.println("f2:"+Math.atan(f));
         s[sp]=change2(Math.atan(f));
         break;
       }
@@ -204,7 +198,6 @@ class Machine {
         boolean flag=false;double f1=s[sp-1],f2=s[sp];
         if(judge(String.valueOf(s[sp-1]))){f1=change(s[sp-1]);flag=true;}
         if(judge(String.valueOf(s[sp]))){f2=change(s[sp]);flag=true;}
-        // System.out.println("f1:"+(float)f1+" f2:"+(float)f2+" 666:"+(f1-f2)+" "+change2(f1-f2));
         if(flag){ s[sp-1] =change2(f1-f2); sp--; break;}
         else{ s[sp-1] = s[sp-1] - s[sp]; sp--; break;}
       } 
@@ -212,7 +205,6 @@ class Machine {
         boolean flag=false;double f1=s[sp-1],f2=s[sp];
         if(judge(String.valueOf(s[sp-1]))){f1=change(s[sp-1]);flag=true;}
         if(judge(String.valueOf(s[sp]))){f2=change(s[sp]);flag=true;}
-        // System.out.println("f1:"+(float)f1+" f2:"+(float)f2+" 666:"+f1*f2+" "+change2(f1*f2));
         if(flag){ s[sp-1] =change2(f1*f2); sp--; break;}
         else{  s[sp-1] = s[sp-1] * s[sp]; sp--; break;}
       }

@@ -145,7 +145,37 @@ and cStmtOrDec stmtOrDec (varEnv : VarEnv) (funEnv : FunEnv) : VarEnv * instr li
     | Stmt stmt    -> (varEnv, cStmt stmt varEnv funEnv) 
     | Dec (typ, x) -> allocate Locvar (typ, x) varEnv
 
+and changeHEX (a:int):int=
+    let mutable sum,tmp,i=0,a,0
+    while (tmp<>0) do
+      let mutable j,ans=0,tmp%10
+      for j=0 to i-1 do
+        ans<-ans*16
+      sum<-sum+ans
+      tmp<-tmp/10
+      i<-i+1
+    sum
+and changeOCT (a:int):int=
+    let mutable sum,tmp,i=0,a,0
+    while (tmp<>0) do
+      let mutable j,ans=0,tmp%10
+      for j=0 to i-1 do
+        ans<-ans*8
+      sum<-sum+ans
+      tmp<-tmp/10
+      i<-i+1
+    sum
 
+and changeBIN (a:int):int=
+    let mutable sum,tmp,i=0,a,0
+    while (tmp<>0) do
+      let mutable j,ans=0,tmp%10
+      for j=0 to i-1 do
+        ans<-ans*2
+      sum<-sum+ans
+      tmp<-tmp/10
+      i<-i+1
+    sum
 and change (a:float):int=
     if a>0.0
     then
@@ -163,6 +193,9 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | Assign(acc, e) -> cAccess acc varEnv funEnv @ cExpr e varEnv funEnv @ [STI]
     | CstI i         -> [CSTI i]
     | CstF i         -> [CSTF (change i)]
+    | CstHEX i       -> [CSTI (changeHEX i)]
+    | CstOCT i       -> [CSTI (changeOCT i)]
+    | CstBIN i       -> [CSTI (changeBIN i)]
     | Addr acc       -> cAccess acc varEnv funEnv
     | P1(acc, ope)   -> 
       cAccess acc varEnv funEnv @ [DUP] @ [LDI] @ [CSTI 1]

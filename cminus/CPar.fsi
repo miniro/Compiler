@@ -90,6 +90,9 @@ type token =
   | CSTFLOAT of (float)
   | CSTINT of (int)
   | CSTBOOL of (int)
+  | CSTHEX of (int)
+  | CSTOCT of (int)
+  | CSTBIN of (int)
 type tokenId = 
     | TOKEN_EOF
     | TOKEN_PLUSASSIGN
@@ -180,6 +183,9 @@ type tokenId =
     | TOKEN_CSTFLOAT
     | TOKEN_CSTINT
     | TOKEN_CSTBOOL
+    | TOKEN_CSTHEX
+    | TOKEN_CSTOCT
+    | TOKEN_CSTBIN
     | TOKEN_end_of_input
     | TOKEN_error
 type nonTerminalId = 
@@ -204,6 +210,9 @@ type nonTerminalId =
     | NONTERM_Exprs
     | NONTERM_Exprs1
     | NONTERM_Const
+    | NONTERM_ConstHEX
+    | NONTERM_ConstOCT
+    | NONTERM_ConstBIN
     | NONTERM_ConstF
     | NONTERM_Type
 /// This function maps tokens to integer indexes

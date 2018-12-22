@@ -13,10 +13,9 @@ open Absyn
 let compose1 f (g, s) = ((fun x -> g(f(x))), s)
 let nl = CstI 10
 %}
-
-%token <int> CSTINT CSTBOOL
+%token <int> CSTINT CSTBOOL CSTHEX CSTOCT CSTBIN
 %token <float> CSTFLOAT
-%token <string> CSTSTRING NAME
+%token <string> CSTSTRING NAME 
 %token COS SIN TAN ASIN ACOS ATAN CHAR ELSE IF INT FLOAT NULL PRINT PRINTI PRINTC PRINTF PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE GCD MCM ROUND FLOOR CEIL FTOI ITOF PI 
 %token PLUS MINUS TIMES DIV MOD PLUSONE MINUSONE INVO
 %token EQ NE GT LT GE LE
@@ -200,6 +199,9 @@ ExprNotAccess:
 AtExprNotAccess:
     Const                               { CstI $1             }
   | ConstF                              { CstF $1             }
+  | ConstHEX                            { CstHEX $1           }
+  | ConstOCT                            { CstOCT $1           }
+  | ConstBIN                            { CstBIN $1           }
   | LPAR ExprNotAccess RPAR             { $2                  } 
   | AMP Access                          { Addr $2             }
 ;
@@ -227,6 +229,21 @@ Const:
   | CSTBOOL                             { $1       }
   | MINUS CSTINT                        { - $2     }
   | NULL                                { -1       }
+;
+
+ConstHEX:
+    CSTHEX                              { $1       }
+  | MINUS CSTHEX                        { - $2     }
+;
+
+ConstOCT:
+    CSTOCT                              { $1       }
+  | MINUS CSTOCT                        { - $2     }
+;
+
+ConstBIN:
+    CSTBIN                              { $1       }
+  | MINUS CSTBIN                        { - $2     }
 ;
 
 ConstF:
