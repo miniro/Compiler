@@ -35,7 +35,9 @@ class Machine {
     GOTO = 16, IFZERO = 17, IFNZRO = 18, CALL = 19, TCALL = 20, RET = 21, 
     PRINTI = 22, PRINTC = 23, 
     LDARGS = 24,STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,
-    BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37,CSTF=38,PRINTF = 39,FTOI=40 ;
+    BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37,CSTF=38,
+    PRINTF = 39,FTOI=40 ,ITOF=41 ,COS  = 42,TAN  = 43,ASIN  = 44 ,ACOS  = 45,ATAN  = 46,SIN  = 47;
+
   final static int STACKSIZE = 1000;
   
   // Read code from file and execute it
@@ -81,7 +83,6 @@ class Machine {
     return false;
   }
   static int change2(double x){
-    
       String tmp=String.valueOf(x);
 	    int index=tmp.indexOf("."),len;
 	    // System.out.println(x);
@@ -118,6 +119,42 @@ class Machine {
       }
       case BITNOT: 
           s[sp] = ~s[sp]         ; break;
+      case COS:{
+        double f=change(s[sp]);
+        s[sp]=change2(Math.cos(f));
+        break;
+      }
+      case TAN:{
+        double f=change(s[sp]);
+        s[sp]=change2(Math.tan(f));
+        break;
+      }   
+      case ASIN:{
+        double f=change(s[sp]);
+        // System.out.println("f:"+f);
+        // System.out.println("f2:"+Math.asin(f));
+        s[sp]=change2(Math.asin(f));
+        break;
+      }
+      case ACOS:{
+        double f=change(s[sp]);
+        // System.out.println("f:"+f);
+        // System.out.println("f2:"+Math.acos(f));
+        s[sp]=change2(Math.acos(f));
+        break;
+      }   
+      case ATAN:{
+        double f=change(s[sp]);
+        // System.out.println("f:"+f);
+        // System.out.println("f2:"+Math.atan(f));
+        s[sp]=change2(Math.atan(f));
+        break;
+      }
+      case SIN:{
+        double f=change(s[sp]);
+        s[sp]=change2(Math.sin(f));
+        break;
+      }   
       case ROUND:{
         double f=change(s[sp]);
         s[sp]=change2(Math.round(f));
@@ -136,6 +173,10 @@ class Machine {
       case FTOI:{
         double f=change(s[sp]);
         s[sp]=(int)f;
+        break;
+      }
+      case ITOF:{
+        s[sp]=change2(s[sp]);
         break;
       }
       case BITLEFT: 

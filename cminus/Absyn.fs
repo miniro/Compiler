@@ -13,7 +13,9 @@ and access =
   | AccIndex of access * expr
 
 and expr =   
-  | Ftoi   of expr                                                     
+  | Pi     
+  | Ftoi   of expr           
+  | Itof   of expr                                             
   | Access of access              
   | Assign of access * expr        
   | Addr of access                 
@@ -46,7 +48,12 @@ and expr =
   | Ceil of expr
   | Gcd of expr * expr
   | Mcm of expr * expr
-
+  | Sin of expr
+  | Cos of expr
+  | Tan of expr
+  | Asin of expr
+  | Acos of expr
+  | Atan of expr
 and stmt =
   | If of expr * stmt * stmt
   | While of expr * stmt

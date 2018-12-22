@@ -57,6 +57,13 @@ type instr =
   | CEIL
   | ROUND
   | FTOI
+  | ITOF
+  | COS
+  | TAN
+  | ASIN
+  | ACOS
+  | ATAN
+  | SIN
 (* Generate new distinct labels *)
 
 // 返回两个函数 resetLabels , newLabel
@@ -222,6 +229,34 @@ let CODEPRINTF  = 39;
 
 [<Literal>]
 let CODEFTOI  = 40;
+
+[<Literal>]
+let CODEITOF  = 41;
+
+
+[<Literal>]
+let CODECOS  = 42;
+
+
+[<Literal>]
+let CODETAN  = 43;
+
+
+[<Literal>]
+let CODEASIN  = 44;
+
+
+[<Literal>]
+let CODEACOS  = 45;
+
+
+[<Literal>]
+let CODEATAN  = 46;
+
+
+[<Literal>]
+let CODESIN  = 47;
+
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
  *)
@@ -270,7 +305,14 @@ let makelabenv (addr, labenv) instr =
     | FLOOR          -> (addr+1, labenv)
     | CEIL           -> (addr+1, labenv)
     | ROUND          -> (addr+1, labenv)
-    | FTOI          -> (addr+1, labenv)
+    | FTOI           -> (addr+1, labenv)
+    | ITOF           -> (addr+1, labenv)
+    | COS            -> (addr+1, labenv)
+    | TAN            -> (addr+1, labenv)
+    | ASIN           -> (addr+1, labenv)
+    | ACOS           -> (addr+1, labenv)
+    | ATAN           -> (addr+1, labenv)
+    | SIN            -> (addr+1, labenv)
 (* Bytecode emission, second pass: output bytecode as integers *)
 
 //getlab 是得到标签所在地址的函数
@@ -320,6 +362,14 @@ let rec emitints getlab instr ints =
     | ROUND          -> CODEROUND  :: ints
     | CEIL           -> CODECEIL  :: ints
     | FTOI           -> CODEFTOI  :: ints
+    | ITOF           -> CODEITOF  :: ints
+    | COS            -> CODECOS   :: ints
+    | TAN            -> CODETAN  :: ints
+    | ASIN           -> CODEASIN  :: ints
+    | ACOS           -> CODEACOS :: ints
+    | ATAN           -> CODEATAN  :: ints
+    | SIN            -> CODESIN  :: ints
+
 (* Convert instruction list to int list in two passes:
    Pass 1: build label environment
    Pass 2: output instructions using label environment
@@ -349,11 +399,18 @@ let rec decomp ints : instr list =
     // printf "%A" ints
     match ints with
     | []                                              ->  []
+    | CODEITOF :: ints_rest                           ->   ITOF           :: decomp ints_rest
     | CODEFTOI :: ints_rest                           ->   FTOI           :: decomp ints_rest
     | CODEGCD  :: ints_rest                           ->   GCD           :: decomp ints_rest
     | CODEFLOOR  :: ints_rest                         ->   FLOOR            :: decomp ints_rest
     | CODECEIL  :: ints_rest                          ->   CEIL           :: decomp ints_rest
     | CODEROUND :: ints_rest                          ->   ROUND           :: decomp ints_rest
+    | CODECOS:: ints_rest                             ->   COS           :: decomp ints_rest
+    | CODETAN :: ints_rest                            ->   TAN           :: decomp ints_rest
+    | CODEASIN  :: ints_rest                          ->   ASIN           :: decomp ints_rest
+    | CODEACOS  :: ints_rest                          ->   ACOS            :: decomp ints_rest
+    | CODEATAN  :: ints_rest                          ->   ATAN           :: decomp ints_rest
+    | CODESIN   :: ints_rest                          ->   SIN           :: decomp ints_rest
     | CODEINVO :: ints_rest                           ->   INVO          :: decomp ints_rest
     | CODENEG :: ints_rest                            ->   NEG           :: decomp ints_rest
     | CODEBITLEFT :: ints_rest                        ->   BITLEFT       :: decomp ints_rest

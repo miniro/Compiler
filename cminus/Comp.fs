@@ -215,10 +215,26 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       let lab2 = newLabel()
       cExpr e varEnv funEnv @ [CSTI 0] @ [LT] @ [IFNZRO lab1] @ cExpr e varEnv funEnv
       @ [GOTO lab2;Label lab1] @ cExpr e varEnv funEnv @ [NEG] @ [Label lab2]
+    | Cos(e1) ->
+      cExpr e1 varEnv funEnv @ [COS]
+    | Tan(e1) ->
+      cExpr e1 varEnv funEnv @ [TAN]
+    | Asin(e1) ->
+      cExpr e1 varEnv funEnv @ [ASIN]
+    | Acos(e1) ->
+      cExpr e1 varEnv funEnv @ [ACOS]
+    | Atan(e1) ->
+      cExpr e1 varEnv funEnv @ [ATAN]
+    | Sin(e1) ->
+      cExpr e1 varEnv funEnv @ [SIN]
+    | Pi ->
+      [CSTF (change 3.1415)]
     | Round(e1) ->
       cExpr e1 varEnv funEnv @ [ROUND]
     | Ftoi(e1) ->
       cExpr e1 varEnv funEnv @ [FTOI]
+    | Itof(e1) ->
+      cExpr e1 varEnv funEnv @ [ITOF] 
     | Ceil(e1) ->
       cExpr e1 varEnv funEnv @ [CEIL]
     | Floor(e1) ->

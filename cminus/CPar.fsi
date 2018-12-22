@@ -47,6 +47,12 @@ type token =
   | PLUSONE
   | MINUSONE
   | INVO
+  | COS
+  | SIN
+  | TAN
+  | ASIN
+  | ACOS
+  | ATAN
   | CHAR
   | ELSE
   | IF
@@ -77,6 +83,8 @@ type token =
   | FLOOR
   | CEIL
   | FTOI
+  | ITOF
+  | PI
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTFLOAT of (float)
@@ -129,6 +137,12 @@ type tokenId =
     | TOKEN_PLUSONE
     | TOKEN_MINUSONE
     | TOKEN_INVO
+    | TOKEN_COS
+    | TOKEN_SIN
+    | TOKEN_TAN
+    | TOKEN_ASIN
+    | TOKEN_ACOS
+    | TOKEN_ATAN
     | TOKEN_CHAR
     | TOKEN_ELSE
     | TOKEN_IF
@@ -159,6 +173,8 @@ type tokenId =
     | TOKEN_FLOOR
     | TOKEN_CEIL
     | TOKEN_FTOI
+    | TOKEN_ITOF
+    | TOKEN_PI
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTFLOAT

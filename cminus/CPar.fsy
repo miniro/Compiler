@@ -17,8 +17,7 @@ let nl = CstI 10
 %token <int> CSTINT CSTBOOL
 %token <float> CSTFLOAT
 %token <string> CSTSTRING NAME
-
-%token CHAR ELSE IF INT FLOAT NULL PRINT PRINTI PRINTC PRINTF PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE GCD MCM ROUND FLOOR CEIL FTOI
+%token COS SIN TAN ASIN ACOS ATAN CHAR ELSE IF INT FLOAT NULL PRINT PRINTI PRINTC PRINTF PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE GCD MCM ROUND FLOOR CEIL FTOI ITOF PI 
 %token PLUS MINUS TIMES DIV MOD PLUSONE MINUSONE INVO
 %token EQ NE GT LT GE LE
 %token NOT SEQOR SEQAND
@@ -174,8 +173,16 @@ ExprNotAccess:
   | MIN LPAR Expr COMMA Expr RPAR       { Min($3, $5)         }
   | SWAP LPAR Access COMMA Access RPAR  { Swap($3, $5)        }
   | ABS LPAR Expr RPAR                  { Abs($3)             }
+  | COS LPAR Expr RPAR                  { Cos($3)             }
+  | TAN LPAR Expr RPAR                  { Tan($3)             }
+  | ASIN LPAR Expr RPAR                 { Asin($3)            }
+  | ACOS LPAR Expr RPAR                 { Acos($3)            }
+  | ATAN LPAR Expr RPAR                 { Atan($3)            }
+  | SIN LPAR Expr RPAR                  { Sin($3)             }
   | ROUND LPAR Expr RPAR                { Round($3)           }
+  | PI                                  { Pi                  }
   | LPAR FTOI RPAR Expr                 { Ftoi($4)            }
+  | LPAR ITOF RPAR Expr                 { Itof($4)            }
   | FLOOR LPAR Expr RPAR                { Floor($3)           }
   | CEIL LPAR Expr RPAR                 { Ceil($3)            }
   | GCD LPAR Expr COMMA Expr RPAR       { Gcd($3, $5)         }
