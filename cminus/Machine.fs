@@ -65,6 +65,10 @@ type instr =
   | ACOS
   | ATAN
   | SIN
+  | FABS
+  | LOG
+  | SQRT
+  | POW
 (* Generate new distinct labels *)
 
 // 返回两个函数 resetLabels , newLabel
@@ -165,7 +169,6 @@ let CODEIFZERO = 17
 let CODEIFNZRO = 18 
 
 
-
 [<Literal>]
 let CODECALL   = 19
 
@@ -258,6 +261,18 @@ let CODEATAN  = 46;
 [<Literal>]
 let CODESIN  = 47;
 
+[<Literal>]
+let CODEFABS  = 48;
+
+[<Literal>]
+let CODELOG  = 49;
+
+[<Literal>]
+let CODESQRT  = 50;
+
+[<Literal>]
+let CODEPOW  = 51;
+
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
  *)
@@ -314,6 +329,10 @@ let makelabenv (addr, labenv) instr =
     | ACOS           -> (addr+1, labenv)
     | ATAN           -> (addr+1, labenv)
     | SIN            -> (addr+1, labenv)
+    | FABS           -> (addr+1, labenv)
+    | LOG            -> (addr+1, labenv)
+    | SQRT           -> (addr+1, labenv)
+    | POW            -> (addr+1, labenv)
 (* Bytecode emission, second pass: output bytecode as integers *)
 
 //getlab 是得到标签所在地址的函数
@@ -370,6 +389,10 @@ let rec emitints getlab instr ints =
     | ACOS           -> CODEACOS :: ints
     | ATAN           -> CODEATAN  :: ints
     | SIN            -> CODESIN  :: ints
+    | FABS           -> CODEFABS  :: ints
+    | LOG            -> CODELOG  :: ints
+    | SQRT           -> CODESQRT  :: ints
+    | POW            -> CODEPOW  :: ints
 
 (* Convert instruction list to int list in two passes:
    Pass 1: build label environment
@@ -400,6 +423,10 @@ let rec decomp ints : instr list =
     // printf "%A" ints
     match ints with
     | []                                              ->  []
+    | CODEFABS :: ints_rest                           ->   FABS           :: decomp ints_rest
+    | CODELOG :: ints_rest                           ->    LOG           :: decomp ints_rest
+    | CODESQRT :: ints_rest                           ->   SQRT           :: decomp ints_rest
+    | CODEPOW :: ints_rest                           ->    POW            :: decomp ints_rest
     | CODEITOF :: ints_rest                           ->   ITOF           :: decomp ints_rest
     | CODEFTOI :: ints_rest                           ->   FTOI           :: decomp ints_rest
     | CODEGCD  :: ints_rest                           ->   GCD           :: decomp ints_rest

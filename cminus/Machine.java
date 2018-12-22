@@ -36,7 +36,7 @@ class Machine {
     PRINTI = 22, PRINTC = 23, 
     LDARGS = 24,STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,
     BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37,CSTF=38,
-    PRINTF = 39,FTOI=40 ,ITOF=41 ,COS  = 42,TAN  = 43,ASIN  = 44 ,ACOS  = 45,ATAN  = 46,SIN  = 47;
+    PRINTF = 39,FTOI=40 ,ITOF=41 ,COS  = 42,TAN  = 43,ASIN  = 44 ,ACOS  = 45,ATAN  = 46,SIN  = 47, FABS = 48,LOG = 49,SQRT = 50,POW = 51;
 
   final static int STACKSIZE = 1000;
   
@@ -119,6 +119,28 @@ class Machine {
       }
       case BITNOT: 
           s[sp] = ~s[sp]         ; break;
+      case FABS:{
+        double f=change(s[sp]);
+        s[sp]=change2(Math.abs(f));
+        break;
+      }
+      case LOG:{
+        double f=change(s[sp]);
+        s[sp]=change2(Math.log(f));
+        break;
+      }
+      case SQRT:{
+        double f=change(s[sp]);
+        s[sp]=change2(Math.sqrt(f));
+        break;
+      }
+      case POW:{
+        double f1=change(s[sp-1]);
+        double f2=change(s[sp]);
+        s[sp-1]=change2(Math.pow(f1,f2));
+        sp--;
+        break;
+      }
       case COS:{
         double f=change(s[sp]);
         s[sp]=change2(Math.cos(f));
@@ -324,6 +346,7 @@ class Machine {
     case STOP:   return "STOP";
     case NEG:    return "NEG";
     case INVO:   return "INVO";
+    case GCD:    return "GCD";
     default:     return "<unknown>";
     }
   }

@@ -85,6 +85,10 @@ type token =
   | FTOI
   | ITOF
   | PI
+  | FABS
+  | LOG
+  | SQRT
+  | POW
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTFLOAT of (float)
@@ -178,6 +182,10 @@ type tokenId =
     | TOKEN_FTOI
     | TOKEN_ITOF
     | TOKEN_PI
+    | TOKEN_FABS
+    | TOKEN_LOG
+    | TOKEN_SQRT
+    | TOKEN_POW
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTFLOAT
@@ -203,6 +211,8 @@ type nonTerminalId =
     | NONTERM_Stmt
     | NONTERM_StmtM
     | NONTERM_StmtU
+    | NONTERM_Caselist
+    | NONTERM_Casedec
     | NONTERM_Expr
     | NONTERM_ExprNotAccess
     | NONTERM_AtExprNotAccess
