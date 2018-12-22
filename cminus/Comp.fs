@@ -147,9 +147,16 @@ and cStmtOrDec stmtOrDec (varEnv : VarEnv) (funEnv : FunEnv) : VarEnv * instr li
 
 
 and change (a:float):int=
-    if string((int)a).Length=string(a).Length
-    then int(a*100.0+0.0)
-    else int(a*(10.0**(float(string(a).Length-string((int)a).Length)+1.0))+float(string(a).Length-string((int)a).Length-1))
+    if a>0.0
+    then
+      if string((int)a).Length=string(a).Length
+      then int(a)*10000+78
+      else (int(a*(10.0**(float(string(a).Length-string((int)a).Length)+1.0))+float(string(a).Length-string((int)a).Length-1)))*100+78
+    else
+      if string((int)(-a)).Length=string((-a)).Length
+      then -(int((-a))*10000+78)
+      else -(int((-a)*(10.0**(float(string((-a)).Length-string((int)(-a)).Length)+1.0))+float(string((-a)).Length-string((int)(-a)).Length-1))*100+78)
+
 and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list = 
     match e with
     | Access acc     -> cAccess acc varEnv funEnv @ [LDI] 

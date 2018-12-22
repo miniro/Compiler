@@ -66,12 +66,37 @@ class Machine {
       return a;
     return gcd(b,a%b);
   }
-
   // The machine: execute the code starting at p[pc] 
-  static float change(int x){
-    int a=x%100,b=x/100;
-    return (float) (b*Math.pow(10,-a));
+  static double change(int x){
+      int tmp=x;
+      x=Math.abs(x);
+      int a=x%10000/100,b=x/10000;
+      if(tmp>=0) 
+        return (double) (b*Math.pow(10,-a));
+      else return -(double) (b*Math.pow(10,-a));
   }
+  static boolean judge(String x){
+    if(x.endsWith("78")) 
+      return true;
+    return false;
+  }
+  static int change2(double x){
+    
+      String tmp=String.valueOf(x);
+	    int index=tmp.indexOf("."),len;
+	    // System.out.println(x);
+	    if(index+3>tmp.length())len=tmp.length();else len=index+3;
+      boolean flag=(x>=0);
+      String tmp2=tmp.substring(0,len);
+      double x2=Math.abs(Double.parseDouble(tmp2));
+      tmp=String.valueOf(x2);
+      index=tmp.indexOf(".");
+	    // System.out.println(x2);
+	    if(flag) 
+	    	return ((int)(x2*Math.pow(10,tmp.length()-index-1))*100+tmp.length()-index-1)*100+78;
+	    else
+	    	return -(((int)(x2*Math.pow(10,tmp.length()-index-1))*100+tmp.length()-index-1)*100+78); 
+	}
   static int execcode(int[] p, int[] s, int[] iargs, boolean trace) {
     int bp = -999;	// Base pointer, for local variable access 
     int sp = -1;	// Stack top pointer
@@ -84,8 +109,13 @@ class Machine {
         s[sp+1] = p[pc++]; sp++; break;
       case CSTF:
         s[sp+1] = p[pc++]; sp++; break;
-      case ADD: 
-        s[sp-1] = s[sp-1] + s[sp]; sp--; break;
+      case ADD:{
+        boolean flag=false;double f1=s[sp-1],f2=s[sp];
+        if(judge(String.valueOf(s[sp-1]))){f1=change(s[sp-1]);flag=true;}
+        if(judge(String.valueOf(s[sp]))){f2=change(s[sp]);flag=true;}
+        if(flag){ s[sp-1] =change2(f1+f2); sp--; break;}
+        else{ s[sp-1] = s[sp-1] + s[sp]; sp--; break;}
+      }
       case BITNOT: 
           s[sp] = ~s[sp]         ; break;
       case ROUND:
@@ -115,12 +145,29 @@ class Machine {
           else 
             r = gcd(s[sp-1], s[sp]);
           s[sp-1] = r; sp--; break;
-      case SUB: 
-        s[sp-1] = s[sp-1] - s[sp]; sp--; break;
-      case MUL: 
-        s[sp-1] = s[sp-1] * s[sp]; sp--; break;
-      case DIV: 
-        s[sp-1] = s[sp-1] / s[sp]; sp--; break;
+      case SUB:{
+        boolean flag=false;double f1=s[sp-1],f2=s[sp];
+        if(judge(String.valueOf(s[sp-1]))){f1=change(s[sp-1]);flag=true;}
+        if(judge(String.valueOf(s[sp]))){f2=change(s[sp]);flag=true;}
+        // System.out.println("f1:"+(float)f1+" f2:"+(float)f2+" 666:"+(f1-f2)+" "+change2(f1-f2));
+        if(flag){ s[sp-1] =change2(f1-f2); sp--; break;}
+        else{ s[sp-1] = s[sp-1] - s[sp]; sp--; break;}
+      } 
+      case MUL: {
+        boolean flag=false;double f1=s[sp-1],f2=s[sp];
+        if(judge(String.valueOf(s[sp-1]))){f1=change(s[sp-1]);flag=true;}
+        if(judge(String.valueOf(s[sp]))){f2=change(s[sp]);flag=true;}
+        // System.out.println("f1:"+(float)f1+" f2:"+(float)f2+" 666:"+f1*f2+" "+change2(f1*f2));
+        if(flag){ s[sp-1] =change2(f1*f2); sp--; break;}
+        else{  s[sp-1] = s[sp-1] * s[sp]; sp--; break;}
+      }
+      case DIV: {
+        boolean flag=false;double f1=s[sp-1],f2=s[sp];
+        if(judge(String.valueOf(s[sp-1]))){f1=change(s[sp-1]);flag=true;}
+        if(judge(String.valueOf(s[sp]))){f2=change(s[sp]);flag=true;}
+        if(flag){ s[sp-1] =change2(f1/f2); sp--; break;}
+        else{  s[sp-1] = s[sp-1] / s[sp]; sp--; break;}
+      }
       case MOD: 
         s[sp-1] = s[sp-1] % s[sp]; sp--; break;
       case EQ: 
@@ -175,7 +222,7 @@ class Machine {
       case PRINTC:
         System.out.print((char)(s[sp])); break; 
       case PRINTF:{
-        float ans=change(s[sp]);
+        float ans=(float)change(s[sp]);
         System.out.print(ans +" "); break;
       }
         
