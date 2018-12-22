@@ -118,12 +118,21 @@ class Machine {
       }
       case BITNOT: 
           s[sp] = ~s[sp]         ; break;
-      case ROUND:
-          s[sp+1] = p[pc++]; sp++; break;
-      case FLOOR:
-          s[sp+1] = p[pc++]; sp++; break;
-      case CEIL:
-          s[sp+1] = p[pc++]; sp++; break;
+      case ROUND:{
+        double f=change(s[sp]);
+        s[sp]=change2(Math.round(f));
+        break;
+      }
+      case FLOOR:{
+        double f=change(s[sp]);
+        s[sp]=change2(Math.floor(f));
+        break;
+      }   
+      case CEIL:{
+        double f=change(s[sp]);
+        s[sp]=change2(Math.ceil(f));
+        break;
+      }
       case BITLEFT: 
           s[sp-1] = s[sp-1] << s[sp]; sp--; break;
       case BITRIGHT: 
