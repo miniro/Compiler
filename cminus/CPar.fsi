@@ -76,6 +76,7 @@ type token =
   | ROUND
   | FLOOR
   | CEIL
+  | FTOI
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTFLOAT of (float)
@@ -157,6 +158,7 @@ type tokenId =
     | TOKEN_ROUND
     | TOKEN_FLOOR
     | TOKEN_CEIL
+    | TOKEN_FTOI
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTFLOAT

@@ -217,6 +217,8 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       @ [GOTO lab2;Label lab1] @ cExpr e varEnv funEnv @ [NEG] @ [Label lab2]
     | Round(e1) ->
       cExpr e1 varEnv funEnv @ [ROUND]
+    | Ftoi(e1) ->
+      cExpr e1 varEnv funEnv @ [FTOI]
     | Ceil(e1) ->
       cExpr e1 varEnv funEnv @ [CEIL]
     | Floor(e1) ->

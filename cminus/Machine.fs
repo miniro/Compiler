@@ -56,6 +56,7 @@ type instr =
   | FLOOR
   | CEIL
   | ROUND
+  | FTOI
 (* Generate new distinct labels *)
 
 // 返回两个函数 resetLabels , newLabel
@@ -218,6 +219,9 @@ let CODECSTF  = 38;
 
 [<Literal>]
 let CODEPRINTF  = 39;
+
+[<Literal>]
+let CODEFTOI  = 40;
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
  *)
@@ -266,6 +270,7 @@ let makelabenv (addr, labenv) instr =
     | FLOOR          -> (addr+1, labenv)
     | CEIL           -> (addr+1, labenv)
     | ROUND          -> (addr+1, labenv)
+    | FTOI          -> (addr+1, labenv)
 (* Bytecode emission, second pass: output bytecode as integers *)
 
 //getlab 是得到标签所在地址的函数
@@ -314,6 +319,7 @@ let rec emitints getlab instr ints =
     | FLOOR          -> CODEFLOOR  :: ints
     | ROUND          -> CODEROUND  :: ints
     | CEIL           -> CODECEIL  :: ints
+    | FTOI           -> CODEFTOI  :: ints
 (* Convert instruction list to int list in two passes:
    Pass 1: build label environment
    Pass 2: output instructions using label environment
@@ -343,6 +349,7 @@ let rec decomp ints : instr list =
     // printf "%A" ints
     match ints with
     | []                                              ->  []
+    | CODEFTOI :: ints_rest                           ->   FTOI           :: decomp ints_rest
     | CODEGCD  :: ints_rest                           ->   GCD           :: decomp ints_rest
     | CODEFLOOR  :: ints_rest                         ->   FLOOR            :: decomp ints_rest
     | CODECEIL  :: ints_rest                          ->   CEIL           :: decomp ints_rest

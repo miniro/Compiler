@@ -12,7 +12,8 @@ and access =
   | AccDeref of expr                
   | AccIndex of access * expr
 
-and expr =                                                         
+and expr =   
+  | Ftoi   of expr                                                     
   | Access of access              
   | Assign of access * expr        
   | Addr of access                 

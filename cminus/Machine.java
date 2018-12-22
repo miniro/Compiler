@@ -35,7 +35,7 @@ class Machine {
     GOTO = 16, IFZERO = 17, IFNZRO = 18, CALL = 19, TCALL = 20, RET = 21, 
     PRINTI = 22, PRINTC = 23, 
     LDARGS = 24,STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,
-    BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37,CSTF=38,PRINTF = 39 ;
+    BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37,CSTF=38,PRINTF = 39,FTOI=40 ;
   final static int STACKSIZE = 1000;
   
   // Read code from file and execute it
@@ -131,6 +131,11 @@ class Machine {
       case CEIL:{
         double f=change(s[sp]);
         s[sp]=change2(Math.ceil(f));
+        break;
+      }
+      case FTOI:{
+        double f=change(s[sp]);
+        s[sp]=(int)f;
         break;
       }
       case BITLEFT: 

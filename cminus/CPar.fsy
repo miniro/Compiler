@@ -18,7 +18,7 @@ let nl = CstI 10
 %token <float> CSTFLOAT
 %token <string> CSTSTRING NAME
 
-%token CHAR ELSE IF INT FLOAT NULL PRINT PRINTI PRINTC PRINTF PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE GCD MCM ROUND FLOOR CEIL
+%token CHAR ELSE IF INT FLOAT NULL PRINT PRINTI PRINTC PRINTF PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE GCD MCM ROUND FLOOR CEIL FTOI
 %token PLUS MINUS TIMES DIV MOD PLUSONE MINUSONE INVO
 %token EQ NE GT LT GE LE
 %token NOT SEQOR SEQAND
@@ -174,12 +174,13 @@ ExprNotAccess:
   | MIN LPAR Expr COMMA Expr RPAR       { Min($3, $5)         }
   | SWAP LPAR Access COMMA Access RPAR  { Swap($3, $5)        }
   | ABS LPAR Expr RPAR                  { Abs($3)             }
-  | ROUND LPAR Expr RPAR                { Round($3)         }
-  | FLOOR LPAR Expr RPAR                { Floor($3)         }
-  | CEIL LPAR Expr RPAR                 { Ceil($3)         }
+  | ROUND LPAR Expr RPAR                { Round($3)           }
+  | LPAR FTOI RPAR Expr                 { Ftoi($4)            }
+  | FLOOR LPAR Expr RPAR                { Floor($3)           }
+  | CEIL LPAR Expr RPAR                 { Ceil($3)            }
   | GCD LPAR Expr COMMA Expr RPAR       { Gcd($3, $5)         }
   | MCM LPAR Expr COMMA Expr RPAR       { Mcm($3, $5)         }
-  | BITNOT Expr                         { Bitnot("~", $2)    }
+  | BITNOT Expr                         { Bitnot("~", $2)     }
   | Access BITANDASSIGN Expr            { Bitassign("&",$1, $3)      }
   | Access BITORASSIGN  Expr            { Bitassign("|",$1, $3)      }
   | Access BITXORASSIGN Expr            { Bitassign("^",$1, $3)      }

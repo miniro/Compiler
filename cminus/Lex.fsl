@@ -16,6 +16,9 @@ let lexemeAsString lexbuf =
 
 let keyword s =
     match s with
+    | "FtoI"    -> FTOI
+    | "ftoi"    -> FTOI
+    | "Int"     ->  FTOI
     | "Round"   -> ROUND
     | "Floor"   -> FLOOR
     | "Ceil"    -> CEIL
