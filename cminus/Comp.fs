@@ -87,8 +87,6 @@ let makeGlobalEnvs (topdecs : topdec list) : VarEnv * FunEnv * instr list =
 *)
 
 let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) : instr list = 
-
-
     match stmt with
     | If (e, stmt1, stmt2) -> 
       let labelse = newLabel()
@@ -176,6 +174,9 @@ and changeBIN (a:int):int=
       tmp<-tmp/10
       i<-i+1
     sum
+and changeStr (a:string):int list=
+    [1]
+
 and change (a:float):int=
     if a>0.0
     then
@@ -192,6 +193,7 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | Access acc     -> cAccess acc varEnv funEnv @ [LDI] 
     | Assign(acc, e) -> cAccess acc varEnv funEnv @ cExpr e varEnv funEnv @ [STI]
     | CstI i         -> [CSTI i]
+    | CstS i         -> [CSTS (changeStr i)]
     | CstF i         -> [CSTF (change i)]
     | CstHEX i       -> [CSTI (changeHEX i)]
     | CstOCT i       -> [CSTI (changeOCT i)]

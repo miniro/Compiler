@@ -19,6 +19,7 @@ type instr =
   | Label of label                     (* symbolic label; pseudo-instruc. *)
   | CSTI of int                        (* constant                        *)
   | CSTF of int                        (* constant                        *)
+  | CSTS of int list                        
   | ADD                                (* addition                        *)
   | SUB                                (* subtraction                     *)
   | MUL                                (* multiplication                  *)
@@ -258,6 +259,9 @@ let CODEATAN  = 46;
 [<Literal>]
 let CODESIN  = 47;
 
+[<Literal>]
+let CODECSTS  = 48;
+
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
  *)
@@ -268,6 +272,7 @@ let makelabenv (addr, labenv) instr =
     | Label lab      -> (addr, (lab, addr) :: labenv)
     | CSTI i         -> (addr+2, labenv)
     | CSTF i         -> (addr+2, labenv)
+    | CSTS i         -> (addr+2, labenv)
     | ADD            -> (addr+1, labenv)
     | SUB            -> (addr+1, labenv)
     | MUL            -> (addr+1, labenv)
@@ -324,6 +329,7 @@ let rec emitints getlab instr ints =
     | Label lab      -> ints
     | CSTI i         -> CODECSTI   :: i :: ints
     | CSTF i         -> CODECSTF   :: i :: ints
+    | CSTS i         -> CODECSTS   :: i @ ints
     | ADD            -> CODEADD    :: ints
     | SUB            -> CODESUB    :: ints
     | MUL            -> CODEMUL    :: ints
@@ -448,5 +454,6 @@ let rec decomp ints : instr list =
     | CODESTOP   :: ints_rest                         ->   STOP             :: decomp ints_rest
     | CODECSTI   :: i :: ints_rest                    ->   CSTI i :: decomp ints_rest   
     | CODECSTF   :: i :: ints_rest                    ->   CSTF i :: decomp ints_rest 
+    | CODECSTS   :: i :: ints_rest                    ->   CSTS i :: decomp ints_rest 
     | _                                       ->    printf "%A" ints; failwith "unknow code"
 

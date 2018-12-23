@@ -20,6 +20,7 @@ and expr =
   | Assign of access * expr        
   | Addr of access                 
   | CstI of int
+  | CstS of string
   | CstBIN of int
   | CstOCT of int
   | CstHEX of int
