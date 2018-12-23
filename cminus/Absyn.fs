@@ -58,6 +58,10 @@ and expr =
   | Asin of expr
   | Acos of expr
   | Atan of expr
+  | Fabs of expr
+  | Sqrt of expr
+  | Log of expr
+  | Pow of expr * expr
 and stmt =
   | If of expr * stmt * stmt
   | While of expr * stmt
@@ -66,8 +70,7 @@ and stmt =
   | Expr of expr
   | Return of expr option
   | Block of stmtordec list
-  | Switch of expr
-  | Case of expr * stmt
+  | Switch of expr * (int * stmt) list
 
 and stmtordec =
   | Dec of typ * string

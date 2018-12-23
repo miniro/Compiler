@@ -126,17 +126,23 @@ let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       let (fdepthend, code) = loop stmts varEnv
 
       code @ [INCSP(snd varEnv - fdepthend)]
-      
+    // | Switch(e, cases) ->
+    //   let rec getcode e cases = 
+    //     match cases with
+    //     | []          -> failwith ("case list not found")
+    //     | (csti, stm)::es -> if e=csti then cStmt stm varEnv funEnv else getcode e es
+    //   let result = getcode e cases
+    //   result
+
     | Return None -> 
       [RET (snd varEnv - 1)]
     | Return (Some e) -> 
       cExpr e varEnv funEnv @ [RET (snd varEnv)]
-    // | Switch(e) ->
-    //   cExpr e varEnv funEnv @ [INCSP -1]
-    // | Case(e, body) ->
-    //   let labend = newLabel()
-    //   [DUP] @ cExpr e varEnv funEnv @ [SUB] @ [IFNZRO labend]
-    //   @ [INSCP -1] @ 
+
+    // let rec lookup env x = 
+    // match env with 
+    // | []         -> failwith (x + " not found")
+    // | (y, v)::yr -> if x=y then v else lookup yr x
 
 and cStmtOrDec stmtOrDec (varEnv : VarEnv) (funEnv : FunEnv) : VarEnv * instr list = 
     match stmtOrDec with 
@@ -250,6 +256,14 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       let lab2 = newLabel()
       cExpr e varEnv funEnv @ [CSTI 0] @ [LT] @ [IFNZRO lab1] @ cExpr e varEnv funEnv
       @ [GOTO lab2;Label lab1] @ cExpr e varEnv funEnv @ [NEG] @ [Label lab2]
+    | Sqrt(e) ->
+      cExpr e varEnv funEnv @ [SQRT]
+    | Log(e) ->
+      cExpr e varEnv funEnv @ [LOG]
+    | Fabs(e) ->
+      cExpr e varEnv funEnv @ [FABS]
+    | Pow(e1, e2) ->
+      cExpr e1 varEnv funEnv @ cExpr e2 varEnv funEnv @ [POW]
     | Cos(e1) ->
       cExpr e1 varEnv funEnv @ [COS]
     | Tan(e1) ->
