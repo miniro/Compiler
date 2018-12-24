@@ -13,7 +13,11 @@ type 'data Env = (string * 'data) list
 let rec lookup env x = 
     match env with 
     | []         -> failwith (x + " not found")
-    | (y, v)::yr -> if x=y then v else lookup yr x
+    | (y, v)::yr -> 
+    if x=y then 
+      v 
+    else 
+      lookup yr x
 
 (* A global variable has an absolute address, a local one has an offset: *)
 
@@ -128,23 +132,65 @@ let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       let (fdepthend, code) = loop stmts varEnv
 
       code @ [INCSP(snd varEnv - fdepthend)]
+
     // | Switch(e, cases) ->
     //   let rec getcode e cases = 
     //     match cases with
     //     | []          -> failwith ("case list not found")
-    //     | (csti, stm)::es -> if e=csti then cStmt stm varEnv funEnv else getcode e es
+    //     | (csti, stm)::es -> if cExpr e varEnv funEnv = [CSTI csti] then cStmt stm varEnv funEnv else getcode e es
     //   let result = getcode e cases
     //   result
+
+    | Switch(e, cases) ->
+      let tmp = cExpr e varEnv funEnv
+      let lab = newLabel()
+      let rec getcode e cases = 
+        match cases with
+        | []          -> [INCSP 0]
+        | (csti, stm)::es -> 
+          let sublab = newLabel()
+          tmp @ [CSTI csti] @ [SUB] @ [IFNZRO sublab] @ cStmt stm varEnv funEnv @ [GOTO lab] @ [Label sublab] @ getcode e es
+      
+      let result = getcode e cases @ [Label lab]
+      result
+
+    | Switch2(e, cases, dstm) ->
+      let tmp = cExpr e varEnv funEnv
+      let lab = newLabel()
+      let rec getcode e cases = 
+        match cases with
+        | []          -> [INCSP 0]
+        | (csti, stm)::es -> 
+          let sublab = newLabel()
+          tmp @ [CSTI csti] @ [SUB] @ [IFNZRO sublab] @ cStmt stm varEnv funEnv @ [GOTO lab] @ [Label sublab] @ getcode e es
+      
+      let result = getcode e cases @ cStmt dstm varEnv funEnv @ [Label lab]
+      result
 
     | Return None -> 
       [RET (snd varEnv - 1)]
     | Return (Some e) -> 
       cExpr e varEnv funEnv @ [RET (snd varEnv)]
 
-    // let rec lookup env x = 
-    // match env with 
-    // | []         -> failwith (x + " not found")
-    // | (y, v)::yr -> if x=y then v else lookup yr x
+    // | Switch(e, cases) ->
+    //   let tmp = cExpr e varEnv funEnv
+    //   let mutable ss = snd cases.[0]
+    //   let lab = newLabel()
+    //   let rec getcode e cases = 
+    //     match cases with
+    //     | []          -> [INCSP 0]
+    //     | (csti, stm)::es -> 
+    //       ss <- stm
+    //       printf "%A" ss
+    //       tmp @ [CSTI csti] @ [SUB] @ [IFZERO lab] @ getcode e es
+      
+    //   let result = getcode e cases @ [Label lab] @ cStmt ss varEnv funEnv
+    //   result
+
+    // | Return None -> 
+    //   [RET (snd varEnv - 1)]
+    // | Return (Some e) -> 
+    //   cExpr e varEnv funEnv @ [RET (snd varEnv)]
 
 and cStmtOrDec stmtOrDec (varEnv : VarEnv) (funEnv : FunEnv) : VarEnv * instr list = 
     match stmtOrDec with 

@@ -16,7 +16,7 @@ let nl = CstI 10
 %token <int> CSTINT CSTBOOL CSTHEX CSTOCT CSTBIN
 %token <float> CSTFLOAT
 %token <string> CSTSTRING NAME 
-%token COS SIN TAN ASIN ACOS ATAN CHAR ELSE IF INT FLOAT NULL PRINT PRINTI PRINTC PRINTF PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE GCD MCM ROUND FLOOR CEIL FTOI ITOF PI FABS LOG SQRT POW
+%token COS SIN TAN ASIN ACOS ATAN CHAR ELSE IF INT FLOAT NULL PRINT PRINTI PRINTC PRINTF PRINTLN RETURN VOID WHILE DO FOR SORT MAX MIN SWAP ABS SWITCH CASE DEFAULT GCD MCM ROUND FLOOR CEIL FTOI ITOF PI FABS LOG SQRT POW
 %token PLUS MINUS TIMES DIV MOD PLUSONE MINUSONE INVO
 %token EQ NE GT LT GE LE
 %token NOT SEQOR SEQAND
@@ -112,6 +112,7 @@ StmtM:  /* No unbalanced if-else */
   | DO StmtM WHILE LPAR Expr RPAR       { Do($2, $5)           }
   | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtM  { For($3, $5, $7, $9) } 
   | SWITCH LPAR Expr RPAR LBRACE Caselist RBRACE { Switch($3, $6)   }
+  | SWITCH LPAR Expr RPAR LBRACE Caselist Default RBRACE { Switch2($3, $6, $7)   }
 ;
 
 StmtU:
@@ -121,6 +122,7 @@ StmtU:
   | DO StmtU WHILE LPAR Expr RPAR       { Do($2, $5)           }
   | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtU  { For($3, $5, $7, $9) } 
   | SWITCH LPAR Expr RPAR LBRACE Caselist RBRACE { Switch($3, $6)   }
+  | SWITCH LPAR Expr RPAR LBRACE Caselist Default RBRACE { Switch2($3, $6, $7)   }
 ;
 
 Caselist:
@@ -130,6 +132,10 @@ Caselist:
 
 Casedec:
     CASE CSTINT COLON Block SEMI            { ($2, $4) }
+;
+
+Default:
+    DEFAULT COLON Block SEMI                  {$3}
 ;
 
 Expr: 

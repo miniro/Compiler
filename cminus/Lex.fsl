@@ -65,6 +65,7 @@ let keyword s =
     | "Swap"    -> SWAP
     | "switch"  -> SWITCH    
     | "case"    -> CASE
+    | "default" -> DEFAULT
     | _         -> NAME s
  
 let cEscape s = 
