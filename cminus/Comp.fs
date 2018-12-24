@@ -10,6 +10,11 @@ open Machine
 
 type 'data Env = (string * 'data) list
 
+let rec getlen list =
+    match list with
+    | []          -> 0
+    | e :: elist  -> 1 + getlen elist
+
 let rec lookup env x = 
     match env with 
     | []         -> failwith (x + " not found")
@@ -386,6 +391,18 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       @ cExpr e3 varEnv funEnv @ [GOTO labelend]
       @ [Label labtrue] @ cExpr e2 varEnv funEnv
       @ [Label labelend]
+    | Comexpr(list) ->
+      let rec getcode list =
+        match list with
+        | []            -> [INCSP 0]
+        | e :: elist    ->
+          if getlen elist <> 0 then
+            cExpr e varEnv funEnv @ [INCSP -1] @ getcode elist
+          else
+            cExpr e varEnv funEnv @ getcode elist
+      let result = getcode list
+      result
+
     | _     -> raise (Failure "unknown primitive 6")
     
       

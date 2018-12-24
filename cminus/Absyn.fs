@@ -44,6 +44,7 @@ and expr =
   | Bitnot of string * expr 
   | Call of string * expr list
   | Question of expr * expr * expr
+  | Comexpr of expr list
   | Sort of int list
   | Max of expr * expr
   | Min of expr * expr

@@ -277,6 +277,7 @@ let CODEPOW  = 51;
 
 [<Literal>]
 let CODECSTS  = 52;
+
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
  *)
