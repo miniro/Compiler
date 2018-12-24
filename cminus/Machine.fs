@@ -480,4 +480,5 @@ let rec decomp ints : instr list =
     | CODESTOP   :: ints_rest                         ->   STOP             :: decomp ints_rest
     | CODECSTI   :: i :: ints_rest                    ->   CSTI i :: decomp ints_rest   
     | CODECSTF   :: i :: ints_rest                    ->   CSTF i :: decomp ints_rest 
+    | CODECSTS   :: i :: ints_rest                    ->   CSTS i :: decomp ints_rest 
     | _                                       ->    printf "%A" ints; failwith "unknow code"
