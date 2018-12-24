@@ -205,6 +205,12 @@ ExprNotAccess:
   | Access BITLEFTASSIGN Expr           { Bitassign("<<",$1, $3)      }
   | Access BITRIGHTASSIGN Expr          { Bitassign(">>",$1, $3)      }
   | Expr QUESTION Expr COLON Expr       { Question($1, $3, $5)}
+  | LPAR Comexpr RPAR                   { Comexpr($2)         }
+;
+
+Comexpr:
+    Expr                                { [$1] }
+  | Expr COMMA Comexpr                  { $1 :: $3 }
 ;
 
 AtExprNotAccess:

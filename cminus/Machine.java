@@ -317,7 +317,6 @@ class Machine {
     switch (p[pc]) {
     case CSTI:   return "CSTI " + p[pc+1]; 
     case CSTF:   return "CSTF " + p[pc+1]; 
-    case CSTS:   return "CSTS " + p[pc+1]; 
     case BITNOT:  return "BITNOT";
     case BITLEFT: return "BITLEFT";
     case BITRIGHT:  return "BITRIGHT";

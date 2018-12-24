@@ -219,6 +219,7 @@ type nonTerminalId =
     | NONTERM_Casedec
     | NONTERM_Expr
     | NONTERM_ExprNotAccess
+    | NONTERM_Comexpr
     | NONTERM_AtExprNotAccess
     | NONTERM_Access
     | NONTERM_Exprs
