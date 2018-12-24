@@ -209,7 +209,7 @@ ExprNotAccess:
 
 AtExprNotAccess:
     Const                               { CstI $1             }
-  | CSTCHAR                           { CstC $1             }
+  | CSTCHAR                             { CstC $1             }
   | ConstF                              { CstF $1             }
   | ConstHEX                            { CstHEX $1           }
   | ConstOCT                            { CstOCT $1           }

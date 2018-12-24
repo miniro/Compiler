@@ -73,6 +73,7 @@ and stmt =
   | Return of expr option
   | Block of stmtordec list
   | Switch of expr * (int * stmt) list
+  | Switch2 of expr * (int * stmt) list * stmt
 
 and stmtordec =
   | Dec of typ * string

@@ -70,7 +70,6 @@ type token =
   | WHILE
   | DO
   | FOR
-  | DEFAULT
   | SORT
   | MAX
   | MIN
@@ -78,6 +77,7 @@ type token =
   | ABS
   | SWITCH
   | CASE
+  | DEFAULT
   | GCD
   | MCM
   | ROUND
@@ -169,7 +169,6 @@ type tokenId =
     | TOKEN_WHILE
     | TOKEN_DO
     | TOKEN_FOR
-    | TOKEN_DEFAULT
     | TOKEN_SORT
     | TOKEN_MAX
     | TOKEN_MIN
@@ -177,6 +176,7 @@ type tokenId =
     | TOKEN_ABS
     | TOKEN_SWITCH
     | TOKEN_CASE
+    | TOKEN_DEFAULT
     | TOKEN_GCD
     | TOKEN_MCM
     | TOKEN_ROUND
@@ -217,6 +217,7 @@ type nonTerminalId =
     | NONTERM_StmtU
     | NONTERM_Caselist
     | NONTERM_Casedec
+    | NONTERM_Default
     | NONTERM_Expr
     | NONTERM_ExprNotAccess
     | NONTERM_AtExprNotAccess
