@@ -275,7 +275,8 @@ let CODESQRT  = 50;
 [<Literal>]
 let CODEPOW  = 51;
 
-
+[<Literal>]
+let CODECSTS  = 52;
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
  *)
@@ -424,14 +425,13 @@ let ntolabel (n:int) :label =
 
 //反编译
 let rec decomp ints : instr list = 
-
     // printf "%A" ints
     match ints with
     | []                                              ->  []
     | CODEFABS :: ints_rest                           ->   FABS           :: decomp ints_rest
-    | CODELOG :: ints_rest                           ->    LOG           :: decomp ints_rest
+    | CODELOG :: ints_rest                            ->    LOG           :: decomp ints_rest
     | CODESQRT :: ints_rest                           ->   SQRT           :: decomp ints_rest
-    | CODEPOW :: ints_rest                           ->    POW            :: decomp ints_rest
+    | CODEPOW :: ints_rest                            ->    POW            :: decomp ints_rest
     | CODEITOF :: ints_rest                           ->   ITOF           :: decomp ints_rest
     | CODEFTOI :: ints_rest                           ->   FTOI           :: decomp ints_rest
     | CODEGCD  :: ints_rest                           ->   GCD           :: decomp ints_rest
@@ -480,6 +480,4 @@ let rec decomp ints : instr list =
     | CODESTOP   :: ints_rest                         ->   STOP             :: decomp ints_rest
     | CODECSTI   :: i :: ints_rest                    ->   CSTI i :: decomp ints_rest   
     | CODECSTF   :: i :: ints_rest                    ->   CSTF i :: decomp ints_rest 
-    | CODECSTS   :: i :: ints_rest                    ->   CSTS i :: decomp ints_rest 
     | _                                       ->    printf "%A" ints; failwith "unknow code"
-

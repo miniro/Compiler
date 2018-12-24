@@ -48,6 +48,7 @@ type token =
   | MINUSONE
   | INVO
   | COS
+  | STRING
   | SIN
   | TAN
   | ASIN
@@ -57,7 +58,6 @@ type token =
   | ELSE
   | IF
   | INT
-  | STRING
   | FLOAT
   | NULL
   | PRINT
@@ -90,6 +90,7 @@ type token =
   | LOG
   | SQRT
   | POW
+  | CSTCHAR of (char)
   | CSTSTRING of (string)
   | NAME of (string)
   | CSTFLOAT of (float)
@@ -146,6 +147,7 @@ type tokenId =
     | TOKEN_MINUSONE
     | TOKEN_INVO
     | TOKEN_COS
+    | TOKEN_STRING
     | TOKEN_SIN
     | TOKEN_TAN
     | TOKEN_ASIN
@@ -155,7 +157,6 @@ type tokenId =
     | TOKEN_ELSE
     | TOKEN_IF
     | TOKEN_INT
-    | TOKEN_STRING
     | TOKEN_FLOAT
     | TOKEN_NULL
     | TOKEN_PRINT
@@ -188,6 +189,7 @@ type tokenId =
     | TOKEN_LOG
     | TOKEN_SQRT
     | TOKEN_POW
+    | TOKEN_CSTCHAR
     | TOKEN_CSTSTRING
     | TOKEN_NAME
     | TOKEN_CSTFLOAT

@@ -2,10 +2,11 @@ module Absyn
 
 type typ =
   | TypI                           
-  | TypC                           
+  | TypC                          
   | TypA of typ * int option      
   | TypP of typ
-  | TypF 
+  | TypF
+  | TypS  
 
 and access =                                                      
   | AccVar of string                 
@@ -20,6 +21,7 @@ and expr =
   | Assign of access * expr        
   | Addr of access                 
   | CstI of int
+  | CstC of char
   | CstS of string
   | CstBIN of int
   | CstOCT of int

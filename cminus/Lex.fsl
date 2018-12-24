@@ -50,6 +50,7 @@ let keyword s =
     | "int"     -> INT
     | "float"   -> FLOAT
     | "String"  -> STRING
+    | "string"  -> STRING
     | "null"    -> NULL
     | "print"   -> PRINT
     | "printi"  -> PRINTI
@@ -89,10 +90,12 @@ rule Token = parse
   | [' ' '\t' '\r'] { Token lexbuf }
   | '\n'            { lexbuf.EndPos <- lexbuf.EndPos.NextLine; Token lexbuf }
   | ['0'-'9']+      { CSTINT (System.Int32.Parse (lexemeAsString lexbuf)) }  
+  | ['''] [' '-'ÿ']* [''']  { CSTCHAR ((lexemeAsString lexbuf).[1]) } 
   | ['0'-'9']+'.'['0'-'9']+ { CSTFLOAT (System.Double.Parse (lexemeAsString lexbuf)) }  
   | ['a'-'z''A'-'Z']['a'-'z''A'-'Z''0'-'9']*
                     { keyword (lexemeAsString lexbuf) }
   | "**"            { INVO }
+  | ['"'] [' '-'ÿ']* ['"']      { CSTSTRING (lexemeAsString lexbuf) }
   | '+'             { PLUS } 
   | "++"            { PLUSONE }
   | "--"            { MINUSONE }
@@ -140,7 +143,6 @@ rule Token = parse
   | "/ /"            { EndLineComment lexbuf; Token lexbuf }
   | "/*"            { Comment lexbuf; Token lexbuf }
   | "(*"            { Comment lexbuf; Token lexbuf }
-  | '['"'] [' '-'ÿ']* ['"']'             { CSTSTRING (String [] lexbuf) }
   | eof             { EOF }
   | _               { failwith "Lexer error: illegal symbol" }
 

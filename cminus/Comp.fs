@@ -149,6 +149,9 @@ and cStmtOrDec stmtOrDec (varEnv : VarEnv) (funEnv : FunEnv) : VarEnv * instr li
     | Stmt stmt    -> (varEnv, cStmt stmt varEnv funEnv) 
     | Dec (typ, x) -> allocate Locvar (typ, x) varEnv
 
+and changeChar (a:char):int=
+  (int)a
+  
 and changeHEX (a:int):int=
     let mutable sum,tmp,i=0,a,0
     while (tmp<>0) do
@@ -199,6 +202,7 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | Access acc     -> cAccess acc varEnv funEnv @ [LDI] 
     | Assign(acc, e) -> cAccess acc varEnv funEnv @ cExpr e varEnv funEnv @ [STI]
     | CstI i         -> [CSTI i]
+    | CstC i         -> [CSTI (changeChar i)]
     | CstS i         -> [CSTS (changeStr i)]
     | CstF i         -> [CSTF (change i)]
     | CstHEX i       -> [CSTI (changeHEX i)]

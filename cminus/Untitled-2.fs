@@ -1,2 +1,3 @@
-let array3 = "12345"
-System.Int32.Parse(array3.[2..])
+let c='a'
+
+let b=int(c)
