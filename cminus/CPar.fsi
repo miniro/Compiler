@@ -57,6 +57,7 @@ type token =
   | ELSE
   | IF
   | INT
+  | STRING
   | FLOAT
   | NULL
   | PRINT
@@ -154,6 +155,7 @@ type tokenId =
     | TOKEN_ELSE
     | TOKEN_IF
     | TOKEN_INT
+    | TOKEN_STRING
     | TOKEN_FLOAT
     | TOKEN_NULL
     | TOKEN_PRINT

@@ -91,8 +91,6 @@ let makeGlobalEnvs (topdecs : topdec list) : VarEnv * FunEnv * instr list =
 *)
 
 let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) : instr list = 
-
-
     match stmt with
     | If (e, stmt1, stmt2) -> 
       let labelse = newLabel()
@@ -133,14 +131,6 @@ let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
 
       code @ [INCSP(snd varEnv - fdepthend)]
 
-    // | Switch(e, cases) ->
-    //   let rec getcode e cases = 
-    //     match cases with
-    //     | []          -> failwith ("case list not found")
-    //     | (csti, stm)::es -> if cExpr e varEnv funEnv = [CSTI csti] then cStmt stm varEnv funEnv else getcode e es
-    //   let result = getcode e cases
-    //   result
-
     | Switch(e, cases) ->
       let tmp = cExpr e varEnv funEnv
       let lab = newLabel()
@@ -171,26 +161,6 @@ let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       [RET (snd varEnv - 1)]
     | Return (Some e) -> 
       cExpr e varEnv funEnv @ [RET (snd varEnv)]
-
-    // | Switch(e, cases) ->
-    //   let tmp = cExpr e varEnv funEnv
-    //   let mutable ss = snd cases.[0]
-    //   let lab = newLabel()
-    //   let rec getcode e cases = 
-    //     match cases with
-    //     | []          -> [INCSP 0]
-    //     | (csti, stm)::es -> 
-    //       ss <- stm
-    //       printf "%A" ss
-    //       tmp @ [CSTI csti] @ [SUB] @ [IFZERO lab] @ getcode e es
-      
-    //   let result = getcode e cases @ [Label lab] @ cStmt ss varEnv funEnv
-    //   result
-
-    // | Return None -> 
-    //   [RET (snd varEnv - 1)]
-    // | Return (Some e) -> 
-    //   cExpr e varEnv funEnv @ [RET (snd varEnv)]
 
 and cStmtOrDec stmtOrDec (varEnv : VarEnv) (funEnv : FunEnv) : VarEnv * instr list = 
     match stmtOrDec with 
@@ -228,6 +198,9 @@ and changeBIN (a:int):int=
       tmp<-tmp/10
       i<-i+1
     sum
+and changeStr (a:string):int list=
+    [1]
+
 and change (a:float):int=
     if a>0.0
     then
@@ -244,6 +217,7 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | Access acc     -> cAccess acc varEnv funEnv @ [LDI] 
     | Assign(acc, e) -> cAccess acc varEnv funEnv @ cExpr e varEnv funEnv @ [STI]
     | CstI i         -> [CSTI i]
+    | CstS i         -> [CSTS (changeStr i)]
     | CstF i         -> [CSTF (change i)]
     | CstHEX i       -> [CSTI (changeHEX i)]
     | CstOCT i       -> [CSTI (changeOCT i)]

@@ -49,6 +49,7 @@ let keyword s =
     | "if"      -> IF
     | "int"     -> INT
     | "float"   -> FLOAT
+    | "String"  -> STRING
     | "null"    -> NULL
     | "print"   -> PRINT
     | "printi"  -> PRINTI
@@ -140,7 +141,7 @@ rule Token = parse
   | "/ /"            { EndLineComment lexbuf; Token lexbuf }
   | "/*"            { Comment lexbuf; Token lexbuf }
   | "(*"            { Comment lexbuf; Token lexbuf }
-  | '"'             { CSTSTRING (String [] lexbuf) }
+  | '['"'] [' '-'ÿ']* ['"']'             { CSTSTRING (String [] lexbuf) }
   | eof             { EOF }
   | _               { failwith "Lexer error: illegal symbol" }
 

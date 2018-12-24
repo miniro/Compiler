@@ -38,6 +38,7 @@ class Machine {
     BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37,CSTF=38,
     PRINTF = 39,FTOI=40 ,ITOF=41 ,COS  = 42,TAN  = 43,ASIN  = 44 ,ACOS  = 45,ATAN  = 46,SIN  = 47, FABS = 48,LOG = 49,SQRT = 50,POW = 51;
 
+
   final static int STACKSIZE = 1000;
   
   // Read code from file and execute it
@@ -109,6 +110,8 @@ class Machine {
       case CSTI:
         s[sp+1] = p[pc++]; sp++; break;
       case CSTF:
+        s[sp+1] = p[pc++]; sp++; break;
+      case CSTS:
         s[sp+1] = p[pc++]; sp++; break;
       case ADD:{
         boolean flag=false;double f1=s[sp-1],f2=s[sp];
@@ -313,6 +316,7 @@ class Machine {
     switch (p[pc]) {
     case CSTI:   return "CSTI " + p[pc+1]; 
     case CSTF:   return "CSTF " + p[pc+1]; 
+    case CSTS:   return "CSTS " + p[pc+1]; 
     case BITNOT:  return "BITNOT";
     case BITLEFT: return "BITLEFT";
     case BITRIGHT:  return "BITRIGHT";
