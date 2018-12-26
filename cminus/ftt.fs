@@ -2,7 +2,8 @@
 
 let args = System.Environment.GetCommandLineArgs()
 
-let _ = printf "cminus compiler v 1.0.0.0 of 2018-12-26\n";;
+let _ = printf "List-C compiler v 1.0.0.0 of 2012-02-13\n";;
+
 
 let _ = if args.Length > 1 then
            let source = args.[1]
