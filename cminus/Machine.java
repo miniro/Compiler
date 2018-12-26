@@ -36,7 +36,8 @@ class Machine {
     PRINTI = 22, PRINTC = 23, 
     LDARGS = 24,STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,
     BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37,CSTF=38,
-    PRINTF = 39,FTOI=40 ,ITOF=41 ,COS  = 42,TAN  = 43,ASIN  = 44 ,ACOS  = 45,ATAN  = 46,SIN  = 47, FABS = 48,LOG = 49,SQRT = 50,POW = 51,CSTS=52;
+    PRINTF = 39,FTOI=40 ,ITOF=41 ,COS  = 42,TAN  = 43,ASIN  = 44 ,ACOS  = 45,ATAN  = 46,SIN  = 47, FABS = 48,
+    LOG = 49,SQRT = 50,POW = 51,CSTS=52;
 
 
   final static int STACKSIZE = 1000;
@@ -106,14 +107,19 @@ class Machine {
     for (;;) {
       if (trace) 
         printsppc(s, bp, sp, p, pc);
-      switch (p[pc++]) {
+      switch (p[pc++]) {   
       case CSTI:
         s[sp+1] = p[pc++]; sp++; break;
       case CSTF:
         s[sp+1] = p[pc++]; sp++; break;
-      case CSTS:{
-        s[sp+1] = p[pc++]; sp++; break;
-      }
+      case CSTS:
+        // System.out.println(p[pc-1]+" "+p[pc]+" "+p[pc+1]+" ");
+        s[sp+1] = p[pc];  sp+=1;
+        s[sp+1] = p[pc+1]; sp+=1;
+        pc+=3;
+        // System.out.print(p[pc]);
+        break;
+
       case ADD:{
         boolean flag=false;double f1=s[sp-1],f2=s[sp];
         if(judge(String.valueOf(s[sp-1]))){f1=change(s[sp-1]);flag=true;}
@@ -293,7 +299,11 @@ class Machine {
       case PRINTI:
         System.out.print(s[sp] + " "); break; 
       case PRINTC:
-        System.out.print((char)(s[sp])); break; 
+        for(int i=0;i<=sp;i++){
+          System.out.print(s[i]+" ");
+        }
+        System.out.print("\n");
+        System.out.print(s[sp]+" "+(char)(s[sp])); break; 
       case PRINTF:{
         float ans=(float)change(s[sp]);
         System.out.print(ans +" "); break;
@@ -317,6 +327,7 @@ class Machine {
     switch (p[pc]) {
     case CSTI:   return "CSTI " + p[pc+1]; 
     case CSTF:   return "CSTF " + p[pc+1]; 
+    case CSTS:   return "CSTS " + p[pc+1]+" "+p[pc+2]; 
     case BITNOT:  return "BITNOT";
     case BITLEFT: return "BITLEFT";
     case BITRIGHT:  return "BITRIGHT";

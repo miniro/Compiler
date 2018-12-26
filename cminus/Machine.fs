@@ -349,7 +349,7 @@ let rec emitints getlab instr ints =
     | Label lab      -> ints
     | CSTI i         -> CODECSTI   :: i :: ints
     | CSTF i         -> CODECSTF   :: i :: ints
-    | CSTS i         -> CODECSTS   :: i @ ints
+    | CSTS i         -> CODECSTS   :: i.[0] ::i.[1]::ints
     | ADD            -> CODEADD    :: ints
     | SUB            -> CODESUB    :: ints
     | MUL            -> CODEMUL    :: ints
@@ -481,5 +481,5 @@ let rec decomp ints : instr list =
     | CODESTOP   :: ints_rest                         ->   STOP             :: decomp ints_rest
     | CODECSTI   :: i :: ints_rest                    ->   CSTI i :: decomp ints_rest   
     | CODECSTF   :: i :: ints_rest                    ->   CSTF i :: decomp ints_rest 
-    | CODECSTS   :: i :: j::ints_rest                 ->   CSTI i :: decomp ints_rest 
+    | CODECSTS   :: i :: j::ints_rest                 ->   CSTI i :: CSTI j::decomp ints_rest 
     | _                                       ->    printf "%A" ints; failwith "unknow code"
