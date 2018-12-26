@@ -212,6 +212,7 @@ and changeStr (a:string):int list=
         let c=(int)a.[i]
         list<- c :: list
         printf "%d" c
+    list<- list@ [0]    
     list
 
 and change (a:float):int=
@@ -231,7 +232,8 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | Assign(acc, e) -> cAccess acc varEnv funEnv @ cExpr e varEnv funEnv @ [STI]
     | CstI i         -> [CSTI i]
     | CstC i         -> [CSTI (changeChar i)]
-    | CstS i         -> [CSTS (changeStr i)]
+    | CstS i         -> [INCSP 2; GETSP; CSTI (2-1); SUB] @[CSTS (changeStr i)]  
+      
     | CstF i         -> [CSTF (change i)]
     | CstHEX i       -> [CSTI (changeHEX i)]
     | CstOCT i       -> [CSTI (changeOCT i)]
