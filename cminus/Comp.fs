@@ -207,7 +207,12 @@ and changeBIN (a:int):int=
       i<-i+1
     sum
 and changeStr (a:string):int list=
-    [1]
+    let mutable list=[]
+    for i=1 to a.Length-2 do
+        let c=(int)a.[i]
+        list<- c :: list
+        printf "%d" c
+    list
 
 and change (a:float):int=
     if a>0.0
