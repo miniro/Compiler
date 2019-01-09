@@ -113,6 +113,7 @@ StmtM:  /* No unbalanced if-else */
   | DO StmtM WHILE LPAR Expr RPAR       { Do($2, $5)           }
   | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtM  { For($3, $5, $7, $9) } 
   | SWITCH LPAR Expr RPAR LBRACE Caselist RBRACE { Switch($3, $6)   }
+  | SWITCH LPAR Expr RPAR LBRACE Caselist DEFAULT COLON StmtM SEMI RBRACE { Switch2($3, $6, $9)   }
 ;
 
 StmtU:
@@ -122,6 +123,7 @@ StmtU:
   | DO StmtU WHILE LPAR Expr RPAR       { Do($2, $5)           }
   | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtU  { For($3, $5, $7, $9) } 
   | SWITCH LPAR Expr RPAR LBRACE Caselist RBRACE { Switch($3, $6)   }
+  | SWITCH LPAR Expr RPAR LBRACE Caselist DEFAULT COLON StmtU SEMI RBRACE { Switch2($3, $6, $9)   }
 ;
 
 Caselist:

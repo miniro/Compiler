@@ -3,7 +3,7 @@ module Absyn
 type typ =
   | TypI                           
   | TypC                          
-  | TypA of typ * int option      
+  | TypA of typ * int option
   | TypP of typ
   | TypF
   | TypS  
