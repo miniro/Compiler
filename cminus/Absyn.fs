@@ -66,6 +66,7 @@ and expr =
   | Log of expr
   | Pow of expr * expr
   | Sort of expr * int * int
+  | Length of string
 and stmt =
   | If of expr * stmt * stmt
   | While of expr * stmt

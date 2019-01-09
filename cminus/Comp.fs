@@ -10,6 +10,10 @@ open Machine
 
 type 'data Env = (string * 'data) list
 
+let mutable arraylist = Map.empty
+
+let getArrayLen arr = arraylist.[arr]
+
 let rec getlen list =
     match list with
     | []          -> 0
@@ -49,6 +53,8 @@ let allocate (kind : int -> Var) (typ, x) (varEnv : VarEnv) : VarEnv * instr lis
     | TypA (TypA _, _) -> 
       raise (Failure "allocate: array of arrays not permitted")
     | TypA (t, Some i) -> 
+      arraylist <- arraylist.Add(x,i)
+      printf "%A" (arraylist)
       let newEnv = ((x, (kind (fdepth+i), typ)) :: env, fdepth+i+1) //数组占用 i个位置
       let code = [INCSP i; GETSP; CSTI (i-1); SUB]
       (newEnv, code)
@@ -411,7 +417,9 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       result
     | Sort(array, i1, i2) ->
       cExpr array varEnv funEnv @ [CSTI i1] @ [CSTI i2] @ [SORT]
-
+    | Length(str)  ->
+      let len = getArrayLen str
+      [CSTI len]
     | _     -> raise (Failure "unknown primitive 6")
     
       
