@@ -409,6 +409,8 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
             cExpr e varEnv funEnv @ getcode elist
       let result = getcode list
       result
+    | Sort(array, i1, i2) ->
+      cExpr array varEnv funEnv @ [CSTI i1] @ [CSTI i2] @ [SORT]
 
     | _     -> raise (Failure "unknown primitive 6")
     

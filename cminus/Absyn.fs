@@ -7,6 +7,7 @@ type typ =
   | TypP of typ
   | TypF
   | TypS  
+  | TypStruct of typ list
 
 and access =                                                      
   | AccVar of string                 
@@ -45,7 +46,6 @@ and expr =
   | Call of string * expr list
   | Question of expr * expr * expr
   | Comexpr of expr list
-  | Sort of int list
   | Max of expr * expr
   | Min of expr * expr
   | Swap of access * access
@@ -65,6 +65,7 @@ and expr =
   | Sqrt of expr
   | Log of expr
   | Pow of expr * expr
+  | Sort of expr * int * int
 and stmt =
   | If of expr * stmt * stmt
   | While of expr * stmt

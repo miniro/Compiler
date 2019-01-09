@@ -23,7 +23,7 @@ let nl = CstI 10
 %token NOT SEQOR SEQAND
 %token LPAR RPAR LBRACE RBRACE LBRACK RBRACK SEMI COMMA ASSIGN AMP 
 %token PLUSASSIGN MINUSASSIGN TIMESASSIGN DIVASSIGN MODASSIGN COLON QUESTION BITAND BITOR BITXOR BITLEFT BITRIGHT BITANDASSIGN BITORASSIGN BITXORASSIGN BITLEFTASSIGN BITRIGHTASSIGN BITNOT
-%token EOF
+%token EOF STRUCT
 
 
 %right ASSIGN PLUSASSIGN MINUSASSIGN TIMESASSIGN DIVASSIGN MODASSIGN   BITANDASSIGN BITORASSIGN BITXORASSIGN BITLEFTASSIGN BITRIGHTASSIGN          /* lowest precedence */
@@ -64,7 +64,6 @@ Vardec:
     Type Vardesc                        { ((fst $2) $1, snd $2) }
 ;
 
-//let compose1 f (g, s) = ((fun x -> g(f(x))), s)
 Vardesc: 
     NAME                                { ((fun t -> t), $1)                      }
   | TIMES Vardesc                       { compose1 TypP $2                        }
@@ -208,6 +207,7 @@ ExprNotAccess:
   | Access BITRIGHTASSIGN Expr          { Bitassign(">>",$1, $3)      }
   | Expr QUESTION Expr COLON Expr       { Question($1, $3, $5)}
   | LPAR Comexpr RPAR                   { Comexpr($2)         }
+  | SORT LPAR Expr COMMA CSTINT COMMA CSTINT RPAR { Sort($3,$5,$7) } 
 ;
 
 Comexpr:
@@ -271,9 +271,22 @@ ConstF:
   | CSTFLOAT                            { $1       }
   | MINUS CSTFLOAT                      { - $2     }
 ;
+
 Type:
     INT                                 { TypI     }
   | CHAR                                { TypC     }
   | FLOAT                               { TypF     }
   | STRING                              { TypS     }
+;
+
+StructType:
+    STRUCT NAME LBRACE Svardeclist RBRACE  { ($2,$4) }
+;
+
+Svardeclist:
+  Svardec Svardeclist                   { $1 :: $2 }
+;
+
+Svardec:
+  Vardec SEMI                           { $1 }
 ;

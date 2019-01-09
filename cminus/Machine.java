@@ -14,6 +14,7 @@
 
 import java.io.*;
 import java.util.*;
+import java.util.Arrays;
 
 class Machine {
   public static void main(String[] args)        
@@ -37,7 +38,7 @@ class Machine {
     LDARGS = 24,STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,
     BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37,CSTF=38,
     PRINTF = 39,FTOI=40 ,ITOF=41 ,COS  = 42,TAN  = 43,ASIN  = 44 ,ACOS  = 45,ATAN  = 46,SIN  = 47, FABS = 48,
-    LOG = 49,SQRT = 50,POW = 51,CSTS=52;
+    LOG = 49,SQRT = 50,POW = 51,CSTS=52,SORT=53;
 
 
   final static int STACKSIZE = 1000;
@@ -149,6 +150,13 @@ class Machine {
         double f2=change(s[sp]);
         s[sp-1]=change2(Math.pow(f1,f2));
         sp--;
+        break;
+      }
+      case SORT:{
+        int beginIndex = s[sp-2]+s[sp-1];
+        int totalL = beginIndex+s[sp];
+        Arrays.sort(s, beginIndex, totalL);
+        sp-=2;
         break;
       }
       case COS:{
@@ -362,6 +370,7 @@ class Machine {
     case NEG:    return "NEG";
     case INVO:   return "INVO";
     case GCD:    return "GCD";
+    case SORT:   return "SORT";
     default:     return "<unknown>";
     }
   }

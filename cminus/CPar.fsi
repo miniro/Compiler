@@ -2,6 +2,7 @@
 module CPar
 type token = 
   | EOF
+  | STRUCT
   | PLUSASSIGN
   | MINUSASSIGN
   | TIMESASSIGN
@@ -101,6 +102,7 @@ type token =
   | CSTBIN of (int)
 type tokenId = 
     | TOKEN_EOF
+    | TOKEN_STRUCT
     | TOKEN_PLUSASSIGN
     | TOKEN_MINUSASSIGN
     | TOKEN_TIMESASSIGN
@@ -230,6 +232,9 @@ type nonTerminalId =
     | NONTERM_ConstBIN
     | NONTERM_ConstF
     | NONTERM_Type
+    | NONTERM_StructType
+    | NONTERM_Svardeclist
+    | NONTERM_Svardec
 /// This function maps tokens to integer indexes
 val tagOfToken: token -> int
 

@@ -70,6 +70,7 @@ type instr =
   | LOG
   | SQRT
   | POW
+  | SORT
 (* Generate new distinct labels *)
 
 // 返回两个函数 resetLabels , newLabel
@@ -278,6 +279,9 @@ let CODEPOW  = 51;
 [<Literal>]
 let CODECSTS  = 52;
 
+[<Literal>]
+let CODESORT  = 53;
+
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
  *)
@@ -339,6 +343,7 @@ let makelabenv (addr, labenv) instr =
     | LOG            -> (addr+1, labenv)
     | SQRT           -> (addr+1, labenv)
     | POW            -> (addr+1, labenv)
+    | SORT           -> (addr+1, labenv)
 (* Bytecode emission, second pass: output bytecode as integers *)
 
 //getlab 是得到标签所在地址的函数
@@ -400,6 +405,7 @@ let rec emitints getlab instr ints =
     | LOG            -> CODELOG  :: ints
     | SQRT           -> CODESQRT  :: ints
     | POW            -> CODEPOW  :: ints
+    | SORT           -> CODESORT :: ints
 
 (* Convert instruction list to int list in two passes:
    Pass 1: build label environment
@@ -429,6 +435,7 @@ let rec decomp ints : instr list =
     // printf "%A" ints
     match ints with
     | []                                              ->  []
+    | CODESORT :: ints_rest                           ->   SORT           :: decomp ints_rest
     | CODEFABS :: ints_rest                           ->   FABS           :: decomp ints_rest
     | CODELOG :: ints_rest                            ->    LOG           :: decomp ints_rest
     | CODESQRT :: ints_rest                           ->   SQRT           :: decomp ints_rest

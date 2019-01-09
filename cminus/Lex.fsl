@@ -61,12 +61,13 @@ let keyword s =
     | "true"    -> CSTBOOL 1
     | "void"    -> VOID 
     | "while"   -> WHILE     
-    | "Sort"    -> SORT
     | "Max"     -> MAX
     | "Min"     -> MIN
     | "Swap"    -> SWAP
+    | "Sort"    -> SORT
     | "switch"  -> SWITCH    
     | "case"    -> CASE
+    | "struct"  -> STRUCT
     | _         -> NAME s
  
 let cEscape s = 
