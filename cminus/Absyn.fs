@@ -72,6 +72,7 @@ and stmt =
   | While of expr * stmt
   | Do of stmt * expr
   | For of expr * expr * expr * stmt
+  | Until of expr * stmt
   | Expr of expr
   | Return of expr option
   | Block of stmtordec list

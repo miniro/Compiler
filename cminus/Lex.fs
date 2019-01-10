@@ -67,6 +67,7 @@ let keyword s =
     | "Swap"    -> SWAP
     | "Sort"    -> SORT
     | "Length"  -> LENGTH
+    | "until"   -> UNTIL
     | "switch"  -> SWITCH    
     | "case"    -> CASE
     | "struct"  -> STRUCT
@@ -85,7 +86,7 @@ let cEscape s =
     | "\\r"  -> '\r'
     | _      -> failwith "Lexer error: impossible C escape"
 
-# 88 "Lex.fs"
+# 89 "Lex.fs"
 let trans : uint16[] array = 
     [| 
     (* State 0 *)
@@ -314,406 +315,406 @@ and String chars (lexbuf : Microsoft.FSharp.Text.Lexing.LexBuffer<_>) = _fslex_S
 and _fslex_Token  _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 89 "Lex.fsl"
+# 90 "Lex.fsl"
                                           CSTBIN(System.Int32.Parse ((lexemeAsString lexbuf).[2..]))  
-# 319 "Lex.fs"
+# 320 "Lex.fs"
           )
   | 1 -> ( 
-# 90 "Lex.fsl"
+# 91 "Lex.fsl"
                                           CSTOCT(System.Int32.Parse ((lexemeAsString lexbuf).[2..]))  
-# 324 "Lex.fs"
+# 325 "Lex.fs"
           )
   | 2 -> ( 
-# 91 "Lex.fsl"
+# 92 "Lex.fsl"
                                           CSTHEX(System.Int32.Parse ((lexemeAsString lexbuf).[2..]))  
-# 329 "Lex.fs"
+# 330 "Lex.fs"
           )
   | 3 -> ( 
-# 92 "Lex.fsl"
+# 93 "Lex.fsl"
                                      Token lexbuf 
-# 334 "Lex.fs"
+# 335 "Lex.fs"
           )
   | 4 -> ( 
-# 93 "Lex.fsl"
+# 94 "Lex.fsl"
                                      lexbuf.EndPos <- lexbuf.EndPos.NextLine; Token lexbuf 
-# 339 "Lex.fs"
+# 340 "Lex.fs"
           )
   | 5 -> ( 
-# 94 "Lex.fsl"
+# 95 "Lex.fsl"
                                      CSTINT (System.Int32.Parse (lexemeAsString lexbuf)) 
-# 344 "Lex.fs"
+# 345 "Lex.fs"
           )
   | 6 -> ( 
-# 95 "Lex.fsl"
+# 96 "Lex.fsl"
                                              CSTCHAR ((lexemeAsString lexbuf).[1]) 
-# 349 "Lex.fs"
+# 350 "Lex.fs"
           )
   | 7 -> ( 
-# 96 "Lex.fsl"
+# 97 "Lex.fsl"
                                              CSTFLOAT (System.Double.Parse (lexemeAsString lexbuf)) 
-# 354 "Lex.fs"
+# 355 "Lex.fs"
           )
   | 8 -> ( 
-# 98 "Lex.fsl"
+# 99 "Lex.fsl"
                                      keyword (lexemeAsString lexbuf) 
-# 359 "Lex.fs"
+# 360 "Lex.fs"
           )
   | 9 -> ( 
-# 99 "Lex.fsl"
+# 100 "Lex.fsl"
                                      INVO 
-# 364 "Lex.fs"
+# 365 "Lex.fs"
           )
   | 10 -> ( 
-# 100 "Lex.fsl"
+# 101 "Lex.fsl"
                                                  CSTSTRING (lexemeAsString lexbuf) 
-# 369 "Lex.fs"
+# 370 "Lex.fs"
           )
   | 11 -> ( 
-# 101 "Lex.fsl"
+# 102 "Lex.fsl"
                                      PLUS 
-# 374 "Lex.fs"
+# 375 "Lex.fs"
           )
   | 12 -> ( 
-# 102 "Lex.fsl"
+# 103 "Lex.fsl"
                                      PLUSONE 
-# 379 "Lex.fs"
+# 380 "Lex.fs"
           )
   | 13 -> ( 
-# 103 "Lex.fsl"
+# 104 "Lex.fsl"
                                      MINUSONE 
-# 384 "Lex.fs"
+# 385 "Lex.fs"
           )
   | 14 -> ( 
-# 104 "Lex.fsl"
+# 105 "Lex.fsl"
                                      MINUS 
-# 389 "Lex.fs"
+# 390 "Lex.fs"
           )
   | 15 -> ( 
-# 105 "Lex.fsl"
+# 106 "Lex.fsl"
                                      TIMES 
-# 394 "Lex.fs"
+# 395 "Lex.fs"
           )
   | 16 -> ( 
-# 106 "Lex.fsl"
+# 107 "Lex.fsl"
                                      DIV 
-# 399 "Lex.fs"
+# 400 "Lex.fs"
           )
   | 17 -> ( 
-# 107 "Lex.fsl"
+# 108 "Lex.fsl"
                                      MOD 
-# 404 "Lex.fs"
+# 405 "Lex.fs"
           )
   | 18 -> ( 
-# 108 "Lex.fsl"
+# 109 "Lex.fsl"
                                      ASSIGN 
-# 409 "Lex.fs"
+# 410 "Lex.fs"
           )
   | 19 -> ( 
-# 109 "Lex.fsl"
+# 110 "Lex.fsl"
                                      PLUSASSIGN 
-# 414 "Lex.fs"
+# 415 "Lex.fs"
           )
   | 20 -> ( 
-# 110 "Lex.fsl"
+# 111 "Lex.fsl"
                                      MINUSASSIGN 
-# 419 "Lex.fs"
+# 420 "Lex.fs"
           )
   | 21 -> ( 
-# 111 "Lex.fsl"
+# 112 "Lex.fsl"
                                      TIMESASSIGN 
-# 424 "Lex.fs"
+# 425 "Lex.fs"
           )
   | 22 -> ( 
-# 112 "Lex.fsl"
+# 113 "Lex.fsl"
                                      DIVASSIGN 
-# 429 "Lex.fs"
+# 430 "Lex.fs"
           )
   | 23 -> ( 
-# 113 "Lex.fsl"
+# 114 "Lex.fsl"
                                      MODASSIGN 
-# 434 "Lex.fs"
+# 435 "Lex.fs"
           )
   | 24 -> ( 
-# 114 "Lex.fsl"
+# 115 "Lex.fsl"
                                      BITANDASSIGN 
-# 439 "Lex.fs"
+# 440 "Lex.fs"
           )
   | 25 -> ( 
-# 115 "Lex.fsl"
+# 116 "Lex.fsl"
                                      BITORASSIGN 
-# 444 "Lex.fs"
+# 445 "Lex.fs"
           )
   | 26 -> ( 
-# 116 "Lex.fsl"
+# 117 "Lex.fsl"
                                      BITXORASSIGN 
-# 449 "Lex.fs"
+# 450 "Lex.fs"
           )
   | 27 -> ( 
-# 117 "Lex.fsl"
+# 118 "Lex.fsl"
                                      BITLEFTASSIGN 
-# 454 "Lex.fs"
+# 455 "Lex.fs"
           )
   | 28 -> ( 
-# 118 "Lex.fsl"
+# 119 "Lex.fsl"
                                      BITRIGHTASSIGN 
-# 459 "Lex.fs"
+# 460 "Lex.fs"
           )
   | 29 -> ( 
-# 119 "Lex.fsl"
+# 120 "Lex.fsl"
                                      EQ 
-# 464 "Lex.fs"
+# 465 "Lex.fs"
           )
   | 30 -> ( 
-# 120 "Lex.fsl"
+# 121 "Lex.fsl"
                                      NE 
-# 469 "Lex.fs"
+# 470 "Lex.fs"
           )
   | 31 -> ( 
-# 121 "Lex.fsl"
+# 122 "Lex.fsl"
                                      GT 
-# 474 "Lex.fs"
+# 475 "Lex.fs"
           )
   | 32 -> ( 
-# 122 "Lex.fsl"
+# 123 "Lex.fsl"
                                      LT 
-# 479 "Lex.fs"
+# 480 "Lex.fs"
           )
   | 33 -> ( 
-# 123 "Lex.fsl"
+# 124 "Lex.fsl"
                                      GE 
-# 484 "Lex.fs"
+# 485 "Lex.fs"
           )
   | 34 -> ( 
-# 124 "Lex.fsl"
+# 125 "Lex.fsl"
                                      LE 
-# 489 "Lex.fs"
+# 490 "Lex.fs"
           )
   | 35 -> ( 
-# 125 "Lex.fsl"
+# 126 "Lex.fsl"
                                      SEQOR 
-# 494 "Lex.fs"
+# 495 "Lex.fs"
           )
   | 36 -> ( 
-# 126 "Lex.fsl"
+# 127 "Lex.fsl"
                                      SEQAND 
-# 499 "Lex.fs"
+# 500 "Lex.fs"
           )
   | 37 -> ( 
-# 127 "Lex.fsl"
+# 128 "Lex.fsl"
                                      AMP 
-# 504 "Lex.fs"
+# 505 "Lex.fs"
           )
   | 38 -> ( 
-# 128 "Lex.fsl"
+# 129 "Lex.fsl"
                                     BITNOT
-# 509 "Lex.fs"
+# 510 "Lex.fs"
           )
   | 39 -> ( 
-# 129 "Lex.fsl"
+# 130 "Lex.fsl"
                                     BITLEFT
-# 514 "Lex.fs"
+# 515 "Lex.fs"
           )
   | 40 -> ( 
-# 130 "Lex.fsl"
+# 131 "Lex.fsl"
                                     BITRIGHT
-# 519 "Lex.fs"
+# 520 "Lex.fs"
           )
   | 41 -> ( 
-# 131 "Lex.fsl"
+# 132 "Lex.fsl"
                                     BITXOR
-# 524 "Lex.fs"
+# 525 "Lex.fs"
           )
   | 42 -> ( 
-# 132 "Lex.fsl"
+# 133 "Lex.fsl"
                                     BITOR
-# 529 "Lex.fs"
+# 530 "Lex.fs"
           )
   | 43 -> ( 
-# 133 "Lex.fsl"
+# 134 "Lex.fsl"
                                      NOT 
-# 534 "Lex.fs"
+# 535 "Lex.fs"
           )
   | 44 -> ( 
-# 134 "Lex.fsl"
+# 135 "Lex.fsl"
                                      LPAR 
-# 539 "Lex.fs"
+# 540 "Lex.fs"
           )
   | 45 -> ( 
-# 135 "Lex.fsl"
+# 136 "Lex.fsl"
                                      RPAR 
-# 544 "Lex.fs"
+# 545 "Lex.fs"
           )
   | 46 -> ( 
-# 136 "Lex.fsl"
+# 137 "Lex.fsl"
                                      LBRACE 
-# 549 "Lex.fs"
+# 550 "Lex.fs"
           )
   | 47 -> ( 
-# 137 "Lex.fsl"
+# 138 "Lex.fsl"
                                      RBRACE 
-# 554 "Lex.fs"
+# 555 "Lex.fs"
           )
   | 48 -> ( 
-# 138 "Lex.fsl"
+# 139 "Lex.fsl"
                                      LBRACK 
-# 559 "Lex.fs"
+# 560 "Lex.fs"
           )
   | 49 -> ( 
-# 139 "Lex.fsl"
+# 140 "Lex.fsl"
                                      RBRACK 
-# 564 "Lex.fs"
+# 565 "Lex.fs"
           )
   | 50 -> ( 
-# 140 "Lex.fsl"
+# 141 "Lex.fsl"
                                      SEMI 
-# 569 "Lex.fs"
+# 570 "Lex.fs"
           )
   | 51 -> ( 
-# 141 "Lex.fsl"
+# 142 "Lex.fsl"
                                      COMMA 
-# 574 "Lex.fs"
+# 575 "Lex.fs"
           )
   | 52 -> ( 
-# 142 "Lex.fsl"
+# 143 "Lex.fsl"
                                      COLON 
-# 579 "Lex.fs"
+# 580 "Lex.fs"
           )
   | 53 -> ( 
-# 143 "Lex.fsl"
+# 144 "Lex.fsl"
                                      QUESTION 
-# 584 "Lex.fs"
+# 585 "Lex.fs"
           )
   | 54 -> ( 
-# 144 "Lex.fsl"
+# 145 "Lex.fsl"
                                      EndLineComment lexbuf; Token lexbuf 
-# 589 "Lex.fs"
+# 590 "Lex.fs"
           )
   | 55 -> ( 
-# 145 "Lex.fsl"
+# 146 "Lex.fsl"
                                       EndLineComment lexbuf; Token lexbuf 
-# 594 "Lex.fs"
+# 595 "Lex.fs"
           )
   | 56 -> ( 
-# 146 "Lex.fsl"
-                                     Comment lexbuf; Token lexbuf 
-# 599 "Lex.fs"
-          )
-  | 57 -> ( 
 # 147 "Lex.fsl"
                                      Comment lexbuf; Token lexbuf 
-# 604 "Lex.fs"
+# 600 "Lex.fs"
+          )
+  | 57 -> ( 
+# 148 "Lex.fsl"
+                                     Comment lexbuf; Token lexbuf 
+# 605 "Lex.fs"
           )
   | 58 -> ( 
-# 148 "Lex.fsl"
+# 149 "Lex.fsl"
                                      EOF 
-# 609 "Lex.fs"
+# 610 "Lex.fs"
           )
   | 59 -> ( 
-# 149 "Lex.fsl"
+# 150 "Lex.fsl"
                                      failwith "Lexer error: illegal symbol" 
-# 614 "Lex.fs"
+# 615 "Lex.fs"
           )
   | _ -> failwith "Token"
 (* Rule Comment *)
 and _fslex_Comment  _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 152 "Lex.fsl"
+# 153 "Lex.fsl"
                                      Comment lexbuf; Comment lexbuf 
-# 623 "Lex.fs"
+# 624 "Lex.fs"
           )
   | 1 -> ( 
-# 153 "Lex.fsl"
+# 154 "Lex.fsl"
                                      () 
-# 628 "Lex.fs"
+# 629 "Lex.fs"
           )
   | 2 -> ( 
-# 154 "Lex.fsl"
+# 155 "Lex.fsl"
                                      Comment lexbuf; Comment lexbuf 
-# 633 "Lex.fs"
+# 634 "Lex.fs"
           )
   | 3 -> ( 
-# 155 "Lex.fsl"
+# 156 "Lex.fsl"
                                      () 
-# 638 "Lex.fs"
+# 639 "Lex.fs"
           )
   | 4 -> ( 
-# 156 "Lex.fsl"
+# 157 "Lex.fsl"
                                      lexbuf.EndPos <- lexbuf.EndPos.NextLine; Comment lexbuf 
-# 643 "Lex.fs"
+# 644 "Lex.fs"
           )
   | 5 -> ( 
-# 157 "Lex.fsl"
+# 158 "Lex.fsl"
                                      failwith "Lexer error: unterminated comment" 
-# 648 "Lex.fs"
+# 649 "Lex.fs"
           )
   | 6 -> ( 
-# 158 "Lex.fsl"
+# 159 "Lex.fsl"
                                      Comment lexbuf 
-# 653 "Lex.fs"
+# 654 "Lex.fs"
           )
   | _ -> failwith "Comment"
 (* Rule EndLineComment *)
 and _fslex_EndLineComment  _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 161 "Lex.fsl"
+# 162 "Lex.fsl"
                                      lexbuf.EndPos <- lexbuf.EndPos.NextLine 
-# 662 "Lex.fs"
+# 663 "Lex.fs"
           )
   | 1 -> ( 
-# 162 "Lex.fsl"
+# 163 "Lex.fsl"
                                      () 
-# 667 "Lex.fs"
+# 668 "Lex.fs"
           )
   | 2 -> ( 
-# 163 "Lex.fsl"
+# 164 "Lex.fsl"
                                      EndLineComment lexbuf 
-# 672 "Lex.fs"
+# 673 "Lex.fs"
           )
   | _ -> failwith "EndLineComment"
 (* Rule String *)
 and _fslex_String chars _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 167 "Lex.fsl"
+# 168 "Lex.fsl"
                        Microsoft.FSharp.Core.String.concat "" (List.map string (List.rev chars)) 
-# 681 "Lex.fs"
+# 682 "Lex.fs"
           )
   | 1 -> ( 
-# 169 "Lex.fsl"
+# 170 "Lex.fsl"
                        String (cEscape (lexemeAsString lexbuf) :: chars) lexbuf 
-# 686 "Lex.fs"
+# 687 "Lex.fs"
           )
   | 2 -> ( 
-# 171 "Lex.fsl"
+# 172 "Lex.fsl"
                        String ('\'' :: chars) lexbuf 
-# 691 "Lex.fs"
+# 692 "Lex.fs"
           )
   | 3 -> ( 
-# 173 "Lex.fsl"
+# 174 "Lex.fsl"
                        failwith "Lexer error: illegal escape sequence" 
-# 696 "Lex.fs"
+# 697 "Lex.fs"
           )
   | 4 -> ( 
-# 175 "Lex.fsl"
+# 176 "Lex.fsl"
                        failwith "Lexer error: unterminated string" 
-# 701 "Lex.fs"
+# 702 "Lex.fs"
           )
   | 5 -> ( 
-# 177 "Lex.fsl"
+# 178 "Lex.fsl"
                        failwith "Lexer error: newline in string" 
-# 706 "Lex.fs"
+# 707 "Lex.fs"
           )
   | 6 -> ( 
-# 179 "Lex.fsl"
+# 180 "Lex.fsl"
                        failwith "Lexer error: invalid character in string" 
-# 711 "Lex.fs"
+# 712 "Lex.fs"
           )
   | 7 -> ( 
-# 181 "Lex.fsl"
+# 182 "Lex.fsl"
                        String (char (lexbuf.LexemeChar 0) :: chars) lexbuf 
-# 716 "Lex.fs"
+# 717 "Lex.fs"
           )
   | _ -> failwith "String"
 

@@ -128,6 +128,11 @@ let rec cStmt stmt (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       cExpr e1 varEnv funEnv @ [INCSP -1] @ [GOTO labtest; Label labbegin]
       @ cStmt body varEnv funEnv @ cExpr e3 varEnv funEnv @ [INCSP -1]
       @ [Label labtest] @ cExpr e2 varEnv funEnv @ [IFNZRO labbegin]
+    | Until(e,stmt) ->
+      let lab1 = newLabel()
+      let lab2 = newLabel()
+      [Label lab1] @ cExpr e varEnv funEnv @ [IFNZRO lab2] @ cStmt stmt varEnv funEnv
+      @ [GOTO lab1] @ [Label lab2]
     | Expr e -> 
       cExpr e varEnv funEnv @ [INCSP -1]
     | Block stmts -> 
