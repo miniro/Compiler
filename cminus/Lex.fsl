@@ -65,6 +65,7 @@ let keyword s =
     | "Min"     -> MIN
     | "Swap"    -> SWAP
     | "Sort"    -> SORT
+    | "Length"  -> LENGTH
     | "switch"  -> SWITCH    
     | "case"    -> CASE
     | "struct"  -> STRUCT
