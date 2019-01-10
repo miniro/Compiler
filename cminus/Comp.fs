@@ -3,7 +3,9 @@ module Comp
 open System.IO
 open Absyn
 open Machine
-
+open System
+open System.Collections
+open System.ComponentModel
 (* ------------------------------------------------------------------- *)
 
 (* Simple environment operations *)
@@ -216,15 +218,12 @@ and changeStr (a:string):int list=
     list
 
 and change (a:float):int=
-    if a>0.0
-    then
-      if string((int)a).Length=string(a).Length
-      then int(a)*10000+78
-      else (int(a*(10.0**(float(string(a).Length-string((int)a).Length)+1.0))+float(string(a).Length-string((int)a).Length-1)))*100+78
-    else
-      if string((int)(-a)).Length=string((-a)).Length
-      then -(int((-a))*10000+78)
-      else -(int((-a)*(10.0**(float(string((-a)).Length-string((int)(-a)).Length)+1.0))+float(string((-a)).Length-string((int)(-a)).Length-1))*100+78)
+    let b=(float32)a
+    let d=BitConverter.ToInt32(BitConverter.GetBytes(b),0)
+    // let d=BitConverter.ToString( BitConverter.GetBytes(b) )
+    // printf "%s" d
+    // printf "%f" b
+    d
 
 and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list = 
     match e with
@@ -233,7 +232,6 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | CstI i         -> [CSTI i]
     | CstC i         -> [CSTI (changeChar i)]
     | CstS i         -> [INCSP 2; GETSP; CSTI (2-1); SUB] @[CSTS (changeStr i)]  
-      
     | CstF i         -> [CSTF (change i)]
     | CstHEX i       -> [CSTI (changeHEX i)]
     | CstOCT i       -> [CSTI (changeOCT i)]

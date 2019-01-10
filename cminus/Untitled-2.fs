@@ -1,12 +1,17 @@
+open System
+open System.Collections
+open System.ComponentModel
 
+// let data =([|1uy; 1uy; 1uy; 1uy|]); 
+// let f = BitConverter.ToSingle(data, 0);
+ 
+let c=Convert.ToByte(123.3)
 
-let changeStr (a:string):int list=
-    let mutable list=[]
-    for i=1 to a.Length-2 do
-        let c=(int)a.[i]
-        list<- c :: list
-        printf "%d" c
-    list
-let c=changeStr("123")
+let aSingl  = 2.1000000f;
 
-printf "%d" c.[0]
+let q=BitConverter.ToInt32(BitConverter.GetBytes( aSingl ),0)
+let d=BitConverter.ToString( BitConverter.GetBytes( aSingl ) )
+
+let h=(int)((string)(d.[9..10]+d.[6..7]+d.[3..4]+d.[0..1]))
+
+let a=0xFF
