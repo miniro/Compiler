@@ -68,6 +68,7 @@ let keyword s =
     | "Swap"    -> SWAP
     | "Sort"    -> SORT
     | "Length"  -> LENGTH
+    | "until"   -> UNTIL
     | "switch"  -> SWITCH    
     | "case"    -> CASE
     | "struct"  -> STRUCT

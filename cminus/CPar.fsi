@@ -49,6 +49,7 @@ type token =
   | PLUSONE
   | MINUSONE
   | INVO
+  | UNTIL
   | COS
   | STRING
   | SIN
@@ -153,6 +154,7 @@ type tokenId =
     | TOKEN_PLUSONE
     | TOKEN_MINUSONE
     | TOKEN_INVO
+    | TOKEN_UNTIL
     | TOKEN_COS
     | TOKEN_STRING
     | TOKEN_SIN
