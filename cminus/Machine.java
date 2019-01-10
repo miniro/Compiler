@@ -38,7 +38,7 @@ class Machine {
     LDARGS = 24,STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,
     BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37,CSTF=38,
     PRINTF = 39,FTOI=40 ,ITOF=41 ,COS  = 42,TAN  = 43,ASIN  = 44 ,ACOS  = 45,ATAN  = 46,SIN  = 47, FABS = 48,
-    LOG = 49,SQRT = 50,POW = 51,CSTS=52,SORT=53,PRINTH=54;
+    LOG = 49,SQRT = 50,POW = 51,CSTS=52,SORT=53,PRINTH=54,TOHEX=55,TOBIN=56,TOOCT=57;
 
 
   final static int STACKSIZE = 1000;
@@ -80,13 +80,6 @@ class Machine {
       buf.rewind();
       float f2=buf.getFloat();
       return f2;
-      // ByteBuffer buf=ByteBuffer.allocateDirect(4); 
-      // String string=String.valueOf(x);
-      // byte b[]={Byte.parseByte(string.substring(0,2),16),Byte.parseByte(string.substring(2,4),16),Byte.parseByte(string.substring(4,6),16),Byte.parseByte(string.substring(6,8),16)}; 
-      // buf.put(b);
-      // buf.rewind();
-      // float f=buf.getFloat();
-      // return f;
       // int tmp=x;
       // x=Math.abs(x);
       // int a=x%10000/100,b=x/10000;
@@ -102,10 +95,6 @@ class Machine {
   static int change2(float x){
     int c=Float.floatToRawIntBits(x);
     return c;
-    // int c=Float.floatToRawIntBits(x);
-		// System.out.println(Float.floatToRawIntBits(1.1f));
-    // String result = Integer.toHexString(c);
-    // return Integer.parseInt(result);
 
       // String tmp=String.valueOf(x);
 	    // int index=tmp.indexOf("."),len;
@@ -189,6 +178,29 @@ class Machine {
       case TAN:{
         double f=change(s[sp]);
         s[sp]=change2((float)Math.tan(f));
+        break;
+      }   
+      case TOHEX:{
+        String shex=Integer.toHexString(s[sp]);
+        int sum=0,len=shex.length();
+        for(int i=0;i<len;i++){
+          char ch=shex.charAt(i);
+          int tmp;
+          if(ch<='9'&&ch>='0')
+            tmp=ch-'0';
+          else 
+            tmp=ch-'a'+10;
+          sum+=16*sum+tmp;
+        }
+        s[sp]=sum;
+        break;
+      }   
+      case TOBIN:{
+        s[sp]=Integer.valueOf(Integer.toBinaryString(s[sp]));
+        break;
+      }   
+      case TOOCT:{
+        s[sp]=Integer.valueOf(Integer.toOctalString(s[sp]));
         break;
       }   
       case ASIN:{

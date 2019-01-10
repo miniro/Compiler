@@ -13,11 +13,11 @@ open Absyn
 let compose1 f (g, s) = ((fun x -> g(f(x))), s)
 let nl = CstI 10
 %}
-%token <int> CSTINT CSTBOOL CSTHEX CSTOCT CSTBIN CSTSHORT
+%token <int> CSTINT CSTBOOL CSTOCT CSTBIN CSTSHORT
 %token <float> CSTFLOAT
-%token <string> CSTSTRING NAME 
+%token <string> CSTSTRING NAME CSTHEX 
 %token <char> CSTCHAR
-%token COS STRING SIN TAN ASIN ACOS ATAN CHAR ELSE IF INT SHORT FLOAT NULL PRINT PRINTH PRINTI PRINTC PRINTF PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE GCD MCM ROUND FLOOR CEIL FTOI ITOF PI FABS LOG SQRT POW
+%token COS STRING SIN TAN TOHEX TOBIN TOOCT ASIN ACOS ATAN CHAR ELSE IF INT SHORT FLOAT NULL PRINT PRINTH PRINTI PRINTC PRINTF PRINTLN RETURN VOID WHILE DO FOR DEFAULT SORT MAX MIN SWAP ABS SWITCH CASE GCD MCM ROUND FLOOR CEIL FTOI ITOF PI FABS LOG SQRT POW
 %token PLUS MINUS TIMES DIV MOD PLUSONE MINUSONE INVO UNTIL
 
 %token EQ NE GT LT GE LE
@@ -191,6 +191,10 @@ ExprNotAccess:
   | POW LPAR Expr COMMA Expr RPAR       { Pow($3, $5)         }
   | COS LPAR Expr RPAR                  { Cos($3)             }
   | TAN LPAR Expr RPAR                  { Tan($3)             }
+  | TOHEX LPAR Expr RPAR                { ToHex($3)           }
+  | TOBIN LPAR Expr RPAR                { ToBin($3)           }
+  | TOOCT LPAR Expr RPAR                { ToOct($3)           }
+
   | ASIN LPAR Expr RPAR                 { Asin($3)            }
   | ACOS LPAR Expr RPAR                 { Acos($3)            }
   | ATAN LPAR Expr RPAR                 { Atan($3)            }
@@ -260,7 +264,7 @@ Const:
 
 ConstHEX:
     CSTHEX                              { $1       }
-  | MINUS CSTHEX                        { - $2     }
+  | MINUS CSTHEX                        { "-"+$2      }
 ;
 
 ConstOCT:

@@ -188,15 +188,26 @@ and cStmtOrDec stmtOrDec (varEnv : VarEnv) (funEnv : FunEnv) : VarEnv * instr li
 and changeChar (a:char):int=
   (int)a
   
-and changeHEX (a:int):int=
-    let mutable sum,tmp,i=0,a,0
-    while (tmp<>0) do
-      let mutable j,ans=0,tmp%10
-      for j=0 to i-1 do
-        ans<-ans*16
-      sum<-sum+ans
-      tmp<-tmp/10
-      i<-i+1
+and changeHEX (a:string):int=
+    let mutable len=a.Length
+    let mutable flag=0
+    if a.[0]='-' then
+      flag<-1
+    else flag<-0
+   
+    let mutable sum=0
+    for j=flag to len-1 do
+      let d=(int)a.[j]-48
+      let mutable x=0
+      if (int)a.[j]<=57 then
+        x <-(int)a.[j]-48
+      else 
+        x<-(int)a.[j]-65+10
+      printf"%d" d
+      sum <- sum+(int)(16.0**(float)(len-j-1))*x
+    if flag=1 then
+      sum<- -sum
+
     sum
 and changeOCT (a:int):int=
     let mutable sum,tmp,i=0,a,0
@@ -231,10 +242,18 @@ and changeStr (a:string):int list=
 and change (a:float):int=
     let b=(float32)a
     let d=BitConverter.ToInt32(BitConverter.GetBytes(b),0)
-    // let d=BitConverter.ToString( BitConverter.GetBytes(b) )
-    // printf "%s" d
-    // printf "%f" b
     d
+
+// and change (a:float):int=
+//     if a>0.0
+//     then
+//       if string((int)a).Length=string(a).Length
+//       then int(a)*10000+78
+//       else (int(a*(10.0**(float(string(a).Length-string((int)a).Length)+1.0))+float(string(a).Length-string((int)a).Length-1)))*100+78
+//     else
+//       if string((int)(-a)).Length=string((-a)).Length
+//       then -(int((-a))*10000+78)
+//       else -(int((-a)*(10.0**(float(string((-a)).Length-string((int)(-a)).Length)+1.0))+float(string((-a)).Length-string((int)(-a)).Length-1))*100+78)
 
 and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list = 
     match e with
@@ -312,6 +331,12 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
       cExpr e1 varEnv funEnv @ [COS]
     | Tan(e1) ->
       cExpr e1 varEnv funEnv @ [TAN]
+    | ToHex(e1) ->
+      cExpr e1 varEnv funEnv @ [TOHEX]
+    | ToBin(e1) ->
+      cExpr e1 varEnv funEnv @ [TOBIN]
+    | ToOct(e1) ->
+      cExpr e1 varEnv funEnv @ [TOOCT]
     | Asin(e1) ->
       cExpr e1 varEnv funEnv @ [ASIN]
     | Acos(e1) ->

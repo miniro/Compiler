@@ -54,6 +54,9 @@ type token =
   | STRING
   | SIN
   | TAN
+  | TOHEX
+  | TOBIN
+  | TOOCT
   | ASIN
   | ACOS
   | ATAN
@@ -98,10 +101,10 @@ type token =
   | CSTCHAR of (char)
   | CSTSTRING of (string)
   | NAME of (string)
+  | CSTHEX of (string)
   | CSTFLOAT of (float)
   | CSTINT of (int)
   | CSTBOOL of (int)
-  | CSTHEX of (int)
   | CSTOCT of (int)
   | CSTBIN of (int)
   | CSTSHORT of (int)
@@ -159,6 +162,9 @@ type tokenId =
     | TOKEN_STRING
     | TOKEN_SIN
     | TOKEN_TAN
+    | TOKEN_TOHEX
+    | TOKEN_TOBIN
+    | TOKEN_TOOCT
     | TOKEN_ASIN
     | TOKEN_ACOS
     | TOKEN_ATAN
@@ -203,10 +209,10 @@ type tokenId =
     | TOKEN_CSTCHAR
     | TOKEN_CSTSTRING
     | TOKEN_NAME
+    | TOKEN_CSTHEX
     | TOKEN_CSTFLOAT
     | TOKEN_CSTINT
     | TOKEN_CSTBOOL
-    | TOKEN_CSTHEX
     | TOKEN_CSTOCT
     | TOKEN_CSTBIN
     | TOKEN_CSTSHORT

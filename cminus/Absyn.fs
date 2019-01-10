@@ -27,7 +27,7 @@ and expr =
   | CstS of string
   | CstBIN of int
   | CstOCT of int
-  | CstHEX of int
+  | CstHEX of string
   | CstF of float        
   | CstShort of int              
   | Prim1 of string * expr
@@ -60,6 +60,9 @@ and expr =
   | Sin of expr
   | Cos of expr
   | Tan of expr
+  | ToHex of expr
+  | ToBin of expr
+  | ToOct of expr
   | Asin of expr
   | Acos of expr
   | Atan of expr

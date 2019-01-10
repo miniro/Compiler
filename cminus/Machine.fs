@@ -73,6 +73,10 @@ type instr =
   | SQRT
   | POW
   | SORT
+  | TOHEX
+  | TOBIN
+  | TOOCT
+  
 (* Generate new distinct labels *)
 
 // 返回两个函数 resetLabels , newLabel
@@ -286,6 +290,15 @@ let CODESORT  = 53;
 
 [<Literal>]
 let CODEPRINTH  = 54;
+[<Literal>]
+let CODETOHEX  = 55;
+[<Literal>]
+let CODETOBIN  = 56;
+[<Literal>]
+let CODETOOCT  = 57;
+
+
+
 
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
@@ -350,6 +363,9 @@ let makelabenv (addr, labenv) instr =
     | SQRT           -> (addr+1, labenv)
     | POW            -> (addr+1, labenv)
     | SORT           -> (addr+1, labenv)
+    | TOHEX           -> (addr+1, labenv)
+    | TOBIN           -> (addr+1, labenv)
+    | TOOCT           -> (addr+1, labenv)
 (* Bytecode emission, second pass: output bytecode as integers *)
 
 //getlab 是得到标签所在地址的函数
@@ -413,6 +429,9 @@ let rec emitints getlab instr ints =
     | SQRT           -> CODESQRT  :: ints
     | POW            -> CODEPOW  :: ints
     | SORT           -> CODESORT :: ints
+    | TOHEX          -> CODETOHEX:: ints
+    | TOBIN          -> CODETOBIN :: ints
+    | TOOCT          -> CODETOOCT :: ints
 
 (* Convert instruction list to int list in two passes:
    Pass 1: build label environment
@@ -497,4 +516,7 @@ let rec decomp ints : instr list =
     | CODECSTI   :: i :: ints_rest                    ->   CSTI i :: decomp ints_rest   
     | CODECSTF   :: i :: ints_rest                    ->   CSTF i :: decomp ints_rest 
     | CODECSTS   :: i :: j::ints_rest                 ->   CSTI i :: CSTI j::decomp ints_rest 
+    | CODETOHEX :: ints_rest                          ->   TOHEX           :: decomp ints_rest
+    | CODETOBIN :: ints_rest                          ->   TOBIN           :: decomp ints_rest
+    | CODETOOCT :: ints_rest                          ->   TOOCT           :: decomp ints_rest
     | _                                       ->    printf "%A" ints; failwith "unknow code"

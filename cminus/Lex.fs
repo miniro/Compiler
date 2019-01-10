@@ -36,6 +36,12 @@ let keyword s =
     | "Asin"    -> ASIN
     | "Acos"    -> ACOS
     | "Atan"    -> ATAN
+    | "ToHex"   -> TOHEX
+    | "ToBin"   -> TOBIN
+    | "ToOct"   -> TOOCT
+    | "ToHex"   -> TOHEX
+    | "ToBin"   -> TOBIN
+    | "ToOct"   -> TOOCT
     | "Round"   -> ROUND
     | "Floor"   -> FLOOR
     | "Ceil"    -> CEIL
@@ -88,7 +94,7 @@ let cEscape s =
     | "\\r"  -> '\r'
     | _      -> failwith "Lexer error: impossible C escape"
 
-# 91 "Lex.fs"
+# 97 "Lex.fs"
 let trans : uint16[] array = 
     [| 
     (* State 0 *)
@@ -290,11 +296,11 @@ let trans : uint16[] array =
     (* State 98 *)
      [| 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 102us; 102us; 102us; 102us; 102us; 102us; 102us; 102us; 102us; 102us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 128us; 65535us; 129us; 65535us; 130us; 65535us; 131us; 65535us; 132us; 65535us; 133us; 65535us; 134us; 65535us; 135us; 65535us; 136us; 65535us; 137us; 65535us; 138us; 65535us; 139us; 65535us; 140us; 65535us; 141us; 65535us; 142us; 65535us; 143us; 65535us; 144us; 65535us; 145us; 65535us; 146us; 65535us; 147us; 65535us; 148us; 65535us; 149us; 65535us; 150us; 65535us; 151us; 65535us; 152us; 65535us; 153us; 65535us; 154us; 65535us; 155us; 65535us; 156us; 65535us; 157us; 65535us; 158us; 65535us; 159us; 65535us; 160us; 65535us; 161us; 65535us; 162us; 65535us; 163us; 65535us; 164us; 65535us; 165us; 65535us; 166us; 65535us; 167us; 65535us; 168us; 65535us; 169us; 65535us; 170us; 65535us; 171us; 65535us; 172us; 65535us; 173us; 65535us; 174us; 65535us; 175us; 65535us; 176us; 65535us; 177us; 65535us; 178us; 65535us; 179us; 65535us; 180us; 65535us; 181us; 65535us; 182us; 65535us; 183us; 65535us; 184us; 65535us; 185us; 65535us; 186us; 65535us; 187us; 65535us; 188us; 65535us; 189us; 65535us; 190us; 65535us; 191us; 65535us; 192us; 65535us; 193us; 65535us; 194us; 65535us; 195us; 65535us; 196us; 65535us; 197us; 65535us; 198us; 65535us; 199us; 65535us; 200us; 65535us; 201us; 65535us; 202us; 65535us; 203us; 65535us; 204us; 65535us; 205us; 65535us; 206us; 65535us; 207us; 65535us; 208us; 65535us; 209us; 65535us; 210us; 65535us; 211us; 65535us; 212us; 65535us; 213us; 65535us; 214us; 65535us; 215us; 65535us; 216us; 65535us; 217us; 65535us; 218us; 65535us; 219us; 65535us; 220us; 65535us; 221us; 65535us; 222us; 65535us; 223us; 65535us; 224us; 65535us; 225us; 65535us; 226us; 65535us; 227us; 65535us; 228us; 65535us; 229us; 65535us; 230us; 65535us; 231us; 65535us; 232us; 65535us; 233us; 65535us; 234us; 65535us; 235us; 65535us; 236us; 65535us; 237us; 65535us; 238us; 65535us; 239us; 65535us; 240us; 65535us; 241us; 65535us; 242us; 65535us; 243us; 65535us; 244us; 65535us; 245us; 65535us; 246us; 65535us; 247us; 65535us; 248us; 65535us; 249us; 65535us; 250us; 65535us; 251us; 65535us; 252us; 65535us; 253us; 65535us; 254us; 65535us; 255us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |];
     (* State 99 *)
-     [| 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 100us; 100us; 100us; 100us; 100us; 100us; 100us; 100us; 100us; 100us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 128us; 65535us; 129us; 65535us; 130us; 65535us; 131us; 65535us; 132us; 65535us; 133us; 65535us; 134us; 65535us; 135us; 65535us; 136us; 65535us; 137us; 65535us; 138us; 65535us; 139us; 65535us; 140us; 65535us; 141us; 65535us; 142us; 65535us; 143us; 65535us; 144us; 65535us; 145us; 65535us; 146us; 65535us; 147us; 65535us; 148us; 65535us; 149us; 65535us; 150us; 65535us; 151us; 65535us; 152us; 65535us; 153us; 65535us; 154us; 65535us; 155us; 65535us; 156us; 65535us; 157us; 65535us; 158us; 65535us; 159us; 65535us; 160us; 65535us; 161us; 65535us; 162us; 65535us; 163us; 65535us; 164us; 65535us; 165us; 65535us; 166us; 65535us; 167us; 65535us; 168us; 65535us; 169us; 65535us; 170us; 65535us; 171us; 65535us; 172us; 65535us; 173us; 65535us; 174us; 65535us; 175us; 65535us; 176us; 65535us; 177us; 65535us; 178us; 65535us; 179us; 65535us; 180us; 65535us; 181us; 65535us; 182us; 65535us; 183us; 65535us; 184us; 65535us; 185us; 65535us; 186us; 65535us; 187us; 65535us; 188us; 65535us; 189us; 65535us; 190us; 65535us; 191us; 65535us; 192us; 65535us; 193us; 65535us; 194us; 65535us; 195us; 65535us; 196us; 65535us; 197us; 65535us; 198us; 65535us; 199us; 65535us; 200us; 65535us; 201us; 65535us; 202us; 65535us; 203us; 65535us; 204us; 65535us; 205us; 65535us; 206us; 65535us; 207us; 65535us; 208us; 65535us; 209us; 65535us; 210us; 65535us; 211us; 65535us; 212us; 65535us; 213us; 65535us; 214us; 65535us; 215us; 65535us; 216us; 65535us; 217us; 65535us; 218us; 65535us; 219us; 65535us; 220us; 65535us; 221us; 65535us; 222us; 65535us; 223us; 65535us; 224us; 65535us; 225us; 65535us; 226us; 65535us; 227us; 65535us; 228us; 65535us; 229us; 65535us; 230us; 65535us; 231us; 65535us; 232us; 65535us; 233us; 65535us; 234us; 65535us; 235us; 65535us; 236us; 65535us; 237us; 65535us; 238us; 65535us; 239us; 65535us; 240us; 65535us; 241us; 65535us; 242us; 65535us; 243us; 65535us; 244us; 65535us; 245us; 65535us; 246us; 65535us; 247us; 65535us; 248us; 65535us; 249us; 65535us; 250us; 65535us; 251us; 65535us; 252us; 65535us; 253us; 65535us; 254us; 65535us; 255us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |];
+     [| 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 100us; 100us; 100us; 100us; 100us; 100us; 100us; 100us; 100us; 100us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 100us; 100us; 100us; 100us; 100us; 100us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 100us; 100us; 100us; 100us; 100us; 100us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 128us; 65535us; 129us; 65535us; 130us; 65535us; 131us; 65535us; 132us; 65535us; 133us; 65535us; 134us; 65535us; 135us; 65535us; 136us; 65535us; 137us; 65535us; 138us; 65535us; 139us; 65535us; 140us; 65535us; 141us; 65535us; 142us; 65535us; 143us; 65535us; 144us; 65535us; 145us; 65535us; 146us; 65535us; 147us; 65535us; 148us; 65535us; 149us; 65535us; 150us; 65535us; 151us; 65535us; 152us; 65535us; 153us; 65535us; 154us; 65535us; 155us; 65535us; 156us; 65535us; 157us; 65535us; 158us; 65535us; 159us; 65535us; 160us; 65535us; 161us; 65535us; 162us; 65535us; 163us; 65535us; 164us; 65535us; 165us; 65535us; 166us; 65535us; 167us; 65535us; 168us; 65535us; 169us; 65535us; 170us; 65535us; 171us; 65535us; 172us; 65535us; 173us; 65535us; 174us; 65535us; 175us; 65535us; 176us; 65535us; 177us; 65535us; 178us; 65535us; 179us; 65535us; 180us; 65535us; 181us; 65535us; 182us; 65535us; 183us; 65535us; 184us; 65535us; 185us; 65535us; 186us; 65535us; 187us; 65535us; 188us; 65535us; 189us; 65535us; 190us; 65535us; 191us; 65535us; 192us; 65535us; 193us; 65535us; 194us; 65535us; 195us; 65535us; 196us; 65535us; 197us; 65535us; 198us; 65535us; 199us; 65535us; 200us; 65535us; 201us; 65535us; 202us; 65535us; 203us; 65535us; 204us; 65535us; 205us; 65535us; 206us; 65535us; 207us; 65535us; 208us; 65535us; 209us; 65535us; 210us; 65535us; 211us; 65535us; 212us; 65535us; 213us; 65535us; 214us; 65535us; 215us; 65535us; 216us; 65535us; 217us; 65535us; 218us; 65535us; 219us; 65535us; 220us; 65535us; 221us; 65535us; 222us; 65535us; 223us; 65535us; 224us; 65535us; 225us; 65535us; 226us; 65535us; 227us; 65535us; 228us; 65535us; 229us; 65535us; 230us; 65535us; 231us; 65535us; 232us; 65535us; 233us; 65535us; 234us; 65535us; 235us; 65535us; 236us; 65535us; 237us; 65535us; 238us; 65535us; 239us; 65535us; 240us; 65535us; 241us; 65535us; 242us; 65535us; 243us; 65535us; 244us; 65535us; 245us; 65535us; 246us; 65535us; 247us; 65535us; 248us; 65535us; 249us; 65535us; 250us; 65535us; 251us; 65535us; 252us; 65535us; 253us; 65535us; 254us; 65535us; 255us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |];
     (* State 100 *)
-     [| 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 128us; 65535us; 129us; 65535us; 130us; 65535us; 131us; 65535us; 132us; 65535us; 133us; 65535us; 134us; 65535us; 135us; 65535us; 136us; 65535us; 137us; 65535us; 138us; 65535us; 139us; 65535us; 140us; 65535us; 141us; 65535us; 142us; 65535us; 143us; 65535us; 144us; 65535us; 145us; 65535us; 146us; 65535us; 147us; 65535us; 148us; 65535us; 149us; 65535us; 150us; 65535us; 151us; 65535us; 152us; 65535us; 153us; 65535us; 154us; 65535us; 155us; 65535us; 156us; 65535us; 157us; 65535us; 158us; 65535us; 159us; 65535us; 160us; 65535us; 161us; 65535us; 162us; 65535us; 163us; 65535us; 164us; 65535us; 165us; 65535us; 166us; 65535us; 167us; 65535us; 168us; 65535us; 169us; 65535us; 170us; 65535us; 171us; 65535us; 172us; 65535us; 173us; 65535us; 174us; 65535us; 175us; 65535us; 176us; 65535us; 177us; 65535us; 178us; 65535us; 179us; 65535us; 180us; 65535us; 181us; 65535us; 182us; 65535us; 183us; 65535us; 184us; 65535us; 185us; 65535us; 186us; 65535us; 187us; 65535us; 188us; 65535us; 189us; 65535us; 190us; 65535us; 191us; 65535us; 192us; 65535us; 193us; 65535us; 194us; 65535us; 195us; 65535us; 196us; 65535us; 197us; 65535us; 198us; 65535us; 199us; 65535us; 200us; 65535us; 201us; 65535us; 202us; 65535us; 203us; 65535us; 204us; 65535us; 205us; 65535us; 206us; 65535us; 207us; 65535us; 208us; 65535us; 209us; 65535us; 210us; 65535us; 211us; 65535us; 212us; 65535us; 213us; 65535us; 214us; 65535us; 215us; 65535us; 216us; 65535us; 217us; 65535us; 218us; 65535us; 219us; 65535us; 220us; 65535us; 221us; 65535us; 222us; 65535us; 223us; 65535us; 224us; 65535us; 225us; 65535us; 226us; 65535us; 227us; 65535us; 228us; 65535us; 229us; 65535us; 230us; 65535us; 231us; 65535us; 232us; 65535us; 233us; 65535us; 234us; 65535us; 235us; 65535us; 236us; 65535us; 237us; 65535us; 238us; 65535us; 239us; 65535us; 240us; 65535us; 241us; 65535us; 242us; 65535us; 243us; 65535us; 244us; 65535us; 245us; 65535us; 246us; 65535us; 247us; 65535us; 248us; 65535us; 249us; 65535us; 250us; 65535us; 251us; 65535us; 252us; 65535us; 253us; 65535us; 254us; 65535us; 255us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |];
+     [| 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 101us; 101us; 101us; 101us; 101us; 101us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 101us; 101us; 101us; 101us; 101us; 101us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 128us; 65535us; 129us; 65535us; 130us; 65535us; 131us; 65535us; 132us; 65535us; 133us; 65535us; 134us; 65535us; 135us; 65535us; 136us; 65535us; 137us; 65535us; 138us; 65535us; 139us; 65535us; 140us; 65535us; 141us; 65535us; 142us; 65535us; 143us; 65535us; 144us; 65535us; 145us; 65535us; 146us; 65535us; 147us; 65535us; 148us; 65535us; 149us; 65535us; 150us; 65535us; 151us; 65535us; 152us; 65535us; 153us; 65535us; 154us; 65535us; 155us; 65535us; 156us; 65535us; 157us; 65535us; 158us; 65535us; 159us; 65535us; 160us; 65535us; 161us; 65535us; 162us; 65535us; 163us; 65535us; 164us; 65535us; 165us; 65535us; 166us; 65535us; 167us; 65535us; 168us; 65535us; 169us; 65535us; 170us; 65535us; 171us; 65535us; 172us; 65535us; 173us; 65535us; 174us; 65535us; 175us; 65535us; 176us; 65535us; 177us; 65535us; 178us; 65535us; 179us; 65535us; 180us; 65535us; 181us; 65535us; 182us; 65535us; 183us; 65535us; 184us; 65535us; 185us; 65535us; 186us; 65535us; 187us; 65535us; 188us; 65535us; 189us; 65535us; 190us; 65535us; 191us; 65535us; 192us; 65535us; 193us; 65535us; 194us; 65535us; 195us; 65535us; 196us; 65535us; 197us; 65535us; 198us; 65535us; 199us; 65535us; 200us; 65535us; 201us; 65535us; 202us; 65535us; 203us; 65535us; 204us; 65535us; 205us; 65535us; 206us; 65535us; 207us; 65535us; 208us; 65535us; 209us; 65535us; 210us; 65535us; 211us; 65535us; 212us; 65535us; 213us; 65535us; 214us; 65535us; 215us; 65535us; 216us; 65535us; 217us; 65535us; 218us; 65535us; 219us; 65535us; 220us; 65535us; 221us; 65535us; 222us; 65535us; 223us; 65535us; 224us; 65535us; 225us; 65535us; 226us; 65535us; 227us; 65535us; 228us; 65535us; 229us; 65535us; 230us; 65535us; 231us; 65535us; 232us; 65535us; 233us; 65535us; 234us; 65535us; 235us; 65535us; 236us; 65535us; 237us; 65535us; 238us; 65535us; 239us; 65535us; 240us; 65535us; 241us; 65535us; 242us; 65535us; 243us; 65535us; 244us; 65535us; 245us; 65535us; 246us; 65535us; 247us; 65535us; 248us; 65535us; 249us; 65535us; 250us; 65535us; 251us; 65535us; 252us; 65535us; 253us; 65535us; 254us; 65535us; 255us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |];
     (* State 101 *)
-     [| 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 128us; 65535us; 129us; 65535us; 130us; 65535us; 131us; 65535us; 132us; 65535us; 133us; 65535us; 134us; 65535us; 135us; 65535us; 136us; 65535us; 137us; 65535us; 138us; 65535us; 139us; 65535us; 140us; 65535us; 141us; 65535us; 142us; 65535us; 143us; 65535us; 144us; 65535us; 145us; 65535us; 146us; 65535us; 147us; 65535us; 148us; 65535us; 149us; 65535us; 150us; 65535us; 151us; 65535us; 152us; 65535us; 153us; 65535us; 154us; 65535us; 155us; 65535us; 156us; 65535us; 157us; 65535us; 158us; 65535us; 159us; 65535us; 160us; 65535us; 161us; 65535us; 162us; 65535us; 163us; 65535us; 164us; 65535us; 165us; 65535us; 166us; 65535us; 167us; 65535us; 168us; 65535us; 169us; 65535us; 170us; 65535us; 171us; 65535us; 172us; 65535us; 173us; 65535us; 174us; 65535us; 175us; 65535us; 176us; 65535us; 177us; 65535us; 178us; 65535us; 179us; 65535us; 180us; 65535us; 181us; 65535us; 182us; 65535us; 183us; 65535us; 184us; 65535us; 185us; 65535us; 186us; 65535us; 187us; 65535us; 188us; 65535us; 189us; 65535us; 190us; 65535us; 191us; 65535us; 192us; 65535us; 193us; 65535us; 194us; 65535us; 195us; 65535us; 196us; 65535us; 197us; 65535us; 198us; 65535us; 199us; 65535us; 200us; 65535us; 201us; 65535us; 202us; 65535us; 203us; 65535us; 204us; 65535us; 205us; 65535us; 206us; 65535us; 207us; 65535us; 208us; 65535us; 209us; 65535us; 210us; 65535us; 211us; 65535us; 212us; 65535us; 213us; 65535us; 214us; 65535us; 215us; 65535us; 216us; 65535us; 217us; 65535us; 218us; 65535us; 219us; 65535us; 220us; 65535us; 221us; 65535us; 222us; 65535us; 223us; 65535us; 224us; 65535us; 225us; 65535us; 226us; 65535us; 227us; 65535us; 228us; 65535us; 229us; 65535us; 230us; 65535us; 231us; 65535us; 232us; 65535us; 233us; 65535us; 234us; 65535us; 235us; 65535us; 236us; 65535us; 237us; 65535us; 238us; 65535us; 239us; 65535us; 240us; 65535us; 241us; 65535us; 242us; 65535us; 243us; 65535us; 244us; 65535us; 245us; 65535us; 246us; 65535us; 247us; 65535us; 248us; 65535us; 249us; 65535us; 250us; 65535us; 251us; 65535us; 252us; 65535us; 253us; 65535us; 254us; 65535us; 255us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |];
+     [| 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 101us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 101us; 101us; 101us; 101us; 101us; 101us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 101us; 101us; 101us; 101us; 101us; 101us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 128us; 65535us; 129us; 65535us; 130us; 65535us; 131us; 65535us; 132us; 65535us; 133us; 65535us; 134us; 65535us; 135us; 65535us; 136us; 65535us; 137us; 65535us; 138us; 65535us; 139us; 65535us; 140us; 65535us; 141us; 65535us; 142us; 65535us; 143us; 65535us; 144us; 65535us; 145us; 65535us; 146us; 65535us; 147us; 65535us; 148us; 65535us; 149us; 65535us; 150us; 65535us; 151us; 65535us; 152us; 65535us; 153us; 65535us; 154us; 65535us; 155us; 65535us; 156us; 65535us; 157us; 65535us; 158us; 65535us; 159us; 65535us; 160us; 65535us; 161us; 65535us; 162us; 65535us; 163us; 65535us; 164us; 65535us; 165us; 65535us; 166us; 65535us; 167us; 65535us; 168us; 65535us; 169us; 65535us; 170us; 65535us; 171us; 65535us; 172us; 65535us; 173us; 65535us; 174us; 65535us; 175us; 65535us; 176us; 65535us; 177us; 65535us; 178us; 65535us; 179us; 65535us; 180us; 65535us; 181us; 65535us; 182us; 65535us; 183us; 65535us; 184us; 65535us; 185us; 65535us; 186us; 65535us; 187us; 65535us; 188us; 65535us; 189us; 65535us; 190us; 65535us; 191us; 65535us; 192us; 65535us; 193us; 65535us; 194us; 65535us; 195us; 65535us; 196us; 65535us; 197us; 65535us; 198us; 65535us; 199us; 65535us; 200us; 65535us; 201us; 65535us; 202us; 65535us; 203us; 65535us; 204us; 65535us; 205us; 65535us; 206us; 65535us; 207us; 65535us; 208us; 65535us; 209us; 65535us; 210us; 65535us; 211us; 65535us; 212us; 65535us; 213us; 65535us; 214us; 65535us; 215us; 65535us; 216us; 65535us; 217us; 65535us; 218us; 65535us; 219us; 65535us; 220us; 65535us; 221us; 65535us; 222us; 65535us; 223us; 65535us; 224us; 65535us; 225us; 65535us; 226us; 65535us; 227us; 65535us; 228us; 65535us; 229us; 65535us; 230us; 65535us; 231us; 65535us; 232us; 65535us; 233us; 65535us; 234us; 65535us; 235us; 65535us; 236us; 65535us; 237us; 65535us; 238us; 65535us; 239us; 65535us; 240us; 65535us; 241us; 65535us; 242us; 65535us; 243us; 65535us; 244us; 65535us; 245us; 65535us; 246us; 65535us; 247us; 65535us; 248us; 65535us; 249us; 65535us; 250us; 65535us; 251us; 65535us; 252us; 65535us; 253us; 65535us; 254us; 65535us; 255us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |];
     (* State 102 *)
      [| 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 103us; 103us; 103us; 103us; 103us; 103us; 103us; 103us; 103us; 103us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 128us; 65535us; 129us; 65535us; 130us; 65535us; 131us; 65535us; 132us; 65535us; 133us; 65535us; 134us; 65535us; 135us; 65535us; 136us; 65535us; 137us; 65535us; 138us; 65535us; 139us; 65535us; 140us; 65535us; 141us; 65535us; 142us; 65535us; 143us; 65535us; 144us; 65535us; 145us; 65535us; 146us; 65535us; 147us; 65535us; 148us; 65535us; 149us; 65535us; 150us; 65535us; 151us; 65535us; 152us; 65535us; 153us; 65535us; 154us; 65535us; 155us; 65535us; 156us; 65535us; 157us; 65535us; 158us; 65535us; 159us; 65535us; 160us; 65535us; 161us; 65535us; 162us; 65535us; 163us; 65535us; 164us; 65535us; 165us; 65535us; 166us; 65535us; 167us; 65535us; 168us; 65535us; 169us; 65535us; 170us; 65535us; 171us; 65535us; 172us; 65535us; 173us; 65535us; 174us; 65535us; 175us; 65535us; 176us; 65535us; 177us; 65535us; 178us; 65535us; 179us; 65535us; 180us; 65535us; 181us; 65535us; 182us; 65535us; 183us; 65535us; 184us; 65535us; 185us; 65535us; 186us; 65535us; 187us; 65535us; 188us; 65535us; 189us; 65535us; 190us; 65535us; 191us; 65535us; 192us; 65535us; 193us; 65535us; 194us; 65535us; 195us; 65535us; 196us; 65535us; 197us; 65535us; 198us; 65535us; 199us; 65535us; 200us; 65535us; 201us; 65535us; 202us; 65535us; 203us; 65535us; 204us; 65535us; 205us; 65535us; 206us; 65535us; 207us; 65535us; 208us; 65535us; 209us; 65535us; 210us; 65535us; 211us; 65535us; 212us; 65535us; 213us; 65535us; 214us; 65535us; 215us; 65535us; 216us; 65535us; 217us; 65535us; 218us; 65535us; 219us; 65535us; 220us; 65535us; 221us; 65535us; 222us; 65535us; 223us; 65535us; 224us; 65535us; 225us; 65535us; 226us; 65535us; 227us; 65535us; 228us; 65535us; 229us; 65535us; 230us; 65535us; 231us; 65535us; 232us; 65535us; 233us; 65535us; 234us; 65535us; 235us; 65535us; 236us; 65535us; 237us; 65535us; 238us; 65535us; 239us; 65535us; 240us; 65535us; 241us; 65535us; 242us; 65535us; 243us; 65535us; 244us; 65535us; 245us; 65535us; 246us; 65535us; 247us; 65535us; 248us; 65535us; 249us; 65535us; 250us; 65535us; 251us; 65535us; 252us; 65535us; 253us; 65535us; 254us; 65535us; 255us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; 65535us; |];
     (* State 103 *)
@@ -319,411 +325,411 @@ and String chars (lexbuf : Microsoft.FSharp.Text.Lexing.LexBuffer<_>) = _fslex_S
 and _fslex_Token  _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 92 "Lex.fsl"
+# 98 "Lex.fsl"
                                           CSTBIN(System.Int32.Parse ((lexemeAsString lexbuf).[2..]))  
-# 324 "Lex.fs"
+# 330 "Lex.fs"
           )
   | 1 -> ( 
-# 93 "Lex.fsl"
+# 99 "Lex.fsl"
                                           CSTOCT(System.Int32.Parse ((lexemeAsString lexbuf).[2..]))  
-# 329 "Lex.fs"
+# 335 "Lex.fs"
           )
   | 2 -> ( 
-# 94 "Lex.fsl"
-                                          CSTHEX(System.Int32.Parse ((lexemeAsString lexbuf).[2..]))  
-# 334 "Lex.fs"
+# 100 "Lex.fsl"
+                                                        CSTHEX((lexemeAsString lexbuf).[2..])   
+# 340 "Lex.fs"
           )
   | 3 -> ( 
-# 95 "Lex.fsl"
+# 101 "Lex.fsl"
                                      Token lexbuf 
-# 339 "Lex.fs"
+# 345 "Lex.fs"
           )
   | 4 -> ( 
-# 96 "Lex.fsl"
+# 102 "Lex.fsl"
                                      lexbuf.EndPos <- lexbuf.EndPos.NextLine; Token lexbuf 
-# 344 "Lex.fs"
+# 350 "Lex.fs"
           )
   | 5 -> ( 
-# 97 "Lex.fsl"
+# 103 "Lex.fsl"
                                      CSTINT (System.Int32.Parse (lexemeAsString lexbuf)) 
-# 349 "Lex.fs"
+# 355 "Lex.fs"
           )
   | 6 -> ( 
-# 98 "Lex.fsl"
+# 104 "Lex.fsl"
                                        CSTSHORT (System.Int32.Parse (lexemeAsString lexbuf)) 
-# 354 "Lex.fs"
+# 360 "Lex.fs"
           )
   | 7 -> ( 
-# 99 "Lex.fsl"
+# 105 "Lex.fsl"
                                              CSTCHAR ((lexemeAsString lexbuf).[1]) 
-# 359 "Lex.fs"
+# 365 "Lex.fs"
           )
   | 8 -> ( 
-# 100 "Lex.fsl"
+# 106 "Lex.fsl"
                                              CSTFLOAT (System.Double.Parse (lexemeAsString lexbuf)) 
-# 364 "Lex.fs"
+# 370 "Lex.fs"
           )
   | 9 -> ( 
-# 102 "Lex.fsl"
+# 108 "Lex.fsl"
                                      keyword (lexemeAsString lexbuf) 
-# 369 "Lex.fs"
+# 375 "Lex.fs"
           )
   | 10 -> ( 
-# 103 "Lex.fsl"
+# 109 "Lex.fsl"
                                      INVO 
-# 374 "Lex.fs"
+# 380 "Lex.fs"
           )
   | 11 -> ( 
-# 104 "Lex.fsl"
+# 110 "Lex.fsl"
                                                  CSTSTRING (lexemeAsString lexbuf) 
-# 379 "Lex.fs"
+# 385 "Lex.fs"
           )
   | 12 -> ( 
-# 105 "Lex.fsl"
+# 111 "Lex.fsl"
                                      PLUS 
-# 384 "Lex.fs"
+# 390 "Lex.fs"
           )
   | 13 -> ( 
-# 106 "Lex.fsl"
+# 112 "Lex.fsl"
                                      PLUSONE 
-# 389 "Lex.fs"
+# 395 "Lex.fs"
           )
   | 14 -> ( 
-# 107 "Lex.fsl"
+# 113 "Lex.fsl"
                                      MINUSONE 
-# 394 "Lex.fs"
+# 400 "Lex.fs"
           )
   | 15 -> ( 
-# 108 "Lex.fsl"
+# 114 "Lex.fsl"
                                      MINUS 
-# 399 "Lex.fs"
+# 405 "Lex.fs"
           )
   | 16 -> ( 
-# 109 "Lex.fsl"
+# 115 "Lex.fsl"
                                      TIMES 
-# 404 "Lex.fs"
+# 410 "Lex.fs"
           )
   | 17 -> ( 
-# 110 "Lex.fsl"
+# 116 "Lex.fsl"
                                      DIV 
-# 409 "Lex.fs"
+# 415 "Lex.fs"
           )
   | 18 -> ( 
-# 111 "Lex.fsl"
+# 117 "Lex.fsl"
                                      MOD 
-# 414 "Lex.fs"
+# 420 "Lex.fs"
           )
   | 19 -> ( 
-# 112 "Lex.fsl"
+# 118 "Lex.fsl"
                                      ASSIGN 
-# 419 "Lex.fs"
+# 425 "Lex.fs"
           )
   | 20 -> ( 
-# 113 "Lex.fsl"
+# 119 "Lex.fsl"
                                      PLUSASSIGN 
-# 424 "Lex.fs"
+# 430 "Lex.fs"
           )
   | 21 -> ( 
-# 114 "Lex.fsl"
+# 120 "Lex.fsl"
                                      MINUSASSIGN 
-# 429 "Lex.fs"
+# 435 "Lex.fs"
           )
   | 22 -> ( 
-# 115 "Lex.fsl"
+# 121 "Lex.fsl"
                                      TIMESASSIGN 
-# 434 "Lex.fs"
+# 440 "Lex.fs"
           )
   | 23 -> ( 
-# 116 "Lex.fsl"
+# 122 "Lex.fsl"
                                      DIVASSIGN 
-# 439 "Lex.fs"
+# 445 "Lex.fs"
           )
   | 24 -> ( 
-# 117 "Lex.fsl"
+# 123 "Lex.fsl"
                                      MODASSIGN 
-# 444 "Lex.fs"
+# 450 "Lex.fs"
           )
   | 25 -> ( 
-# 118 "Lex.fsl"
+# 124 "Lex.fsl"
                                      BITANDASSIGN 
-# 449 "Lex.fs"
+# 455 "Lex.fs"
           )
   | 26 -> ( 
-# 119 "Lex.fsl"
+# 125 "Lex.fsl"
                                      BITORASSIGN 
-# 454 "Lex.fs"
+# 460 "Lex.fs"
           )
   | 27 -> ( 
-# 120 "Lex.fsl"
+# 126 "Lex.fsl"
                                      BITXORASSIGN 
-# 459 "Lex.fs"
+# 465 "Lex.fs"
           )
   | 28 -> ( 
-# 121 "Lex.fsl"
+# 127 "Lex.fsl"
                                      BITLEFTASSIGN 
-# 464 "Lex.fs"
+# 470 "Lex.fs"
           )
   | 29 -> ( 
-# 122 "Lex.fsl"
+# 128 "Lex.fsl"
                                      BITRIGHTASSIGN 
-# 469 "Lex.fs"
+# 475 "Lex.fs"
           )
   | 30 -> ( 
-# 123 "Lex.fsl"
+# 129 "Lex.fsl"
                                      EQ 
-# 474 "Lex.fs"
+# 480 "Lex.fs"
           )
   | 31 -> ( 
-# 124 "Lex.fsl"
+# 130 "Lex.fsl"
                                      NE 
-# 479 "Lex.fs"
+# 485 "Lex.fs"
           )
   | 32 -> ( 
-# 125 "Lex.fsl"
+# 131 "Lex.fsl"
                                      GT 
-# 484 "Lex.fs"
+# 490 "Lex.fs"
           )
   | 33 -> ( 
-# 126 "Lex.fsl"
+# 132 "Lex.fsl"
                                      LT 
-# 489 "Lex.fs"
+# 495 "Lex.fs"
           )
   | 34 -> ( 
-# 127 "Lex.fsl"
+# 133 "Lex.fsl"
                                      GE 
-# 494 "Lex.fs"
+# 500 "Lex.fs"
           )
   | 35 -> ( 
-# 128 "Lex.fsl"
+# 134 "Lex.fsl"
                                      LE 
-# 499 "Lex.fs"
+# 505 "Lex.fs"
           )
   | 36 -> ( 
-# 129 "Lex.fsl"
+# 135 "Lex.fsl"
                                      SEQOR 
-# 504 "Lex.fs"
+# 510 "Lex.fs"
           )
   | 37 -> ( 
-# 130 "Lex.fsl"
+# 136 "Lex.fsl"
                                      SEQAND 
-# 509 "Lex.fs"
+# 515 "Lex.fs"
           )
   | 38 -> ( 
-# 131 "Lex.fsl"
+# 137 "Lex.fsl"
                                      AMP 
-# 514 "Lex.fs"
+# 520 "Lex.fs"
           )
   | 39 -> ( 
-# 132 "Lex.fsl"
+# 138 "Lex.fsl"
                                     BITNOT
-# 519 "Lex.fs"
+# 525 "Lex.fs"
           )
   | 40 -> ( 
-# 133 "Lex.fsl"
+# 139 "Lex.fsl"
                                     BITLEFT
-# 524 "Lex.fs"
+# 530 "Lex.fs"
           )
   | 41 -> ( 
-# 134 "Lex.fsl"
+# 140 "Lex.fsl"
                                     BITRIGHT
-# 529 "Lex.fs"
+# 535 "Lex.fs"
           )
   | 42 -> ( 
-# 135 "Lex.fsl"
+# 141 "Lex.fsl"
                                     BITXOR
-# 534 "Lex.fs"
+# 540 "Lex.fs"
           )
   | 43 -> ( 
-# 136 "Lex.fsl"
+# 142 "Lex.fsl"
                                     BITOR
-# 539 "Lex.fs"
+# 545 "Lex.fs"
           )
   | 44 -> ( 
-# 137 "Lex.fsl"
+# 143 "Lex.fsl"
                                      NOT 
-# 544 "Lex.fs"
+# 550 "Lex.fs"
           )
   | 45 -> ( 
-# 138 "Lex.fsl"
+# 144 "Lex.fsl"
                                      LPAR 
-# 549 "Lex.fs"
+# 555 "Lex.fs"
           )
   | 46 -> ( 
-# 139 "Lex.fsl"
+# 145 "Lex.fsl"
                                      RPAR 
-# 554 "Lex.fs"
+# 560 "Lex.fs"
           )
   | 47 -> ( 
-# 140 "Lex.fsl"
+# 146 "Lex.fsl"
                                      LBRACE 
-# 559 "Lex.fs"
+# 565 "Lex.fs"
           )
   | 48 -> ( 
-# 141 "Lex.fsl"
+# 147 "Lex.fsl"
                                      RBRACE 
-# 564 "Lex.fs"
+# 570 "Lex.fs"
           )
   | 49 -> ( 
-# 142 "Lex.fsl"
+# 148 "Lex.fsl"
                                      LBRACK 
-# 569 "Lex.fs"
+# 575 "Lex.fs"
           )
   | 50 -> ( 
-# 143 "Lex.fsl"
+# 149 "Lex.fsl"
                                      RBRACK 
-# 574 "Lex.fs"
+# 580 "Lex.fs"
           )
   | 51 -> ( 
-# 144 "Lex.fsl"
+# 150 "Lex.fsl"
                                      SEMI 
-# 579 "Lex.fs"
+# 585 "Lex.fs"
           )
   | 52 -> ( 
-# 145 "Lex.fsl"
+# 151 "Lex.fsl"
                                      COMMA 
-# 584 "Lex.fs"
+# 590 "Lex.fs"
           )
   | 53 -> ( 
-# 146 "Lex.fsl"
+# 152 "Lex.fsl"
                                      COLON 
-# 589 "Lex.fs"
+# 595 "Lex.fs"
           )
   | 54 -> ( 
-# 147 "Lex.fsl"
+# 153 "Lex.fsl"
                                      QUESTION 
-# 594 "Lex.fs"
+# 600 "Lex.fs"
           )
   | 55 -> ( 
-# 148 "Lex.fsl"
+# 154 "Lex.fsl"
                                      EndLineComment lexbuf; Token lexbuf 
-# 599 "Lex.fs"
+# 605 "Lex.fs"
           )
   | 56 -> ( 
-# 149 "Lex.fsl"
+# 155 "Lex.fsl"
                                       EndLineComment lexbuf; Token lexbuf 
-# 604 "Lex.fs"
+# 610 "Lex.fs"
           )
   | 57 -> ( 
-# 150 "Lex.fsl"
+# 156 "Lex.fsl"
                                      Comment lexbuf; Token lexbuf 
-# 609 "Lex.fs"
+# 615 "Lex.fs"
           )
   | 58 -> ( 
-# 151 "Lex.fsl"
+# 157 "Lex.fsl"
                                      Comment lexbuf; Token lexbuf 
-# 614 "Lex.fs"
+# 620 "Lex.fs"
           )
   | 59 -> ( 
-# 152 "Lex.fsl"
+# 158 "Lex.fsl"
                                      EOF 
-# 619 "Lex.fs"
+# 625 "Lex.fs"
           )
   | 60 -> ( 
-# 153 "Lex.fsl"
+# 159 "Lex.fsl"
                                      failwith "Lexer error: illegal symbol" 
-# 624 "Lex.fs"
+# 630 "Lex.fs"
           )
   | _ -> failwith "Token"
 (* Rule Comment *)
 and _fslex_Comment  _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 156 "Lex.fsl"
+# 162 "Lex.fsl"
                                      Comment lexbuf; Comment lexbuf 
-# 633 "Lex.fs"
+# 639 "Lex.fs"
           )
   | 1 -> ( 
-# 157 "Lex.fsl"
+# 163 "Lex.fsl"
                                      () 
-# 638 "Lex.fs"
+# 644 "Lex.fs"
           )
   | 2 -> ( 
-# 158 "Lex.fsl"
+# 164 "Lex.fsl"
                                      Comment lexbuf; Comment lexbuf 
-# 643 "Lex.fs"
+# 649 "Lex.fs"
           )
   | 3 -> ( 
-# 159 "Lex.fsl"
+# 165 "Lex.fsl"
                                      () 
-# 648 "Lex.fs"
+# 654 "Lex.fs"
           )
   | 4 -> ( 
-# 160 "Lex.fsl"
+# 166 "Lex.fsl"
                                      lexbuf.EndPos <- lexbuf.EndPos.NextLine; Comment lexbuf 
-# 653 "Lex.fs"
+# 659 "Lex.fs"
           )
   | 5 -> ( 
-# 161 "Lex.fsl"
+# 167 "Lex.fsl"
                                      failwith "Lexer error: unterminated comment" 
-# 658 "Lex.fs"
+# 664 "Lex.fs"
           )
   | 6 -> ( 
-# 162 "Lex.fsl"
+# 168 "Lex.fsl"
                                      Comment lexbuf 
-# 663 "Lex.fs"
+# 669 "Lex.fs"
           )
   | _ -> failwith "Comment"
 (* Rule EndLineComment *)
 and _fslex_EndLineComment  _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 165 "Lex.fsl"
+# 171 "Lex.fsl"
                                      lexbuf.EndPos <- lexbuf.EndPos.NextLine 
-# 672 "Lex.fs"
+# 678 "Lex.fs"
           )
   | 1 -> ( 
-# 166 "Lex.fsl"
+# 172 "Lex.fsl"
                                      () 
-# 677 "Lex.fs"
+# 683 "Lex.fs"
           )
   | 2 -> ( 
-# 167 "Lex.fsl"
+# 173 "Lex.fsl"
                                      EndLineComment lexbuf 
-# 682 "Lex.fs"
+# 688 "Lex.fs"
           )
   | _ -> failwith "EndLineComment"
 (* Rule String *)
 and _fslex_String chars _fslex_state lexbuf =
   match _fslex_tables.Interpret(_fslex_state,lexbuf) with
   | 0 -> ( 
-# 171 "Lex.fsl"
+# 177 "Lex.fsl"
                        Microsoft.FSharp.Core.String.concat "" (List.map string (List.rev chars)) 
-# 691 "Lex.fs"
+# 697 "Lex.fs"
           )
   | 1 -> ( 
-# 173 "Lex.fsl"
+# 179 "Lex.fsl"
                        String (cEscape (lexemeAsString lexbuf) :: chars) lexbuf 
-# 696 "Lex.fs"
+# 702 "Lex.fs"
           )
   | 2 -> ( 
-# 175 "Lex.fsl"
+# 181 "Lex.fsl"
                        String ('\'' :: chars) lexbuf 
-# 701 "Lex.fs"
+# 707 "Lex.fs"
           )
   | 3 -> ( 
-# 177 "Lex.fsl"
+# 183 "Lex.fsl"
                        failwith "Lexer error: illegal escape sequence" 
-# 706 "Lex.fs"
+# 712 "Lex.fs"
           )
   | 4 -> ( 
-# 179 "Lex.fsl"
+# 185 "Lex.fsl"
                        failwith "Lexer error: unterminated string" 
-# 711 "Lex.fs"
+# 717 "Lex.fs"
           )
   | 5 -> ( 
-# 181 "Lex.fsl"
+# 187 "Lex.fsl"
                        failwith "Lexer error: newline in string" 
-# 716 "Lex.fs"
+# 722 "Lex.fs"
           )
   | 6 -> ( 
-# 183 "Lex.fsl"
+# 189 "Lex.fsl"
                        failwith "Lexer error: invalid character in string" 
-# 721 "Lex.fs"
+# 727 "Lex.fs"
           )
   | 7 -> ( 
-# 185 "Lex.fsl"
+# 191 "Lex.fsl"
                        String (char (lexbuf.LexemeChar 0) :: chars) lexbuf 
-# 726 "Lex.fs"
+# 732 "Lex.fs"
           )
   | _ -> failwith "String"
 

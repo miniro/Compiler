@@ -35,6 +35,12 @@ let keyword s =
     | "Asin"    -> ASIN
     | "Acos"    -> ACOS
     | "Atan"    -> ATAN
+    | "ToHex"   -> TOHEX
+    | "ToBin"   -> TOBIN
+    | "ToOct"   -> TOOCT
+    | "Tohex"   -> TOHEX
+    | "Tobin"   -> TOBIN
+    | "Tooct"   -> TOOCT
     | "Round"   -> ROUND
     | "Floor"   -> FLOOR
     | "Ceil"    -> CEIL
@@ -91,7 +97,7 @@ let cEscape s =
 rule Token = parse
   | ['0']['b']['0'-'9']+  {CSTBIN(System.Int32.Parse ((lexemeAsString lexbuf).[2..]))  } 
   | ['0']['o']['0'-'9']+  {CSTOCT(System.Int32.Parse ((lexemeAsString lexbuf).[2..]))  } 
-  | ['0']['x']['0'-'9']+  {CSTHEX(System.Int32.Parse ((lexemeAsString lexbuf).[2..]))  } 
+  | ['0']['x']['0'-'9''A'-'F''a'-'f']+  {CSTHEX((lexemeAsString lexbuf).[2..])   } 
   | [' ' '\t' '\r'] { Token lexbuf }
   | '\n'            { lexbuf.EndPos <- lexbuf.EndPos.NextLine; Token lexbuf }
   | ['0'-'9']+      { CSTINT (System.Int32.Parse (lexemeAsString lexbuf)) }  
