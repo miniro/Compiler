@@ -8,6 +8,7 @@ type typ =
   | TypF
   | TypS  
   | TypStruct of typ list
+  | TypShort
 
 and access =                                                      
   | AccVar of string                 
@@ -27,7 +28,8 @@ and expr =
   | CstBIN of int
   | CstOCT of int
   | CstHEX of int
-  | CstF of float                      
+  | CstF of float        
+  | CstShort of int              
   | Prim1 of string * expr
   | Prim2 of string * expr * expr
   | Prim3 of expr * expr * expr 

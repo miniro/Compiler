@@ -239,6 +239,7 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | CstC i         -> [CSTI (changeChar i)]
     | CstS i         -> [INCSP 2; GETSP; CSTI (2-1); SUB] @[CSTS (changeStr i)]  
     | CstF i         -> [CSTF (change i)]
+    | CstShort i     -> [CSTI i]
     | CstHEX i       -> [CSTI (changeHEX i)]
     | CstOCT i       -> [CSTI (changeOCT i)]
     | CstBIN i       -> [CSTI (changeBIN i)]
@@ -315,7 +316,7 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
     | Sin(e1) ->
       cExpr e1 varEnv funEnv @ [SIN]
     | Pi ->
-      [CSTF (change 3.1415)]
+      [CSTF (change 3.1415926)]
     | Round(e1) ->
       cExpr e1 varEnv funEnv @ [ROUND]
     | Ftoi(e1) ->
@@ -339,6 +340,7 @@ and cExpr (e : expr) (varEnv : VarEnv) (funEnv : FunEnv) : instr list =
          | "printi" -> [PRINTI]
          | "printc" -> [PRINTC]
          | "printf" -> [PRINTF]
+         | "printh" -> [PRINTH]
          | _        -> raise (Failure "unknown primitive 4"))
     | Prim2(ope, e1, e2) ->
       cExpr e1 varEnv funEnv

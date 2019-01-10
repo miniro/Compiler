@@ -60,9 +60,11 @@ type token =
   | ELSE
   | IF
   | INT
+  | SHORT
   | FLOAT
   | NULL
   | PRINT
+  | PRINTH
   | PRINTI
   | PRINTC
   | PRINTF
@@ -101,6 +103,7 @@ type token =
   | CSTHEX of (int)
   | CSTOCT of (int)
   | CSTBIN of (int)
+  | CSTSHORT of (int)
 type tokenId = 
     | TOKEN_EOF
     | TOKEN_STRUCT
@@ -161,9 +164,11 @@ type tokenId =
     | TOKEN_ELSE
     | TOKEN_IF
     | TOKEN_INT
+    | TOKEN_SHORT
     | TOKEN_FLOAT
     | TOKEN_NULL
     | TOKEN_PRINT
+    | TOKEN_PRINTH
     | TOKEN_PRINTI
     | TOKEN_PRINTC
     | TOKEN_PRINTF
@@ -202,6 +207,7 @@ type tokenId =
     | TOKEN_CSTHEX
     | TOKEN_CSTOCT
     | TOKEN_CSTBIN
+    | TOKEN_CSTSHORT
     | TOKEN_end_of_input
     | TOKEN_error
 type nonTerminalId = 
@@ -233,6 +239,7 @@ type nonTerminalId =
     | NONTERM_ConstOCT
     | NONTERM_ConstBIN
     | NONTERM_ConstF
+    | NONTERM_ConstShort
     | NONTERM_Type
     | NONTERM_StructType
     | NONTERM_Svardeclist

@@ -18,6 +18,7 @@ type label = string
 type instr =
   | Label of label                     (* symbolic label; pseudo-instruc. *)
   | CSTI of int                        (* constant                        *)
+  | CSTSHORT of int
   | CSTF of int                        (* constant                        *)
   | CSTS of int list                        
   | ADD                                (* addition                        *)
@@ -44,6 +45,7 @@ type instr =
   | PRINTI                             (* print s[sp] as integer          *)
   | PRINTC                             (* print s[sp] as character        *)
   | PRINTF                             (* print s[sp] as float            *)
+  | PRINTH
   | LDARGS                             (* load command line args on stack *)
   | STOP                               (* halt the abstract machine       *)
   | BITAND
@@ -282,6 +284,9 @@ let CODECSTS  = 52;
 [<Literal>]
 let CODESORT  = 53;
 
+[<Literal>]
+let CODEPRINTH  = 54;
+
 (* Bytecode emission, first pass: build environment that maps 
    each label to an integer address in the bytecode.
  *)
@@ -317,6 +322,7 @@ let makelabenv (addr, labenv) instr =
     | PRINTI         -> (addr+1, labenv)
     | PRINTC         -> (addr+1, labenv)
     | PRINTF         -> (addr+1, labenv)
+    | PRINTH         -> (addr+1, labenv)
     | LDARGS         -> (addr+1, labenv)
     | STOP           -> (addr+1, labenv)
     | BITAND         -> (addr+1, labenv)
@@ -379,6 +385,7 @@ let rec emitints getlab instr ints =
     | PRINTI         -> CODEPRINTI :: ints
     | PRINTC         -> CODEPRINTC :: ints
     | PRINTF         -> CODEPRINTF :: ints
+    | PRINTH         -> CODEPRINTH :: ints
     | LDARGS         -> CODELDARGS :: ints
     | STOP           -> CODESTOP   :: ints
     | BITAND         -> CODEBITAND :: ints
@@ -484,6 +491,7 @@ let rec decomp ints : instr list =
     | CODEPRINTI :: ints_rest                         ->   PRINTI        :: decomp ints_rest
     | CODEPRINTC :: ints_rest                         ->   PRINTC        :: decomp ints_rest
     | CODEPRINTF :: ints_rest                         ->   PRINTF       :: decomp ints_rest
+    | CODEPRINTH :: ints_rest                         ->   PRINTH       :: decomp ints_rest
     | CODELDARGS :: ints_rest                         ->   LDARGS        :: decomp ints_rest
     | CODESTOP   :: ints_rest                         ->   STOP             :: decomp ints_rest
     | CODECSTI   :: i :: ints_rest                    ->   CSTI i :: decomp ints_rest   

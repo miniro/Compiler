@@ -38,7 +38,7 @@ class Machine {
     LDARGS = 24,STOP = 25, BITAND = 26,BITOR = 27,BITXOR = 28,BITLEFT = 29,BITRIGHT = 30,
     BITNOT = 31,NEG = 32,INVO = 33,GCD = 34,ROUND=35,FLOOR=36,CEIL=37,CSTF=38,
     PRINTF = 39,FTOI=40 ,ITOF=41 ,COS  = 42,TAN  = 43,ASIN  = 44 ,ACOS  = 45,ATAN  = 46,SIN  = 47, FABS = 48,
-    LOG = 49,SQRT = 50,POW = 51,CSTS=52,SORT=53;
+    LOG = 49,SQRT = 50,POW = 51,CSTS=52,SORT=53,PRINTH=54;
 
 
   final static int STACKSIZE = 1000;
@@ -75,7 +75,7 @@ class Machine {
   static float change(int x){
       ByteBuffer buf=ByteBuffer.allocateDirect(4); 
       String string = Integer.toHexString(x);
-      byte b[]={Byte.parseByte(string.substring(0,2),16),Byte.parseByte(string.substring(2,4),16),Byte.parseByte(string.substring(4,6),16),Byte.parseByte(string.substring(6,8),16)}; 
+      byte b[]={Integer.valueOf(string.substring(0,2),16).byteValue(),Integer.valueOf(string.substring(2,4),16).byteValue(),Integer.valueOf(string.substring(4,6),16).byteValue(),Integer.valueOf(string.substring(6,8),16).byteValue()}; 
       buf.put(b);
       buf.rewind();
       float f2=buf.getFloat();
@@ -100,7 +100,7 @@ class Machine {
   //     return false;
   // }
   static int change2(float x){
-    int c=Float.floatToRawIntBits(2.1f);
+    int c=Float.floatToRawIntBits(x);
     return c;
     // int c=Float.floatToRawIntBits(x);
 		// System.out.println(Float.floatToRawIntBits(1.1f));
@@ -141,7 +141,7 @@ class Machine {
         pc+=3;
         // System.out.print(p[pc]);
         break;
-
+        
       case ADD:{
         // boolean flag=false;double f1=s[sp-1],f2=s[sp];
         // if(judge(String.valueOf(s[sp-1]))){f1=change(s[sp-1]);flag=true;}
@@ -212,22 +212,22 @@ class Machine {
         break;
       }   
       case ROUND:{
-        double f=change(s[sp]);
+        float f=change(s[sp]);
         s[sp]=change2(Math.round(f));
         break;
       }
       case FLOOR:{
-        double f=change(s[sp]);
+        float f=change(s[sp]);
         s[sp]=change2((float)Math.floor(f));
         break;
       }   
       case CEIL:{
-        double f=change(s[sp]);
+        float f=change(s[sp]);
         s[sp]=change2((float)Math.ceil(f));
         break;
       }
       case FTOI:{
-        double f=change(s[sp]);
+        float f=change(s[sp]);
         s[sp]=(int)f;
         break;
       }
@@ -332,16 +332,17 @@ class Machine {
       case PRINTI:
         System.out.print(s[sp] + " "); break; 
       case PRINTC:
-        for(int i=0;i<=sp;i++){
-          System.out.print(s[i]+" ");
-        }
-        System.out.print("\n");
-        System.out.print(s[sp]+" "+(char)(s[sp])); break; 
+        // for(int i=0;i<=sp;i++){
+        //   System.out.print(s[i]+" ");
+        // }
+        // System.out.print("\n");
+        System.out.print((char)(s[sp])); break; 
       case PRINTF:{
         float ans=change(s[sp]);
         System.out.print(ans +" "); break;
       }
-        
+      case PRINTH:
+        System.out.print((short)s[sp] +" "); break;
       case LDARGS:
 	for (int i=0; i<iargs.length; i++) // Push commandline arguments
 	  s[++sp] = iargs[i];
